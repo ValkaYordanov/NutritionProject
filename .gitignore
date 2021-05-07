@@ -8,3 +8,4 @@
 bin
 obj
 NutritionApp/.vs/NutritionApp/v16/.suo
+*.cache
