@@ -8,9 +8,9 @@ namespace NutritionApp.Models
     public class Intake
     {
         public int IntakeId { get; set; }
-        public string UserId { get; }
-        public int MealId { get; }
-        public int ProductId { get; }
+        public string UserId { get; set; }
+        public int MealId { get; set; }
+        public int ProductId { get; set; }
         public decimal Quantity { get; set; }
         public DateTime Day { get; set; }
     }

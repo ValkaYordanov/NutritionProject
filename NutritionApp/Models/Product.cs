@@ -8,7 +8,7 @@ namespace NutritionApp.Models
     public class Product
     {
         public int ProductId { get; set; }
-        public int ProductNutritionId { get; }
+        public int ProductNutritionId { get; set; }
         public string Brand { get; set; }
         public string ProductName { get; set; }
         public int GTIN { get; set; }

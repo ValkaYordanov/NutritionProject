@@ -9,7 +9,7 @@ namespace NutritionApp.Models
     {
         
         public int IngredientId { get; set; }
-        public int ProductId { get; }
+        public int ProductId { get; set; }
         public decimal Quantity { get; set; }
 
     }
