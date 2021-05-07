@@ -5,8 +5,8 @@
 *.pdb
 *.dll
 *.pdb
-NutritionApp/bin\
-NutritionApp/obj\
+NutritionApp/bin/
+NutritionApp/obj/
 NutritionApp/.vs/NutritionApp/v16/.suo
 *.cache
-NutritionApp\.vs\NutritionApp\config
+NutritionApp/.vs/NutritionApp/config
