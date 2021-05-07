@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\NutritionApp.csproj": {}
+    "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\NutritionApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\NutritionApp.csproj": {
+    "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\NutritionApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+        "projectUniqueName": "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
         "projectName": "NutritionApp",
-        "projectPath": "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
-        "packagesPath": "C:\\Users\\mnoer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\obj\\",
+        "projectPath": "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\mnoer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -42,26 +39,6 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "dependencies": {
-            "Microsoft.CodeAnalysis.CSharp.Workspaces": {
-              "target": "Package",
-              "version": "[3.9.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[5.0.5, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[5.0.5, )"
-            },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-              "target": "Package",
-              "version": "[5.0.2, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
