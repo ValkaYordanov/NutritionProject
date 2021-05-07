@@ -8,7 +8,7 @@ namespace NutritionApp.Models
     public class Meal
     {
         public int MealId { get; set; }
-        public int UserId { get; }
-        public decimal Qunatity { get; set; }
+        public string UserId { get; }
+        public decimal Quantity { get; set; }
     }
 }

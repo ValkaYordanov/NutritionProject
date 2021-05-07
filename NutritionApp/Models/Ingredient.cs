@@ -7,9 +7,10 @@ namespace NutritionApp.Models
 {
     public class Ingredient
     {
+        
         public int IngredientId { get; set; }
         public int ProductId { get; }
-        public decimal Qunatity { get; set; }
+        public decimal Quantity { get; set; }
 
     }
 }
