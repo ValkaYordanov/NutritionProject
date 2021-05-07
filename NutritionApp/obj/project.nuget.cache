@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4A2/ONKzAZaaaMUqMnQxvOnb9DvsBDJc13TV6sKUjPPsE24wHxwIk85sF6YXm+FHq584HplTkFXRPpdcb9X26w==",
+  "dgSpecHash": "v0Uufgo5iBw6DKltJ9swZQ/QhXAsUlvkIPaiJKKKJDiih+aM2wuUNLFRWOWSP/vlPnGPCpQS76zhLX/0LpdkEA==",
   "success": true,
   "projectFilePath": "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
   "expectedPackageFiles": [
@@ -10,7 +10,7 @@
     "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\5.0.0\\microsoft.aspnetcore.razor.language.5.0.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.razor.runtime\\2.2.0\\microsoft.aspnetcore.razor.runtime.2.2.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
-    "C:\\Users\\User\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.0.0\\microsoft.codeanalysis.analyzers.3.0.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.2\\microsoft.codeanalysis.analyzers.3.3.2.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.codeanalysis.common\\3.9.0\\microsoft.codeanalysis.common.3.9.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.codeanalysis.csharp\\3.9.0\\microsoft.codeanalysis.csharp.3.9.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.codeanalysis.csharp.workspaces\\3.9.0\\microsoft.codeanalysis.csharp.workspaces.3.9.0.nupkg.sha512",
