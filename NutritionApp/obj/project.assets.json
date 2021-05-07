@@ -8,11 +8,16 @@
     "net5.0": []
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\Andre\\.nuget\\packages\\": {}
+=======
+    "C:\\Users\\User\\.nuget\\packages\\": {}
+>>>>>>> 0ecfa967833efb4e813db9d49910d88a9b058774
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
       "projectName": "NutritionApp",
       "projectPath": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
@@ -21,6 +26,16 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+      "projectUniqueName": "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+      "projectName": "NutritionApp",
+      "projectPath": "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> 0ecfa967833efb4e813db9d49910d88a9b058774
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

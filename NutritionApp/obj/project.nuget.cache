@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "E6iAnJHpJDhmWDy8hdSIexSucfSENiscMiYzFrjh3DIg493OSataL5ZHFMTX5/ZtHvPk/G+B9SnYCbfX9NJHmQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+=======
+  "dgSpecHash": "zYXaDF1hu5dXAIi3L3yUg2SRv8xkkjwF9T94JCU9xKIXfCZH/r9/TdqCpiQetq9u8MdgreL0t9TkOvoKj8yrYg==",
+  "success": true,
+  "projectFilePath": "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+>>>>>>> 0ecfa967833efb4e813db9d49910d88a9b058774
   "expectedPackageFiles": [],
   "logs": []
 }
