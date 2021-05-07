@@ -7185,19 +7185,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "C:\\Users\\Andre\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+      "projectUniqueName": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
       "projectName": "NutritionApp",
-      "projectPath": "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\VS - Baaa\\NutritionProject\\NutritionApp\\obj\\",
+      "projectPath": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+      "packagesPath": "C:\\Users\\Andre\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7263,5 +7263,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
