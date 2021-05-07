@@ -7,6 +7,6 @@
 *.pdb
 NutritionApp/bin/
 NutritionApp/obj/
-NutritionApp/.vs/NutritionApp/v16/.suo
+NutritionApp/.vs/
 *.cache
-NutritionApp/.vs/NutritionApp/config
+NutritionApp/.vs/
