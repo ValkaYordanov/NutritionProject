@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\NutritionApp.csproj": {}
+    "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\NutritionApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\NutritionApp.csproj": {
+    "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\NutritionApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+        "projectUniqueName": "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
         "projectName": "NutritionApp",
-        "projectPath": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
-        "packagesPath": "C:\\Users\\Andre\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\obj\\",
+        "projectPath": "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+        "packagesPath": "C:\\Users\\mnoer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mnoer\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
