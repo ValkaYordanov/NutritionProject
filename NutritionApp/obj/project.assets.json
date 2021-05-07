@@ -7185,23 +7185,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mnoer\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Andre\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+      "projectUniqueName": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
       "projectName": "NutritionApp",
-      "projectPath": "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
-      "packagesPath": "C:\\Users\\mnoer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mnoer\\OneDrive\\Documents\\eaaa\\Webudvikling\\NutritionProject\\NutritionApp\\obj\\",
+      "projectPath": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\NutritionApp.csproj",
+      "packagesPath": "C:\\Users\\Andre\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\mnoer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7267,5 +7263,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Andre\\Documents\\GitHub\\NutritionProject\\NutritionApp\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
