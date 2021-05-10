@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using NutritionApp.Models;
 
 namespace NutritionApp
 {
@@ -29,6 +31,21 @@ namespace NutritionApp
             services.AddControllersWithViews();
             services.AddDbContext<NutritionAppContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("NutritionAppContext")));
+
+            services.AddIdentity<AppUser, IdentityRole>(opts => {
+                opts.User.RequireUniqueEmail = true;
+                //opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
+                opts.Password.RequiredLength = 6;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequireLowercase = false;
+                opts.Password.RequireUppercase = false;
+                opts.Password.RequireDigit = false;
+            }).AddEntityFrameworkStores<NutritionAppContext>()
+            .AddDefaultTokenProviders();
+
+            //services.ConfigureApplicationCookie(opts => opts.LoginPath = "/Users/Login");
+
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +63,7 @@ namespace NutritionApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseRouting();
 

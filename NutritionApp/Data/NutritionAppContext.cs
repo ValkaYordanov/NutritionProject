@@ -18,6 +18,8 @@ namespace NutritionApp.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductNutrition> ProductNutritions { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Gender> Genders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +30,7 @@ namespace NutritionApp.Data
             modelBuilder.Entity<Product>().ToTable("Product");
             modelBuilder.Entity<ProductNutrition>().ToTable("ProductNutrition");
             modelBuilder.Entity<Tag>().ToTable("Tag");
+            modelBuilder.Entity<Gender>().ToTable("Gender");
 
             modelBuilder.Entity<Intake>().Property(b => b.Day).HasColumnType("datetime2");
             modelBuilder.Entity<Intake>().Property(b => b.Quantity).HasColumnType("decimal(18,2)");
@@ -36,6 +39,7 @@ namespace NutritionApp.Data
             modelBuilder.Entity<Product>().Property(b => b.Brand).HasColumnType("varchar(60)");
             modelBuilder.Entity<Product>().Property(b => b.ProductName).HasColumnType("varchar(100)");
             modelBuilder.Entity<Tag>().Property(b => b.TagName).HasColumnType("varchar(50)");
+            modelBuilder.Entity<Gender>().Property(b => b.Label).HasColumnType("varchar(50)");
             modelBuilder.Entity<ProductNutrition>().Property(b => b.Amount).HasColumnType("decimal(18,2)");
             modelBuilder.Entity<ProductNutrition>().Property(b => b.Fat).HasColumnType("decimal(18,2)");
             modelBuilder.Entity<ProductNutrition>().Property(b => b.FromFatSaturated).HasColumnType("decimal(18,2)");
