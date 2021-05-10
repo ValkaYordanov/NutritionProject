@@ -15,15 +15,10 @@ namespace NutritionApp.Controllers
     public class HomeController : Controller
     {
         private UserManager<AppUser> userManager;
-        public HomeController(UserManager<AppUser> userMgr)
+        private readonly ILogger<HomeController> _logger;
+        public HomeController(UserManager<AppUser> userMgr, ILogger<HomeController> logger)
         {
             userManager = userMgr;
-        }
-
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
             _logger = logger;
         }
 

@@ -4,10 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NutritionApp.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace NutritionApp.Data
 {
-    public class NutritionAppContext : DbContext
+    public class NutritionAppContext : IdentityDbContext<AppUser>
     {
 
         public NutritionAppContext(DbContextOptions<NutritionAppContext> options) : base(options) { }
@@ -23,7 +27,8 @@ namespace NutritionApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           // modelBuilder.Entity<User>().ToTable("User");
+            base.OnModelCreating(modelBuilder);
+            // modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Ingredient>().ToTable("Ingredient");
             modelBuilder.Entity<Intake>().ToTable("Intake");
             modelBuilder.Entity<Meal>().ToTable("Meal");
