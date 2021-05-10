@@ -11,7 +11,7 @@ namespace NutritionApp.Models
         //public int ProductNutritionId { get; set; }
         public string Brand { get; set; }
         public string ProductName { get; set; }
-        public int GTIN { get; set; }
+        public string GTIN { get; set; }
         public int Kcal { get; set; }
         public int KJ { get; set; }
         public decimal Fat { get; set; }
