@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NutritionApp.Data;
 
 namespace NutritionApp.Migrations
 {
     [DbContext(typeof(NutritionAppContext))]
-    partial class NutritionAppContextModelSnapshot : ModelSnapshot
+    [Migration("20210510085602_nutrionContent-To-Products")]
+    partial class nutrionContentToProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
