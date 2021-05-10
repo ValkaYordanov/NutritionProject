@@ -52,8 +52,17 @@ namespace NutritionApp.Controllers
         public IActionResult Create()
         {
 
+        
 
-          
+            SelectList prod  = new SelectList(_context.Products, "ProductId", "ProductId");
+            SelectList mea  = new SelectList(_context.Meals, "MealId", "MealId");
+            SelectList listt = new SelectList(prod.Concat(mea));
+            Console.WriteLine(prod);
+            Console.WriteLine(mea);
+            Console.WriteLine(listt);
+            ViewData["AllItems"] = listt;
+
+
             ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId");
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId");
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id");
