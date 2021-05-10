@@ -301,8 +301,8 @@ namespace NutritionApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("MealName")
+                        .HasColumnType("varchar(300)");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");

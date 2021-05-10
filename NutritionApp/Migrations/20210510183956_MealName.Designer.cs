@@ -10,8 +10,8 @@ using NutritionApp.Data;
 namespace NutritionApp.Migrations
 {
     [DbContext(typeof(NutritionAppContext))]
-    [Migration("20210510182521_Add-Name-to-meal")]
-    partial class AddNametomeal
+    [Migration("20210510183956_MealName")]
+    partial class MealName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -303,8 +303,8 @@ namespace NutritionApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("MealName")
+                        .HasColumnType("varchar(300)");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");

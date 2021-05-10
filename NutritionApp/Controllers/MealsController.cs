@@ -57,7 +57,7 @@ namespace NutritionApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MealId,UserId,Quantity")] Meal meal)
+        public async Task<IActionResult> Create([Bind("MealId,UserId,Quantity,MealName")] Meal meal)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace NutritionApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MealId,UserId,Quantity")] Meal meal)
+        public async Task<IActionResult> Edit(int id, [Bind("MealId,UserId,Quantity,MealName")] Meal meal)
         {
             if (id != meal.MealId)
             {
