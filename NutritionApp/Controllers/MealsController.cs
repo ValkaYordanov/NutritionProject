@@ -48,7 +48,7 @@ namespace NutritionApp.Controllers
         // GET: Meals/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
             return View();
         }
 
