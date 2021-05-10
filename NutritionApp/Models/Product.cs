@@ -13,5 +13,10 @@ namespace NutritionApp.Models
         public string ProductName { get; set; }
         public int GTIN { get; set; }
         public ProductNutrition ProductNutrition { get; set; }
+        //public virtual IEnumerable<Tag> Tags { get; set; }
+        //public Product()
+        //{
+        //    this.Tags = new HashSet<Tag>();
+        //}
     }
 }

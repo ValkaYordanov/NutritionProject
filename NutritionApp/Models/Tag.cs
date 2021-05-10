@@ -9,5 +9,12 @@ namespace NutritionApp.Models
     {
         public int TagId { get; set; }
         public string TagName { get; set; }
+        //public virtual IEnumerable<Product> Products { get; set; }
+        //public virtual IEnumerable<Meal> Meals { get; set; }
+        //public Tag()
+        //{
+        //    this.Products = new HashSet<Product>();
+        //    this.Meals = new HashSet<Meal>();
+        //}
     }
 }

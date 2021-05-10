@@ -10,6 +10,11 @@ namespace NutritionApp.Models
         public int MealId { get; set; }
         public string UserId { get; set; }
         public decimal Quantity { get; set; }
-        public AppUser AppUser { get; set; }
+        public AppUser User { get; set; }
+        //public virtual IEnumerable<Tag> Tags { get; set; }
+        //public Meal()
+        //{
+        //    this.Tags = new HashSet<Tag>();
+        //}
     }
 }
