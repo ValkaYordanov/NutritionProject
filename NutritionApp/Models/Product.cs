@@ -12,5 +12,6 @@ namespace NutritionApp.Models
         public string Brand { get; set; }
         public string ProductName { get; set; }
         public int GTIN { get; set; }
+        public ProductNutrition ProductNutrition { get; set; }
     }
 }

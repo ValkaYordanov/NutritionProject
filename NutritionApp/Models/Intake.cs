@@ -13,5 +13,8 @@ namespace NutritionApp.Models
         public int ProductId { get; set; }
         public decimal Quantity { get; set; }
         public DateTime Day { get; set; }
+        public AppUser User { get; set; }
+        public Meal Meal { get; set; }
+        public Product Product { get; set; }
     }
 }

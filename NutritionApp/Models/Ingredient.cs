@@ -12,5 +12,7 @@ namespace NutritionApp.Models
         public int ProductId { get; set; }
         public decimal Quantity { get; set; }
 
+        public Product Prodct { get; set; }
+
     }
 }
