@@ -18,9 +18,11 @@
             </div>
 
 
-            <div class="form-group">
+            <div class="form-group" id="searchFoodContainer">
                 <label class="control-label">Search for food</label>
-                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)">
+                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off">
+                <input type="hidden" name="type" value=""/>
+                <input type="hidden" name="id" value=""/>
                 <div id="foodOptions">
                 </div>
                 <span class="text-danger"></span>
@@ -28,14 +30,14 @@
           
 
 
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="MealId" class="control-label"></label>
                 <select asp-for="MealId" class="form-control" asp-items="ViewBag.MealId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="ProductId" class="control-label"></label>
                 <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Quantity" class="control-label"></label>
                 <input asp-for="Quantity" class="form-control" />
@@ -81,16 +83,17 @@
 
     function addFoodOption(food, type) {
         console.log(food);
+        console.log(food.id);
 
        
         if (type == 'product') {
             document.querySelector("#foodOptions").innerHTML += `
-<p id="${food.productId}" onclick="chooseFood(this);">${food.productName}</p>
+<p name="${food.productId}" onclick="chooseFood(this, '${type}', ${food.id});">${food.productName}</p>
 `;
         }
         if (type == 'meal') {
             document.querySelector("#foodOptions").innerHTML += `
-<p id="${food.mealId}"  onclick="chooseFood(this);">${food.mealName}</p>
+<p name="${food.mealId}"  onclick="chooseFood(this, '${type}',${food.id});">${food.mealName}</p>
 `;
         }
 
@@ -98,11 +101,22 @@
         
     }
 
-    function chooseFood(food) {
+    function chooseFood(food, addedType, foodId) {
         console.log(food);
+        const searchFoodContainer = document.querySelector("#searchFoodContainer");
+        const type = searchFoodContainer.querySelector("input[name='type']");
+        const id = searchFoodContainer.querySelector("input[name='id']");
+
+        // Save values
+        type.value = addedType;
+        id.value = foodId;
+
+        // Save value and Reset dropdown
         searchFoodsInput.value = food.innerHTML;
-        searchFoodsInput.id = food.id;
         foodOptions.innerHTML = '';
+
+     
+      
 
     }
 </script>

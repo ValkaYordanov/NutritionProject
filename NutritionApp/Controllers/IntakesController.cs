@@ -105,7 +105,7 @@ namespace NutritionApp.Controllers
            
                 _context.Add(intake);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
             ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
