@@ -55,19 +55,10 @@ namespace NutritionApp.Controllers
         {
             IntakeViewModel intake = new IntakeViewModel();
             intake.Day = DateTime.Now;
+            intake.Quantity = 1;
 
-
-            //SelectList prod = new SelectList(_context.Products, "ProductId", "ProductId");
-            //SelectList mea = new SelectList(_context.Meals, "MealId", "MealId");
-            //SelectList listt = new SelectList(prod.Concat(mea));
-            //Console.WriteLine(prod);
-            //Console.WriteLine(mea);
-            //Console.WriteLine(listt);
-            //ViewData["AllItems"] = listt;
-
-
-            ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealName");
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName");
+            //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealName");
+            //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName");
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
             return View(intake);
         }

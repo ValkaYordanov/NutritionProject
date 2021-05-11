@@ -21,7 +21,7 @@
             <div class="form-group" id="searchFoodContainer">
                 <label class="control-label">Search for food</label>
                 <input  id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off">
-                <input asp-for="Type" type="hidden" name="type" value=""/>
+                <input asp-for="Type" type="hidden" name="type" />
                 <input asp-for="ItemId" type="hidden" name="id"/>
                 <div id="foodOptions">
                 </div>
@@ -118,7 +118,7 @@
         id.value = num;
         parseInt(id.value);
         console.log("value", foodId, typeof foodId, "new value", id.value, typeof id.value, "num", num, typeof num);
-
+    
         // Save value and Reset dropdown
         searchFoodsInput.value = food.innerHTML;
         foodOptions.innerHTML = '';
