@@ -101,7 +101,6 @@ namespace NutritionApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IntakeViewModel data)
         {
-            Intake intake = new Intake();
             if (ModelState.IsValid)
             {
 
@@ -109,8 +108,6 @@ namespace NutritionApp.Controllers
                 intake.Quantity = data.Quantity;
                 intake.Day = data.Day;
                 intake.UserId = data.UserId;
-
-          
 
                 if (data.Type == "product")
                 {
@@ -124,14 +121,14 @@ namespace NutritionApp.Controllers
                    
                 }
 
-        _context.Add(intake);
+                _context.Add(intake);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
             //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
-            //ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", intake.UserId);
-            return View(intake);
+            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", data.UserId);
+            return View(data);
         }
 
         // GET: Intakes/Edit/5
