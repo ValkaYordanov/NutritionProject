@@ -27,30 +27,29 @@ namespace NutritionApp.Controllers
         [HttpPost]
         public IActionResult AddToBasket(int productId, int qunatity)
         {
-            Console.WriteLine(productId);
-            //productId = 1;
-            //var product = _context.Products
-            //    .FirstOrDefaultAsync(m => m.ProductId == productId);
+            
+           
             var product = _context.Products.Where(p => p.ProductId == productId);
             if (product == null)
             {
-                return View();
+                return NotFound();
             }
 
             if (product != null)
             {
+               
                 basket.AddProduct(productId, qunatity);
             }
-            return View();
+            return RedirectToAction("Create", "Meals");
         }
-        //public RedirectToActionResult RemoveFromCart(int productID, string returnUrl)
-        //{
-        //    Product product = Repository.Products.FirstOrDefault(p => p.ProductId == productID);
-        //    if (product != null)
-        //    {
-        //        cart.RemoveLine(product);
-        //    }
-        //    return RedirectToAction("Index", new { returnUrl });
-        //}
+
+        [HttpPost]
+        public IActionResult RemoveFromBasket(int productID)
+        {
+           
+                basket.RemoveLine(productID);
+            
+            return RedirectToAction("Create", "Meals");
+        }
     }
 }

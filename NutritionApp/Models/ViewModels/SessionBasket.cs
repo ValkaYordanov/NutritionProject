@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using NutritionApp.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
+//using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace NutritionApp.Models.ViewModels

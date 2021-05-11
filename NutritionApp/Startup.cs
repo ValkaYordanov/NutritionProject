@@ -30,13 +30,16 @@ namespace NutritionApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
+            services.AddScoped<Basket>(sp => SessionBasket.GetBasket(sp));
             services.AddControllersWithViews();
             services.AddMemoryCache();
             services.AddSession();
-
-            services.AddDbContext<NutritionAppContext>(options => 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddDbContext<NutritionAppContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("NutritionAppContext")));
+
+
+
 
             services.AddIdentity<AppUser, IdentityRole>(opts => {
                 opts.User.RequireUniqueEmail = true;
