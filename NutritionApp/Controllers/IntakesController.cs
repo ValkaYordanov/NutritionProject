@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using NutritionApp.Data;
 using NutritionApp.Models;
@@ -14,7 +15,7 @@ namespace NutritionApp.Controllers
     public class IntakesController : Controller
     {
         private readonly NutritionAppContext _context;
-
+      
         public IntakesController(NutritionAppContext context)
         {
             _context = context;
@@ -51,8 +52,9 @@ namespace NutritionApp.Controllers
         // GET: Intakes/Create
         public IActionResult Create()
         {
+            Intake intake = new Intake();
+            intake.Day = DateTime.Now;
 
-        
 
             SelectList prod  = new SelectList(_context.Products, "ProductId", "ProductId");
             SelectList mea  = new SelectList(_context.Meals, "MealId", "MealId");
@@ -63,10 +65,32 @@ namespace NutritionApp.Controllers
             ViewData["AllItems"] = listt;
 
 
-            ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId");
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId");
-            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id");
-            return View();
+            ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealName");
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName");
+            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
+            return View(intake);
+        }
+
+        public JsonResult SelectFromSp(string input)
+        {
+            SqlParameter inputs = new SqlParameter("@input", input);
+
+            List<Product> products =
+                _context.Products.FromSqlRaw<Product>(
+                    "exec spSearchProductAndMeal @input", inputs).ToList();
+
+            List<Meal> meals =
+                _context.Meals.FromSqlRaw<Meal>(
+                    "exec spSearchMeal @input", inputs).ToList();
+
+            var myResult = new
+            {
+                ProductList = products,
+                MealList = meals
+            };
+            return Json(myResult);
+           
+
         }
 
         // POST: Intakes/Create
@@ -78,6 +102,7 @@ namespace NutritionApp.Controllers
         {
             if (ModelState.IsValid)
             {
+           
                 _context.Add(intake);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
