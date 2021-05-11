@@ -101,6 +101,7 @@ namespace NutritionApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IntakeViewModel data)
         {
+            Intake intake = new Intake();
             if (ModelState.IsValid)
             {
 
