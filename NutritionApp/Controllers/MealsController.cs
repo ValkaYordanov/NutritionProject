@@ -49,6 +49,7 @@ namespace NutritionApp.Controllers
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
+            ViewData["AllProd"] = new SelectList(_context.Products, "ProductId", "ProductName");
             return View();
         }
 
@@ -68,6 +69,7 @@ namespace NutritionApp.Controllers
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", meal.UserId);
             return View(meal);
         }
+
 
         // GET: Meals/Edit/5
         public async Task<IActionResult> Edit(int? id)

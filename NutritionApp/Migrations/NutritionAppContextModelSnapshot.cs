@@ -248,6 +248,9 @@ namespace NutritionApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("MealId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -255,6 +258,8 @@ namespace NutritionApp.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IngredientId");
+
+                    b.HasIndex("MealId");
 
                     b.HasIndex("ProductId");
 
@@ -441,11 +446,19 @@ namespace NutritionApp.Migrations
 
             modelBuilder.Entity("NutritionApp.Models.Ingredient", b =>
                 {
+                    b.HasOne("NutritionApp.Models.Meal", "Meal")
+                        .WithMany()
+                        .HasForeignKey("MealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("NutritionApp.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Meal");
 
                     b.Navigation("Product");
                 });
