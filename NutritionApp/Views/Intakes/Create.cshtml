@@ -16,13 +16,25 @@
                 <label asp-for="UserId" class="control-label"></label>
                 <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
             </div>
+
+
+            <div class="form-group">
+                <label class="control-label">Search for food</label>
+                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)">
+                <div id="foodOptions">
+                </div>
+                <span class="text-danger"></span>
+            </div>
+          
+
+
             <div class="form-group">
                 <label asp-for="MealId" class="control-label"></label>
-                <select asp-for="MealId" class ="form-control" asp-items="ViewBag.MealId"></select>
+                <select asp-for="MealId" class="form-control" asp-items="ViewBag.MealId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="ProductId" class="control-label"></label>
-                <select  asp-for="ProductId"class="form-control" asp-items="ViewBag.ProductId"></select>
+                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Quantity" class="control-label"></label>
@@ -46,10 +58,60 @@
 </div>
 
 <script>
-    fetch('https://localhost:44351/Intakes/SelectFromSp?Input=chi')
-        .then(response => response.json())
-        .then(data => console.log(data));
+
+    function searchForFoods(input) {
+       
+        if (input !== "") {
+            const path = "https://localhost:44351/Intakes/SelectFromSp?Input=";
+            fetch(`${path}${input}`)
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data);
+                    document.querySelector("#foodOptions").innerHTML = '';
+
+                    data.productList.forEach(obj => addFoodOption(obj, 'product'))
+                    data.mealList.forEach(obj => addFoodOption(obj, 'meal'))
+                });
+
+
+            
+        }
+    }
+
+    function addFoodOption(food, type) {
+        console.log(food);
+
+       
+        if (type == 'product') {
+            document.querySelector("#foodOptions").innerHTML += `
+<p id="${food.productId}" onclick="chooseFood(this);">${food.productName}</p>
+`;
+        }
+        if (type == 'meal') {
+            document.querySelector("#foodOptions").innerHTML += `
+<p id="${food.mealId}"  onclick="chooseFood(this);">${food.mealName}</p>
+`;
+        }
+
+        
+        
+    }
+
+    function chooseFood(food) {
+        console.log(food);
+        searchFoodsInput.value = food.innerHTML;
+        searchFoodsInput.id = food.id;
+        foodOptions.innerHTML = '';
+
+    }
 </script>
+
+<style>
+    #foodOptions{
+        background-color:lightblue;
+    }
+</style>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
