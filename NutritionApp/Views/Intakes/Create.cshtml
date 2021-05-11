@@ -22,7 +22,7 @@
                 <label class="control-label">Search for food</label>
                 <input  id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off">
                 <input asp-for="Type" type="hidden" name="type" value=""/>
-                <input asp-for="ItemId" type="hidden" name="id" value=""/>
+                <input asp-for="ItemId" type="hidden" name="id"/>
                 <div id="foodOptions">
                 </div>
                 <span class="text-danger"></span>
@@ -83,17 +83,19 @@
 
     function addFoodOption(food, type) {
         console.log(food);
-        console.log(food.id);
+       
 
        
         if (type == 'product') {
+            console.log(food.productId);
             document.querySelector("#foodOptions").innerHTML += `
-<p name="${food.productId}" onclick="chooseFood(this, '${type}', ${food.id});">${food.productName}</p>
+<p onclick="chooseFood(this, '${type}', ${food.productId});">${food.productName}</p>
 `;
         }
         if (type == 'meal') {
+            console.log(food.mealId);
             document.querySelector("#foodOptions").innerHTML += `
-<p name="${food.mealId}"  onclick="chooseFood(this, '${type}',${food.id});">${food.mealName}</p>
+<p onclick="chooseFood(this, '${type}',${food.mealId});">${food.mealName}</p>
 `;
         }
 
@@ -103,13 +105,19 @@
 
     function chooseFood(food, addedType, foodId) {
         console.log(food);
+        console.log(foodId);
         const searchFoodContainer = document.querySelector("#searchFoodContainer");
         const type = searchFoodContainer.querySelector("input[name='type']");
         const id = searchFoodContainer.querySelector("input[name='id']");
 
         // Save values
+
         type.value = addedType;
-        id.value = foodId;
+        id.value = +foodId;
+        var num = +document.querySelector("#searchFoodContainer input[name='id']").value;
+        id.value = num;
+        parseInt(id.value);
+        console.log("value", foodId, typeof foodId, "new value", id.value, typeof id.value, "num", num, typeof num);
 
         // Save value and Reset dropdown
         searchFoodsInput.value = food.innerHTML;

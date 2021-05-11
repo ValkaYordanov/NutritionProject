@@ -13,5 +13,10 @@ namespace NutritionApp.Models.ViewModels
         public string Type { get; set; }
         public string UserId {get;set;}
         public DateTime Day { get; set; }
+
+        public IntakeViewModel()
+        {
+
+        }
     }
 }

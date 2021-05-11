@@ -104,19 +104,24 @@ namespace NutritionApp.Controllers
             Intake intake = new Intake();
             if (ModelState.IsValid)
             {
-               
-                intake.IntakeId = data.Id;
+
+                //intake.IntakeId = data.Id;
                 intake.Quantity = data.Quantity;
                 intake.Day = data.Day;
+                intake.UserId = data.UserId;
 
           
 
                 if (data.Type == "product")
                 {
                     intake.ProductId = data.ItemId;
+                  
+                 
                 }  else if (data.Type == "meal")
                 {
                     intake.MealId = data.ItemId;
+                   
+                   
                 }
 
         _context.Add(intake);
