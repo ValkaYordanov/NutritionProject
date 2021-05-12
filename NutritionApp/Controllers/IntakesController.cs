@@ -104,18 +104,16 @@ namespace NutritionApp.Controllers
 
                 if (data.Type == "product")
                 {
-                    var tempProd = _context.Products.Where(p => p.ProductId == data.ItemId).First();
-                    intake.Product = tempProd;
-                  
+                    intake.Product = _context.Products.Where(p => p.ProductId == data.ItemId).First();
+                                
                   
                  
                 }  else if (data.Type == "meal")
                 {
-          
-                  var tempMeal = _context.Meals.Where(p => p.MealId == data.ItemId).First();
-                    intake.Meal = tempMeal;
-                  
+
+                    intake.Meal = _context.Meals.Where(p => p.MealId == data.ItemId).First();
                     
+                            
                    
                    
                 }

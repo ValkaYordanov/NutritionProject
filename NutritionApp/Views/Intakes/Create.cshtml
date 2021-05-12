@@ -34,16 +34,6 @@
                 <span class="text-danger"></span>
             </div>
 
-
-
-            @*<div class="form-group">
-                    <label asp-for="MealId" class="control-label"></label>
-                    <select asp-for="MealId" class="form-control" asp-items="ViewBag.MealId"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ProductId" class="control-label"></label>
-                    <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
-                </div>*@
             <div class="form-group" id="quantityContainer">
                 <label asp-for="Quantity" class="control-label"></label>
                 <input asp-for="Quantity" class="form-control" />
@@ -75,12 +65,12 @@
         @foreach (var item in ViewBag.Intakes)
         {
          
-            <tr onclick="addToInput(@item)">
+            <tr onclick="addToInput(@item.Product)">
                 <td>
                     @item.Quantity
                 </td>
                 <td>
-                    type
+                   @item
                 </td>
                 <td>
                     <input type="submit" asp-action="Create" value="Eat" class="btn btn-primary" />
@@ -94,12 +84,14 @@
 
 <script>
 
-    function addToInput(prevFood) {
-        console.log(prevFood);
+    function addToInput(prevIntake) {
+        console.log(prevIntake);
         //document.querySelector("#quantityContainer input").value = prevFood;
         //document.querySelector("#searchFoodContainer input[name='id']").value = preproductId;
 
     }
+
+
 
     function searchForFoods(input) {
 
