@@ -27,8 +27,8 @@
             <div class="form-group" id="searchFoodContainer">
                 <label class="control-label">Search for food</label>
                 <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off">
-                <input asp-for="Type" type="hidden" name="type" />
-                <input asp-for="ItemId" type="hidden" name="id" />
+                <input asp-for="Type" type="hidden" />
+                <input asp-for="ItemId" type="hidden" />
                 <div id="foodOptions">
                 </div>
                 <span class="text-danger"></span>
@@ -147,14 +147,14 @@
         console.log(food);
         console.log(foodId);
         const searchFoodContainer = document.querySelector("#searchFoodContainer");
-        const type = searchFoodContainer.querySelector("input[name='type']");
-        const id = searchFoodContainer.querySelector("input[name='id']");
+        const type = searchFoodContainer.querySelector("input[name='Type']");
+        const id = searchFoodContainer.querySelector("input[name='ItemId']");
 
         // Save values
 
         type.value = addedType;
         id.value = foodId;
-        id.value = 4;
+      
         //var num = +document.querySelector("#searchFoodContainer input[name='id']").value;
         //id.value = num;
         //parseInt(id.value);
