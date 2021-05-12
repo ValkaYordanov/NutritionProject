@@ -22,20 +22,19 @@ namespace NutritionApp.Controllers
         private readonly NutritionAppContext _context;
 
         //authorize
-        private UserManager<AppUser> userManager;
+        private UserManager<AppUser> _userManager;
         private readonly ILogger<OverviewController> _logger;
         public OverviewController(NutritionAppContext context, UserManager<AppUser> userMgr, ILogger<OverviewController> logger)
         {
             _context = context;
-            userManager = userMgr;
+            _userManager = userMgr;
             _logger = logger;
 
         }
 
-        private Task<AppUser> CurrentUser =>
-            userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+        private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-
+        //private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
         public async Task<IActionResult> Index()
         {
             AppUser user = await CurrentUser;
