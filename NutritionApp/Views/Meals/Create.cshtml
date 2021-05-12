@@ -24,12 +24,10 @@
             <div class="form-group">
                 <input type="submit" value="Add" class="btn btn-primary" />
             </div>
-            <div>
-                <div id="categories" class="col-md-3">
-                    @await Component.InvokeAsync("BasketSummary", Model.Basket)
-                </div>
-            </div>
         </form>
+
+        @await Component.InvokeAsync("BasketSummary", Model.Basket)
+
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
