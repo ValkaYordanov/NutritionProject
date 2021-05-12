@@ -6,7 +6,8 @@
 
 <h3>Gender</h3>
 <form id="genderForm" method="post" asp-controller="Account" asp-action="Gender">
-    <input type="text" name="genderId" id="genderId" />
+    @*<input type="text" name="genderId" id="genderId" />*@
+    <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
     <input type="button" value="Submit" onclick="GenderFormSubmit()" />
 </form>
 
