@@ -1,0 +1,71 @@
+﻿@{
+}
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h2>Details Form</h2>
+<div id="gender-block">
+    <h3>Gender</h3>
+    <form id="genderForm" method="post" asp-controller="Account" asp-action="Gender">
+        <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
+        <input type="button" value="Submit" onclick="GenderFormSubmit()" />
+    </form>
+</div>
+
+<div id="weight-block">
+    <h3>Weight</h3>
+    <form id="weightForm" method="post" asp-controller="Account" asp-action="Weight">
+        <input type="text" name="weight" id="weight" />
+        <input type="button" value="Submit" onclick="WeightFormSubmit()" />
+    </form>
+</div>
+
+<div id="goal-block">
+    <h3>Weight Goal</h3>
+    <form id="weightGoalForm" method="post" asp-controller="Account" asp-action="WeightGoal">
+        <input type="text" name="weightGoal" id="weightGoal" />
+        <input type="submit" />
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    function GenderFormSubmit() {
+        let url = document.getElementById("genderForm").action;
+        let genderId = document.getElementById("genderId").value;
+
+        let formData = new FormData();
+        formData.append("genderId", genderId);
+        sendData(formData, url);
+    }
+
+    function WeightFormSubmit() {
+        let url = document.getElementById("weightForm").action;
+        let weight = document.getElementById("weight").value;
+
+        let formData = new FormData();
+        formData.append("weight", weight);
+        sendData(formData, url);
+    }
+
+    function WeightGoalFormSubmit() {
+        let url = document.getElementById("weightGoalForm").action;
+        let weightGoal = document.getElementById("weightGoal").value;
+
+        let formData = new FormData();
+        formData.append("weightGoal", weightGoal);
+        sendData(formData, url);
+    }
+
+    function sendData(formData, url) {
+        const XHR = new XMLHttpRequest();
+        XHR.addEventListener('load', function (event) {
+            // Code upon success
+        });
+
+        XHR.addEventListener(' error', function (event) {
+            // Code upon error
+        });
+        XHR.open('POST', url);
+        XHR.send(formData);
+    }
+</script>

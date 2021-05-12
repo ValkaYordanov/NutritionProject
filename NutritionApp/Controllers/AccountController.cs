@@ -1,6 +1,8 @@
 ﻿using NutritionApp.Models;
+using NutritionApp.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -21,13 +23,16 @@ namespace NutritionApp.Controllers
 
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly NutritionAppContext _context;
         public AccountController(UserManager<AppUser> userMgr,
         SignInManager<AppUser> signinMgr,
-        ILogger<AccountController> logger)
+        ILogger<AccountController> logger,
+        NutritionAppContext context)
         {
             _userManager = userMgr;
             _signInManager = signinMgr;
             _logger = logger;
+            _context = context;
         }
 
         [AllowAnonymous]
@@ -83,12 +88,90 @@ namespace NutritionApp.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
-                    return Redirect(returnUrl ?? "/");
+                    return RedirectToAction("Details");
                 }
                 AddErrors(result);
             }
 
             return View(model);
+        }
+
+        // GET: /Account/Details
+        [HttpGet]
+        public IActionResult Details()
+        {
+            SelectList gen = new SelectList(_context.Genders, "GenderId", "GenderId");
+            ViewData["Genders"] = new SelectList(_context.Genders, "GenderId", "Label");
+
+            return View();
+        }
+
+        private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+        // POST: /Account/Gender
+        [HttpPost]
+        public async Task<IActionResult> Gender(int genderId)
+        {
+            AppUser user = await CurrentUser;
+            if (user != null)
+            {
+                user.GenderId = genderId;
+                IdentityResult result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Details");
+                }
+                else
+                {
+                    AddErrors(result);
+                }
+            }
+
+            return Json(new { });
+        }
+
+        // POST: /Account/Weight
+        [HttpPost]
+        public async Task<IActionResult> Weight(decimal weight)
+        {
+            AppUser user = await CurrentUser;
+            if (user != null)
+            {
+                user.Weight = weight;
+                IdentityResult result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Details");
+                }
+                else
+                {
+                    AddErrors(result);
+                }
+            }
+
+            return Json(new { });
+        }
+
+        // POST: /Account/WeightGoal
+        [HttpPost]
+        public async Task<IActionResult> WeightGoal(decimal weightGoal)
+        {
+            AppUser user = await CurrentUser;
+            if (user != null)
+            {
+                user.WeightGoal = weightGoal;
+                IdentityResult result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return Redirect("/");
+                }
+                else
+                {
+                    AddErrors(result);
+                }
+            }
+
+            return Json(new { });
         }
 
         [Authorize]
