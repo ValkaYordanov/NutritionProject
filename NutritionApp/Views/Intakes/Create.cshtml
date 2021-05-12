@@ -17,52 +17,92 @@
                 <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
             </div>
 
-
-            <div class="form-group" id="searchFoodContainer">
-                <label class="control-label">Search for food</label>
-                <input  id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off">
-                <input asp-for="Type" type="hidden" name="type" />
-                <input asp-for="ItemId" type="hidden" name="id"/>
-                <div id="foodOptions">
-                </div>
-                <span class="text-danger"></span>
-            </div>
-          
-
-
-            @*<div class="form-group">
-                <label asp-for="MealId" class="control-label"></label>
-                <select asp-for="MealId" class="form-control" asp-items="ViewBag.MealId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Day" class="control-label"></label>
                 <input asp-for="Day" class="form-control" />
                 <span asp-validation-for="Day" class="text-danger"></span>
             </div>
+
+
+            <div class="form-group" id="searchFoodContainer">
+                <label class="control-label">Search for food</label>
+                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off">
+                <input asp-for="Type" type="hidden" name="type" />
+                <input asp-for="ItemId" type="hidden" name="id" />
+                <div id="foodOptions">
+                </div>
+                <span class="text-danger"></span>
+            </div>
+
+
+
+            @*<div class="form-group">
+                    <label asp-for="MealId" class="control-label"></label>
+                    <select asp-for="MealId" class="form-control" asp-items="ViewBag.MealId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProductId" class="control-label"></label>
+                    <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                </div>*@
+            <div class="form-group" id="quantityContainer">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Eat" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<h2>Resent/Search</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Intakes)
+        {
+         
+            <tr onclick="addToInput(@item.Quantity, @item.MealId, @item.ProductId)">
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    type
+                </td>
+                <td>
+                    <input type="submit" asp-action="Create" value="Eat" class="btn btn-primary" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
 
 <script>
 
+    function addToInput(prevFood, mealId, productId) {
+        console.log(prevFood, mealId, productId);
+        document.querySelector("#quantityContainer input").value = prevFood;
+        document.querySelector("#searchFoodContainer input[name='id']").value = productId;
+
+    }
+
     function searchForFoods(input) {
-       
+
         if (input !== "") {
             const path = "https://localhost:44351/Intakes/SelectFromSp?Input=";
             fetch(`${path}${input}`)
@@ -77,15 +117,15 @@
                 });
 
 
-            
+
         }
     }
 
     function addFoodOption(food, type) {
         console.log(food);
-       
 
-       
+
+
         if (type == 'product') {
             console.log(food.productId);
             document.querySelector("#foodOptions").innerHTML += `
@@ -99,8 +139,8 @@
 `;
         }
 
-        
-        
+
+
     }
 
     function chooseFood(food, addedType, foodId) {
@@ -118,20 +158,20 @@
         id.value = num;
         parseInt(id.value);
         console.log("value", foodId, typeof foodId, "new value", id.value, typeof id.value, "num", num, typeof num);
-    
+
         // Save value and Reset dropdown
         searchFoodsInput.value = food.innerHTML;
         foodOptions.innerHTML = '';
 
-     
-      
+
+
 
     }
 </script>
 
 <style>
-    #foodOptions{
-        background-color:lightblue;
+    #foodOptions {
+        background-color: lightblue;
     }
 </style>
 

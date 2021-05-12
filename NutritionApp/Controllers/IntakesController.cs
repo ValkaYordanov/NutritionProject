@@ -60,6 +60,7 @@ namespace NutritionApp.Controllers
             //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealName");
             //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName");
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
+            ViewBag.Intakes = _context.Intakes;
             return View(intake);
         }
 
