@@ -21,34 +21,42 @@ namespace NutritionApp.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View(new BasketIndexViewModel
+            {
+                Basket = basket
+            });
         }
 
         [HttpPost]
-        public IActionResult AddToBasket(int productId, int qunatity)
+        public IActionResult AddToBasket(Product product, int qunatity)
         {
-            
-           
-            var product = _context.Products.Where(p => p.ProductId == productId);
-            if (product == null)
+
+
+            Product productObj = _context.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
+
+            if (productObj == null)
             {
                 return NotFound();
             }
 
-            if (product != null)
+            if (productObj != null)
             {
                
-                basket.AddProduct(productId, qunatity);
+                basket.AddProduct(productObj, qunatity);
             }
             return RedirectToAction("Create", "Meals");
         }
 
         [HttpPost]
-        public IActionResult RemoveFromBasket(int productID)
+        public IActionResult RemoveFromBasket(int productId)
         {
-           
-                basket.RemoveLine(productID);
-            
+
+            Product productObj = _context.Products.FirstOrDefault(p => p.ProductId == productId);
+            if (productObj != null)
+            {
+                basket.RemoveLine(productObj);
+            }
+
             return RedirectToAction("Create", "Meals");
         }
     }

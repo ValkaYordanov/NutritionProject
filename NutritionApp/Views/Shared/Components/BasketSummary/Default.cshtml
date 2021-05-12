@@ -3,48 +3,36 @@
 
 <div class="">
 
-    @*@if (Model.Lines.Count() > 0)
-    {
-        <small class="navbar-text">
-            <b>Your cart:</b>
-            @foreach (var prod in Model.Lines)
-            {
-                <p> PrductId: @Html.DisplayFor(modelItem => prod.ProductId)</p>
-                <p> Qunatity: @Html.DisplayFor(modelItem => prod.Quantity)</p>
-                <br />
-
-            }
-
-        </small>
-    }*@
+   
 
     <table class="table table-bordered table-striped">
 
         <thead>
             <tr>
-                <th>PrpductId</th>
+                <th>ProductName</th>
                 <th>Qunatity</th>
-               
+                <th>Delete</th>
+
             </tr>
         </thead>
         <tbody>
             @foreach (var line in Model.Lines)
             {
                 <tr>
-                    <td class="text-center">@line.ProductId</td>
+                    <td class="text-center">@line.Product.ProductName</td>
                     <td class="text-left">@line.Quantity</td>
-                   
-                   
+
+
                     <td>
-                        <form asp-action="RemoveFromBasket" asp-controller="Basket"  method="post">
-                            <input type="hidden" name="ProductId" value="@line.ProductId" />
+                        <form asp-action="RemoveFromBasket" asp-controller="Basket" method="post">
+                            <input type="hidden" name="ProductId" value="@line.Product.ProductId" />
                             <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                         </form>
                     </td>
                 </tr>
             }
         </tbody>
-       
+
     </table>
 
 </div>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,20 @@ namespace NutritionApp.Models.ViewModels
     public class Basket
     {
 
+
         private List<BasketLine> lineCollection = new List<BasketLine>();
 
         
-        public virtual void AddProduct(int productId, int quantity)
+        public virtual void AddProduct(Product product, int quantity)
         {
             
             BasketLine newProd = lineCollection
-                .Where(p => p.ProductId == productId)
+                .Where(p => p.Product.ProductId == product.ProductId)
                 .FirstOrDefault();
 
             if (newProd == null)
             {
-                lineCollection.Add(new BasketLine { ProductId = productId, Quantity = quantity });
+                lineCollection.Add(new BasketLine { Product = product, Quantity = quantity });
             }
             else
             {
@@ -29,10 +31,11 @@ namespace NutritionApp.Models.ViewModels
             }
         }
 
-        public virtual void RemoveLine(int productId) =>
-            lineCollection.RemoveAll(i => i.ProductId == productId);
+        public virtual void RemoveLine(Product product) =>
+            lineCollection.RemoveAll(i => i.Product.ProductId == product.ProductId);
 
-     
+
+      
         public virtual void Clear() => lineCollection.Clear();
         public List<BasketLine> Lines => lineCollection;
 
@@ -40,7 +43,7 @@ namespace NutritionApp.Models.ViewModels
 
     public class BasketLine
     {
-        public int ProductId { get; set; }
+        public Product Product { get; set; }
         public int Quantity { get; set; }
     }
 

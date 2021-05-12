@@ -22,22 +22,24 @@ namespace NutritionApp.Models.ViewModels
         }
         [JsonIgnore]
         public ISession Session { get; set; }
-        public override void AddProduct(int productId, int quantity)
+        public override void AddProduct(Product product, int quantity)
         {
-            base.AddProduct(productId, quantity);
+            base.AddProduct(product, quantity);
             Session.SetJson("Basket", this);
 
         }
 
-        //public override void RemoveLine(Product product)
-        //{
-        //    base.RemoveLine(product);
-        //    Session.SetJson("Basket", this);
-        //}
+        public override void RemoveLine(Product product)
+        {
+            base.RemoveLine(product);
+            Session.SetJson("Basket", this);
+        }
         public override void Clear()
         {
             base.Clear();
-            Session.Remove("Cart");
+            Session.Remove("Basket");
         }
+
+       
     }
 }
