@@ -51,7 +51,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Eat" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -75,7 +75,7 @@
         @foreach (var item in ViewBag.Intakes)
         {
          
-            <tr onclick="addToInput(@item.Quantity, @item.MealId, @item.ProductId)">
+            <tr onclick="addToInput(@item)">
                 <td>
                     @item.Quantity
                 </td>
@@ -94,10 +94,10 @@
 
 <script>
 
-    function addToInput(prevFood, mealId, productId) {
-        console.log(prevFood, mealId, productId);
-        document.querySelector("#quantityContainer input").value = prevFood;
-        document.querySelector("#searchFoodContainer input[name='id']").value = productId;
+    function addToInput(prevFood) {
+        console.log(prevFood);
+        //document.querySelector("#quantityContainer input").value = prevFood;
+        //document.querySelector("#searchFoodContainer input[name='id']").value = preproductId;
 
     }
 
@@ -153,11 +153,12 @@
         // Save values
 
         type.value = addedType;
-        id.value = +foodId;
-        var num = +document.querySelector("#searchFoodContainer input[name='id']").value;
-        id.value = num;
-        parseInt(id.value);
-        console.log("value", foodId, typeof foodId, "new value", id.value, typeof id.value, "num", num, typeof num);
+        id.value = foodId;
+        id.value = 4;
+        //var num = +document.querySelector("#searchFoodContainer input[name='id']").value;
+        //id.value = num;
+        //parseInt(id.value);
+        console.log("value", foodId, typeof foodId, "new value", id.value, typeof id.value);
 
         // Save value and Reset dropdown
         searchFoodsInput.value = food.innerHTML;
