@@ -88,7 +88,7 @@ namespace NutritionApp.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
-                    return Redirect(returnUrl ?? "/");
+                    return RedirectToAction("Details");
                 }
                 AddErrors(result);
             }
@@ -163,7 +163,7 @@ namespace NutritionApp.Controllers
                 IdentityResult result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Details");
+                    return Redirect("/");
                 }
                 else
                 {

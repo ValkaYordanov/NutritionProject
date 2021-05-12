@@ -3,25 +3,30 @@
 @addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <h2>Details Form</h2>
+<div id="gender-block">
+    <h3>Gender</h3>
+    <form id="genderForm" method="post" asp-controller="Account" asp-action="Gender">
+        <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
+        <input type="button" value="Submit" onclick="GenderFormSubmit()" />
+    </form>
+</div>
 
-<h3>Gender</h3>
-<form id="genderForm" method="post" asp-controller="Account" asp-action="Gender">
-    @*<input type="text" name="genderId" id="genderId" />*@
-    <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
-    <input type="button" value="Submit" onclick="GenderFormSubmit()" />
-</form>
+<div id="weight-block">
+    <h3>Weight</h3>
+    <form id="weightForm" method="post" asp-controller="Account" asp-action="Weight">
+        <input type="text" name="weight" id="weight" />
+        <input type="button" value="Submit" onclick="WeightFormSubmit()" />
+    </form>
+</div>
 
-<h3>Weight</h3>
-<form id="weightForm" method="post" asp-controller="Account" asp-action="Weight">
-    <input type="text" name="weight" id="weight" />
-    <input type="button" value="Submit" onclick="WeightFormSubmit()" />
-</form>
+<div id="goal-block">
+    <h3>Weight Goal</h3>
+    <form id="weightGoalForm" method="post" asp-controller="Account" asp-action="WeightGoal">
+        <input type="text" name="weightGoal" id="weightGoal" />
+        <input type="submit" />
+    </form>
+</div>
 
-<h3>Weight Goal</h3>
-<form id="weightGoalForm" method="post" asp-controller="Account" asp-action="WeightGoal">
-    <input type="text" name="weightGoal" id="weightGoal" />
-    <input type="button" value="Submit" onclick="WeightGoalFormSubmit()" />
-</form>
 
 <script type="text/javascript">
     function GenderFormSubmit() {
