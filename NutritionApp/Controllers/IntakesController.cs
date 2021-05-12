@@ -9,20 +9,38 @@ using Microsoft.EntityFrameworkCore;
 using NutritionApp.Data;
 using NutritionApp.Models;
 
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Logging;
+using System.Security.Claims;
+
 namespace NutritionApp.Controllers
 {
     public class IntakesController : Controller
     {
         private readonly NutritionAppContext _context;
 
-        public IntakesController(NutritionAppContext context)
+        private UserManager<AppUser> userManager;
+        private readonly ILogger<IntakesController> _logger;
+        public IntakesController(NutritionAppContext context, UserManager<AppUser> userMgr, ILogger<IntakesController> logger)
         {
             _context = context;
+            userManager = userMgr;
+            _logger = logger;
         }
+
+        private Task<AppUser> CurrentUser =>
+            userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
         // GET: Intakes
         public async Task<IActionResult> Index()
         {
+            AppUser user = await CurrentUser;
+            var username = HttpContext.User.Identity.Name;
+            var id = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.Name = username;
+            ViewBag.Id = id;
             var nutritionAppContext = _context.Intakes.Include(i => i.Meal).Include(i => i.Product).Include(i => i.User);
             return View(await nutritionAppContext.ToListAsync());
         }
@@ -53,7 +71,15 @@ namespace NutritionApp.Controllers
         {
 
 
-          
+            SelectList prod  = new SelectList(_context.Products, "ProductId", "ProductId");
+            SelectList mea  = new SelectList(_context.Meals, "MealId", "MealId");
+            SelectList listt = new SelectList(prod.Concat(mea));
+            Console.WriteLine(prod);
+            Console.WriteLine(mea);
+            Console.WriteLine(listt);
+            ViewData["AllItems"] = listt;
+
+
             ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId");
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId");
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id");
