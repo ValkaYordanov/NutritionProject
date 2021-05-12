@@ -27,23 +27,13 @@
             <div class="form-group" id="searchFoodContainer">
                 <label class="control-label">Search for food</label>
                 <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off">
-                <input asp-for="Type" type="hidden" name="type" />
-                <input asp-for="ItemId" type="hidden" name="id" />
+                <input asp-for="Type" type="hidden" />
+                <input asp-for="ItemId" type="hidden" />
                 <div id="foodOptions">
                 </div>
                 <span class="text-danger"></span>
             </div>
 
-
-
-            @*<div class="form-group">
-                    <label asp-for="MealId" class="control-label"></label>
-                    <select asp-for="MealId" class="form-control" asp-items="ViewBag.MealId"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ProductId" class="control-label"></label>
-                    <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
-                </div>*@
             <div class="form-group" id="quantityContainer">
                 <label asp-for="Quantity" class="control-label"></label>
                 <input asp-for="Quantity" class="form-control" />
@@ -51,7 +41,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Eat" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -75,12 +65,12 @@
         @foreach (var item in ViewBag.Intakes)
         {
          
-            <tr onclick="addToInput(@item.Quantity, @item.MealId, @item.ProductId)">
+            <tr onclick="addToInput(@item.Product)">
                 <td>
                     @item.Quantity
                 </td>
                 <td>
-                    type
+                   @item
                 </td>
                 <td>
                     <input type="submit" asp-action="Create" value="Eat" class="btn btn-primary" />
@@ -94,12 +84,14 @@
 
 <script>
 
-    function addToInput(prevFood, mealId, productId) {
-        console.log(prevFood, mealId, productId);
-        document.querySelector("#quantityContainer input").value = prevFood;
-        document.querySelector("#searchFoodContainer input[name='id']").value = productId;
+    function addToInput(prevIntake) {
+        console.log(prevIntake);
+        //document.querySelector("#quantityContainer input").value = prevFood;
+        //document.querySelector("#searchFoodContainer input[name='id']").value = preproductId;
 
     }
+
+
 
     function searchForFoods(input) {
 
@@ -147,17 +139,18 @@
         console.log(food);
         console.log(foodId);
         const searchFoodContainer = document.querySelector("#searchFoodContainer");
-        const type = searchFoodContainer.querySelector("input[name='type']");
-        const id = searchFoodContainer.querySelector("input[name='id']");
+        const type = searchFoodContainer.querySelector("input[name='Type']");
+        const id = searchFoodContainer.querySelector("input[name='ItemId']");
 
         // Save values
 
         type.value = addedType;
-        id.value = +foodId;
-        var num = +document.querySelector("#searchFoodContainer input[name='id']").value;
-        id.value = num;
-        parseInt(id.value);
-        console.log("value", foodId, typeof foodId, "new value", id.value, typeof id.value, "num", num, typeof num);
+        id.value = foodId;
+      
+        //var num = +document.querySelector("#searchFoodContainer input[name='id']").value;
+        //id.value = num;
+        //parseInt(id.value);
+        console.log("value", foodId, typeof foodId, "new value", id.value, typeof id.value);
 
         // Save value and Reset dropdown
         searchFoodsInput.value = food.innerHTML;

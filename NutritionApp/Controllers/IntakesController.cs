@@ -104,18 +104,31 @@ namespace NutritionApp.Controllers
 
                 if (data.Type == "product")
                 {
-                    intake.ProductId = data.ItemId;
+                    intake.Product = _context.Products.Where(p => p.ProductId == data.ItemId).First();
+                                
                   
                  
                 }  else if (data.Type == "meal")
                 {
-                    intake.MealId = data.ItemId;
+
+                    intake.Meal = _context.Meals.Where(p => p.MealId == data.ItemId).First();
+                    
+                            
                    
                    
                 }
 
                 _context.Add(intake);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch(Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+
+                }
                 return RedirectToAction(nameof(Index));
             }
             //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
@@ -137,8 +150,8 @@ namespace NutritionApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
+            //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
+            //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", intake.UserId);
             return View(intake);
         }
@@ -175,8 +188,8 @@ namespace NutritionApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
+            //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
+            //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", intake.UserId);
             return View(intake);
         }
