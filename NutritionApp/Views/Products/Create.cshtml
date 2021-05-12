@@ -79,11 +79,13 @@
     </div>
 </div>
 
-<div>
+<div>   
     <a asp-action="Index">Back to List</a>
 </div>
-<script src="~/js/quagga.min.js" asp-append-version="true"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/quagga.min.js"></script>
 <script src="~/js/barcode.js"></script>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

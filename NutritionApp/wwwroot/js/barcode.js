@@ -4,7 +4,7 @@ function getjson() {
     $.ajax({
         'async': false,
         'global': false,
-        'url': "eans.json",
+        'url': "../js/eans.json",
         'dataType': "json",
         'success': function (data) {
             json = data;
