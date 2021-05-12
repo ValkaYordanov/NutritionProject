@@ -102,6 +102,7 @@ namespace NutritionApp.Controllers
 
             if (id < 0) { id = 0; };
             ViewBag.Id = theid;
+            ViewBag.Name = username;
             ViewBag.Count = id;
 
             var minusCount = (-1 * id);
@@ -113,7 +114,8 @@ namespace NutritionApp.Controllers
                     &&
                     (s.Day >= theDay
                     && s.Day < theDay.AddDays(1))
-                    );
+                    ).Include(i => i.Meal)
+                    .Include(i => i.Product);
             ViewBag.theDay = theDay;
             return View(await nutritionAppContext.ToListAsync());
         }

@@ -105,17 +105,11 @@ namespace NutritionApp.Controllers
                 if (data.Type == "product")
                 {
                     intake.Product = _context.Products.Where(p => p.ProductId == data.ItemId).First();
-                                
-                  
-                 
+
                 }  else if (data.Type == "meal")
                 {
 
-                    intake.Meal = _context.Meals.Where(p => p.MealId == data.ItemId).First();
-                    
-                            
-                   
-                   
+                    intake.Meal = _context.Meals.Where(p => p.MealId == data.ItemId).First();                
                 }
 
                 _context.Add(intake);
