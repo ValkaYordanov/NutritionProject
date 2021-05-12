@@ -67,7 +67,7 @@ namespace NutritionApp.Controllers
                     s.User.Id == id
                     && s.Day >= DateTime.Today
                     );
-            ViewBag.theDay = "Today";
+            ViewBag.theDay = today;
             return View(await nutritionAppContext.ToListAsync());
             //return View();
         }
@@ -79,18 +79,43 @@ namespace NutritionApp.Controllers
             var id = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewBag.Id = id;
 
-            var Yesterday = DateTime.Today;
+            var minusCount = 1;
+            var theDay = DateTime.Today.AddDays(-minusCount);
 
             var nutritionAppContext = _context.Intakes
                     .Where(s =>
                     s.User.Id == id
                     && 
-                    ( s.Day >= DateTime.Today.AddDays(-1) 
-                    && s.Day <= DateTime.Today )
+                    ( s.Day >= theDay
+                    && s.Day < theDay.AddDays(1))
                     );
-            ViewBag.theDay = "YEsterday";
-            //return View(await nutritionAppContext.ToListAsync());
-            return View();
+            ViewBag.theDay = theDay;
+            return View(await nutritionAppContext.ToListAsync());
+            //return View();
+        }
+
+        public async Task<IActionResult> Day(int id)
+        {
+            AppUser user = await CurrentUser;
+            var username = HttpContext.User.Identity.Name;
+            var theid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (id < 0) { id = 0; };
+            ViewBag.Id = theid;
+            ViewBag.Count = id;
+
+            var minusCount = (-1 * id);
+            var theDay = DateTime.Today.AddDays(minusCount);
+
+            var nutritionAppContext = _context.Intakes
+                    .Where(s =>
+                    s.User.Id == theid
+                    &&
+                    (s.Day >= theDay
+                    && s.Day < theDay.AddDays(1))
+                    );
+            ViewBag.theDay = theDay;
+            return View(await nutritionAppContext.ToListAsync());
         }
     }
 }

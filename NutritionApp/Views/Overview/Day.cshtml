@@ -4,11 +4,21 @@
 
 @{
     ViewData["Title"] = "Index";
+
+    int prev = ViewBag.Count + 1;
+    int next = ViewBag.Count - 1;
 }
 
 <h1>Index</h1>
-@ViewBag.theDay
+<div id="day">
+    <a asp-action="Day" asp-route-id="@prev">Prev</a>
+    <span>@ViewBag.theDay</span>
+    <a asp-action="Day" asp-route-id="@next">Next</a>
+</div>
+
+
 <p>
+
     <a asp-action="Today">Today</a>
 </p>
 <p>
