@@ -114,7 +114,7 @@ namespace NutritionApp.Controllers
                     &&
                     (s.Day >= theDay
                     && s.Day < theDay.AddDays(1))
-                    ).Include(i => i.Meal)
+                    ).Include(i => i.Meal).ThenInclude(i => i.Ingredients)
                     .Include(i => i.Product);
             ViewBag.theDay = theDay;
             return View(await nutritionAppContext.ToListAsync());
