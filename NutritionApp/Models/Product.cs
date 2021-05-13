@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NutritionApp.Models
 {
-    public class Product: Item
+    public class Product
     {
         public int ProductId { get; set; }
         //public int ProductNutritionId { get; set; }
