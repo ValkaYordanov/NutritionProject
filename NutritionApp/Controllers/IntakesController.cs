@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -13,20 +15,30 @@ using NutritionApp.Models.ViewModels;
 
 
 
+
 namespace NutritionApp.Controllers
 {
     public class IntakesController : Controller
     {
+        private readonly UserManager<AppUser> _userManager;
         private readonly NutritionAppContext _context;
 
-        public IntakesController(NutritionAppContext context)
+        public IntakesController(UserManager<AppUser> userMgr, NutritionAppContext context)
         {
+            _userManager = userMgr;
             _context = context;
         }
+        private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
 
         // GET: Intakes
         public async Task<IActionResult> Index()
         {
+            AppUser user = await CurrentUser;
+            var username = HttpContext.User.Identity.Name;
+            var id = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.CurrentUserId = id;
+
             var nutritionAppContext = _context.Intakes.Include(i => i.Meal).Include(i => i.Product).Include(i => i.User);
             return View(await nutritionAppContext.ToListAsync());
         }
@@ -55,6 +67,10 @@ namespace NutritionApp.Controllers
         // GET: Intakes/Create
         public IActionResult Create()
         {
+          
+
+
+
             IntakeViewModel intake = new IntakeViewModel();
             intake.Day = DateTime.Now;
             intake.Quantity = 1;
@@ -70,9 +86,10 @@ namespace NutritionApp.Controllers
             return View(intake);
         }
 
-        public JsonResult SelectFromSp(string input)
+        public JsonResult SelectFromSp(string input, string userId)
         {
             SqlParameter inputs = new SqlParameter("@input", input);
+            SqlParameter currentUserId = new SqlParameter("@userId", userId);
 
             List<Product> products =
                 _context.Products.FromSqlRaw<Product>(
@@ -80,7 +97,7 @@ namespace NutritionApp.Controllers
 
             List<Meal> meals =
                 _context.Meals.FromSqlRaw<Meal>(
-                    "exec spSearchMeal @input", inputs).ToList();
+                    "exec spSearchMeal @input, @userId", inputs, currentUserId).ToList();
 
             var myResult = new
             {
