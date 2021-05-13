@@ -100,7 +100,6 @@ namespace NutritionApp.Controllers
         [HttpGet]
         public IActionResult Details()
         {
-            SelectList gen = new SelectList(_context.Genders, "GenderId", "GenderId");
             ViewData["Genders"] = new SelectList(_context.Genders, "GenderId", "Label");
 
             return View();

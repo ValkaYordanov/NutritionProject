@@ -26,4 +26,12 @@ namespace NutritionApp.Models
         [UIHint("password")]
         public string Password { get; set; }
     }
+
+    public class Settings
+    {
+        public string Email { get; set; }
+        public int GenderId { get; set; }
+        public decimal Weight { get; set; }
+        public decimal WeightGoal { get; set; }
+    }
 }
