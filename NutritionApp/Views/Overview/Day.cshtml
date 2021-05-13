@@ -6,10 +6,18 @@
     int prev = ViewBag.Count + 1;
     int next = ViewBag.Count - 1;
     var day = ViewBag.theDay;
+    var mids = ViewData["MealIds"];
+
 }
 
 <h1>Overview</h1>
 <h3>@ViewBag.Name</h3>
+<p>
+    @foreach (var item in mids as IEnumerable<NutritionApp.Models.Intake>)
+    {
+        @: this is id <br />
+    }
+</p>
 <div id="day">
     <a asp-action="Day" asp-route-id="@prev">Prev</a>
     <span>
@@ -58,28 +66,19 @@
     <tbody>
 
         @foreach (var item in Model)
-                {
+        {
+            
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Day)
                 </td>
                 <td>
-                    @*@{
-                        if (item.Product.ProductName != null)
-                        {
-                            Html.DisplayFor(modelItem => item.Product.ProductName);
-                        }
-                        else if (item.Meal.MealName != null)
-                        {
 
-                        }
-                    }*@
                     @Html.DisplayFor(modelItem => item.Meal.MealName)
                     @Html.DisplayFor(modelItem => item.Product.ProductName)
-                </td>
+                  </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Product.Kcal)
                 </td>
@@ -90,8 +89,8 @@
                     <a asp-controller="Intakes" asp-action="Delete" asp-route-id="@item.IntakeId">Delete</a>
                 </td>
             </tr>
-                    }
-                
-            
+        }
+
+
     </tbody>
 </table>
