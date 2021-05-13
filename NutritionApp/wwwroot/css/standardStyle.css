@@ -3,8 +3,9 @@
     display:flex;
 }
 
-.table{
+.table {
     max-width: 100%;
+    table-layout: auto;
 }
 .table th, .table td{
     padding: .75rem 0;
