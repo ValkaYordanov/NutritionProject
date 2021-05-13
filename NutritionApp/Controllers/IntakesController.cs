@@ -105,14 +105,22 @@ namespace NutritionApp.Controllers
                 MealList = meals
             };
             return Json(myResult);
-
-
         }
 
-        // POST: Intakes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+
+        public ActionResult GetCalories(int id)
+        {
+            SqlParameter currentId = new SqlParameter("@id", id);
+            List<Intake> inta=_context.Intakes.FromSqlRaw<Intake>("select * from Intake where IntakeId > @id", currentId).ToList();
+            List<Product> p=_context.Products.FromSqlRaw<Product>("select * from Product where ProductId > @id", currentId).ToList();
+            List<Ingredient> ingre =_context.Ingredients.FromSqlRaw<Ingredient>("select * from Ingredient where IngredientId > @id", currentId).ToList();
+               return Json(p);
+        }
+
+            // POST: Intakes/Create
+            // To protect from overposting attacks, enable the specific properties you want to bind to.
+            // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+            [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IntakeViewModel data)
         {

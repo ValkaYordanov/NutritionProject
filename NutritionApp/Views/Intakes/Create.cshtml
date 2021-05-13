@@ -69,7 +69,7 @@
         {
             if (item.Meal != null)
             {
-                <tr onclick="console.log('meal'); addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
+                <tr onclick="addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
                     <td >
                         @item.Quantity
                     </td>
@@ -82,14 +82,14 @@
             }
             if (item.Product != null)
             {
-    <tr onclick="console.log('produ'); addToInput(@item.Product.ProductId, '@item.Product.ProductName', '@item.Quantity', 'product');">
+    <tr onclick="addToInput(@item.Product.ProductId, '@item.Product.ProductName', '@item.Quantity', 'product');">
         <td >
             @item.Quantity
         </td>
         <td>
             @item.Product.ProductName
         </td>
-        <td></td>
+        <td>@(item.Product.Kcal/100.0) * @item.Quantity</td>
     </tr>
             }
 
@@ -115,6 +115,7 @@
 
                     console.log(data);
                     document.querySelector("#foodOptions").innerHTML = '';
+                    document.querySelector("tbody").innerHTML = '';
 
                     data.productList.forEach(obj => addFoodOption(obj, 'product'))
                     data.mealList.forEach(obj => addFoodOption(obj, 'meal'))
@@ -125,28 +126,35 @@
     function addFoodOption(food, type) {
         console.log(food);
         if (type == 'product') {
-            console.log(food.productId);
-            document.querySelector("#foodOptions").innerHTML += `
-            <p onclick="chooseFoodFromSearchDropdown(this, '${type}', ${food.productId})">${food.productName}</p>
-            `;
+                       document.querySelector("tbody").innerHTML += `
+             <tr onclick="addChoosenFoodToInputFields('${food.productName}', '${type}', ${food.productId})">
+                    <td >
+                        
+                    </td>
+                    <td>
+                        ${food.productName}
+                    </td>
+                    <td></td>
+
+                </tr>`
         }
         if (type == 'meal') {
-            console.log(food.mealId);
-            document.querySelector("#foodOptions").innerHTML += `
-            <p onclick="chooseFoodFromSearchDropdown(this, '${type}',${food.mealId})">${food.mealName}</p>
-            `;
+                       document.querySelector("tbody").innerHTML +=`
+             <tr onclick="addChoosenFoodToInputFields('${food.mealName}', '${type}',${food.mealId})">
+                    <td >
+                        
+                    </td>
+                    <td>
+                        ${food.mealName}
+                    </td>
+                    <td></td>
+
+                </tr>`
         }
-
-
-
     }
 
-    function chooseFoodFromSearchDropdown(food, addedType, foodId) {
-        addChoosenFoodToInputFields(addedType, foodId, `${food.innerHTML}`);    
-        foodOptions.innerHTML = '';
-    }
 
-    function addChoosenFoodToInputFields(addedType, foodId, foodName) {
+    function addChoosenFoodToInputFields(foodName, addedType, foodId) {
         const searchFoodContainer = document.querySelector("#searchFoodContainer");
         const type = searchFoodContainer.querySelector("input[name='Type']");
         const id = searchFoodContainer.querySelector("input[name='ItemId']");
@@ -160,7 +168,7 @@
 
     function addToInput(prevIntakeId, prevIntakeName, prevIntakeQuantity, type) {
         console.log(prevIntakeId);
-        addChoosenFoodToInputFields(`${type}`, prevIntakeId, prevIntakeName);
+        addChoosenFoodToInputFields(prevIntakeName, `${type}`, prevIntakeId);
         //let dotyfiedQuantity = parseInt(prevIntakeQuantity.replace(",", "."));
         document.querySelector("input[name='Quantity']").value = prevIntakeQuantity;
     }
