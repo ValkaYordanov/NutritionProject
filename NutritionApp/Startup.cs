@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using NutritionApp.Models;
 
+
 namespace NutritionApp
 {
     public class Startup
@@ -71,6 +72,8 @@ namespace NutritionApp
 
             app.UseEndpoints(endpoints =>
             {
+               
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

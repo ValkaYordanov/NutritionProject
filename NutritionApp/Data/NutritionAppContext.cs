@@ -54,6 +54,8 @@ namespace NutritionApp.Data
             modelBuilder.Entity<Product>().Property(b => b.Protein).HasColumnType("decimal(18,2)");
             modelBuilder.Entity<Product>().Property(b => b.Salt).HasColumnType("decimal(18,2)");
 
+
+
         }
     }
 }

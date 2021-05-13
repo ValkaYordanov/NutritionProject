@@ -5,9 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using NutritionApp.Data;
 using NutritionApp.Models;
+using NutritionApp.Models.ViewModels;
+
+
 
 namespace NutritionApp.Controllers
 {
@@ -51,22 +55,41 @@ namespace NutritionApp.Controllers
         // GET: Intakes/Create
         public IActionResult Create()
         {
+            IntakeViewModel intake = new IntakeViewModel();
+            intake.Day = DateTime.Now;
+            intake.Quantity = 1;
 
-        
+            //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealName");
+            //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName");
+            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
+         var intakes= _context.Intakes
+             .Include(i => i.Meal)
+             .Include(i => i.Product)
+             .Include(i => i.User).ToList();
+            ViewBag.Intakes = intakes;
+            return View(intake);
+        }
 
-            SelectList prod  = new SelectList(_context.Products, "ProductId", "ProductId");
-            SelectList mea  = new SelectList(_context.Meals, "MealId", "MealId");
-            SelectList listt = new SelectList(prod.Concat(mea));
-            Console.WriteLine(prod);
-            Console.WriteLine(mea);
-            Console.WriteLine(listt);
-            ViewData["AllItems"] = listt;
+        public JsonResult SelectFromSp(string input)
+        {
+            SqlParameter inputs = new SqlParameter("@input", input);
+
+            List<Product> products =
+                _context.Products.FromSqlRaw<Product>(
+                    "exec spSearchProductAndMeal @input", inputs).ToList();
+
+            List<Meal> meals =
+                _context.Meals.FromSqlRaw<Meal>(
+                    "exec spSearchMeal @input", inputs).ToList();
+
+            var myResult = new
+            {
+                ProductList = products,
+                MealList = meals
+            };
+            return Json(myResult);
 
 
-            ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId");
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId");
-            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id");
-            return View();
         }
 
         // POST: Intakes/Create
@@ -74,18 +97,50 @@ namespace NutritionApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IntakeId,UserId,MealId,ProductId,Quantity,Day")] Intake intake)
+        public async Task<IActionResult> Create(IntakeViewModel data)
         {
+            Intake intake = new Intake();
             if (ModelState.IsValid)
             {
+
+                //intake.IntakeId = data.Id;
+                intake.Quantity = data.Quantity;
+                intake.Day = data.Day;
+                intake.UserId = data.UserId;
+
+                if (data.Type == "product")
+                {
+                    intake.Product = _context.Products.Where(p => p.ProductId == data.ItemId).First();
+                                
+                  
+                 
+                }  else if (data.Type == "meal")
+                {
+
+                    intake.Meal = _context.Meals.Where(p => p.MealId == data.ItemId).First();
+                    
+                            
+                   
+                   
+                }
+
                 _context.Add(intake);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch(Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+
+                }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
-            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", intake.UserId);
-            return View(intake);
+            //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
+            //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
+            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", data.UserId);
+            return View(data);
         }
 
         // GET: Intakes/Edit/5
@@ -101,8 +156,8 @@ namespace NutritionApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
+            //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
+            //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", intake.UserId);
             return View(intake);
         }
@@ -139,8 +194,8 @@ namespace NutritionApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
+            //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
+            //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", intake.UserId);
             return View(intake);
         }
