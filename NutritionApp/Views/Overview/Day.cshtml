@@ -35,7 +35,7 @@
 </div>
 
 <p>
-    <a asp-controller="Intakes" asp-action="Create">Create New</a>
+    <a asp-controller="Intakes" asp-action="Create" asp-route-id="@ViewBag.theDay">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -81,7 +81,6 @@
                     @Html.DisplayFor(modelItem => item.Product.ProductName)
                 </td>
                 <td>
-                   
                     @Html.DisplayFor(modelItem => item.Product.Kcal)
                 </td>
 
