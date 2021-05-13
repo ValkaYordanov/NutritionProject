@@ -9,6 +9,7 @@ namespace NutritionApp.Models.ViewModels
     {
         public int IntakeId { get; set; }
         public int ItemId { get; set; }
+        public string ItemName { get; set; }
         public decimal Quantity { get; set; }
         public string Type { get; set; }
         public string UserId {get;set;}
