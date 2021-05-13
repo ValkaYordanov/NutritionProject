@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - NutritionApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/standardStyle.css" />
 </head>
 <body>
     <header>
@@ -37,11 +38,20 @@
             @RenderBody()
         </main>
     </div>
-
+   
     <footer class="border-top footer text-muted">
+        <nav class="flexContainer">
+            <div><a href="/Meals"><img src="/images/breakfast.svg" alt="Breakfast plate" />Meals</a></div>
+            <div><a href="/Intakes/Create"><img src="/images/open-mouth.svg" alt="Open mouth" />Eat</a></div>
+            <div><a href="/Overview"><img src="/images/eye.svg" alt="Eye" />Overview</a></div>
+            <div><a href="/Products"><img src="/images/pear.svg" alt="Food" />Foods</a></div>
+
+        </nav>
         <div class="container">
             &copy; 2021 - NutritionApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a>, <a href="https://www.freepik.com" title="Freepik">Freepik</a>, <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> and <a href="" title="photo3idea_studio">photo3idea_studio</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
         </div>
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

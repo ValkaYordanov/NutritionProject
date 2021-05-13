@@ -15,6 +15,7 @@ namespace NutritionApp.Models.ViewModels
         public string UserId {get;set;}
         public DateTime Day { get; set; }
         public IEnumerable<Ingredient> Ingredients { get; set; }
+        public IEnumerable<Intake> Intakes { get; set; }
 
         public IntakeViewModel()
         {

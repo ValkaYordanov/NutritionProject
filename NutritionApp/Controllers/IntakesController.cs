@@ -63,24 +63,27 @@ namespace NutritionApp.Controllers
         // GET: Intakes/Create
         public IActionResult Create()
         {
-          
+            var intakes = _context.Intakes
+               .Include(i => i.Meal).ThenInclude(i => i.Ingredients)
+               .Include(i => i.Product)
+               .Include(i => i.User).ToList();
 
 
 
             IntakeViewModel intake = new IntakeViewModel();
             intake.Day = DateTime.Now;
             intake.Quantity = 1;
+            intake.Ingredients = _context.Ingredients;
+            intake.Intakes = _context.Intakes
+               .Include(i => i.Meal).ThenInclude(i => i.Ingredients)
+               .Include(i => i.Product)
+               .Include(i => i.User).ToList();
 
-            //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealName");
-            //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName");
+
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
-         var intakes= _context.Intakes
-             .Include(i => i.Meal)
-             .Include(i => i.Product)
-             .Include(i => i.User).ToList();
-            //ViewBag.Ingredients = _context.Ingredients
-            //              .Where(i => i.MealId == intakes.Meal.MealId);
-            //ViewBag.Intakes = intakes;
+
+                         
+            ViewBag.Intakes = intakes;
             return View(intake);
         }
 

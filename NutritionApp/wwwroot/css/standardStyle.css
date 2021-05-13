@@ -1,0 +1,11 @@
+﻿
+.flexContainer{
+    display:flex;
+}
+
+.table{
+    max-width: 100%;
+}
+.table th, .table td{
+    padding: .75rem 0;
+}

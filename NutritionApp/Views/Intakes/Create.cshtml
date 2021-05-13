@@ -40,7 +40,10 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Eat" class="btn btn-primary" />
+                <button type="submit" value="Eat" class="btn btn-primary"><img src="/images/open-mouth.svg" alt="Open mouth" /></button>
+                
+                <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
             </div>
         </form>
     </div>
@@ -65,7 +68,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.Intakes)
+        @foreach (var item in Model.Intakes)
         {
             if (item.Meal != null)
             {
@@ -76,7 +79,11 @@
                     <td>
                         @item.Meal.MealName
                     </td>
-                    <td>@item.Ingredients</td>
+                    <td>@foreach (var ingredient in @item.Meal.Ingredients)
+                    {
+                        @ingredient.Product.Kcal @ingredient.Quantity
+                        
+                    }</td>
                     
                 </tr>
             }
@@ -89,7 +96,7 @@
         <td>
             @item.Product.ProductName
         </td>
-        <td>@(item.Product.Kcal/100.0) * @item.Quantity</td>
+        <td>@(item.Product.Kcal/100.0) * @item.Quantity </td>
     </tr>
             }
 
@@ -175,8 +182,14 @@
 </script>
 
 <style>
-    #foodOptions {
-        background-color: lightblue;
+    th {
+        position: sticky;
+        top: 0;
+        background-color: wheat;
+    }
+    button{width: auto}
+    img{
+        height:2em;
     }
 </style>
 
