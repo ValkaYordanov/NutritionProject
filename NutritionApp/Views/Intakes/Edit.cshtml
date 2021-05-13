@@ -1,4 +1,5 @@
-﻿@model NutritionApp.Models.Intake
+﻿
+@model NutritionApp.Models.ViewModels.IntakeViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,53 +14,128 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IntakeId" />
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Meal" class="control-label"></label>
-                <select asp-for="Meal" class="form-control" asp-items="ViewBag.MealId"></select>
-                <span asp-validation-for="Meal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Product" class="control-label"></label>
-                <select asp-for="Product" class="form-control" asp-items="ViewBag.ProductId"></select>
-                <span asp-validation-for="Product" class="text-danger"></span>
-            </div>
+            @*<div class="form-group">
+            <label asp-for="UserId" class="control-label"></label>
+            <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>*@
+
+
+
+            @*<div class="form-group">
+            <label asp-for="Meal" class="control-label"></label>
+            <select asp-for="Meal" class="form-control" asp-items="ViewBag.MealId"></select>
+            <span asp-validation-for="Meal" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Product" class="control-label"></label>
+            <select asp-for="Product" class="form-control" asp-items="ViewBag.ProductId"></select>
+            <span asp-validation-for="Product" class="text-danger"></span>
+        </div>*@
+
+
+
+
             <div class="form-group">
                 <label asp-for="Quantity" class="control-label"></label>
                 <input asp-for="Quantity" class="form-control" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Day" class="control-label"></label>
-                <input asp-for="Day" class="form-control" />
-                <span asp-validation-for="Day" class="text-danger"></span>
-            </div>
+            @*<div class="form-group">
+            <label asp-for="Day" class="control-label"></label>
+            <input asp-for="Day" class="form-control" />
+            <span asp-validation-for="Day" class="text-danger"></span>
+        </div>*@
 
-            @*<div class="form-group" id="searchFoodContainer">
+            <div class="form-group" id="searchFoodContainer">
                 <label class="control-label">Search for food</label>
-                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off">
+                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off" value="@Model.ItemName">
                 <input asp-for="Type" type="hidden" />
                 <input asp-for="ItemId" type="hidden" />
                 <div id="foodOptions">
                 </div>
                 <span class="text-danger"></span>
-            </div>*@
+            </div>
 
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+                        
+       
+            
+
+        </form>
+
+        <form asp-action="Delete" asp-route-id="@Model.IntakeId">
+            <input type="hidden" asp-for="IntakeId" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-action="Index">Cancel</a>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+
+<script>
+
+    function searchForFoods(input) {
+        if (input !== "") {
+            const path = "https://localhost:44351/Intakes/SelectFromSp?Input=";
+            fetch(`${path}${input}`)
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data);
+                    document.querySelector("#foodOptions").innerHTML = '';
+
+                    data.productList.forEach(obj => addFoodOption(obj, 'product'))
+                    data.mealList.forEach(obj => addFoodOption(obj, 'meal'))
+                });
+        }
+    }
+
+    function addFoodOption(food, type) {
+        console.log(food);
+        if (type == 'product') {
+            console.log(food.productId);
+            document.querySelector("#foodOptions").innerHTML += `
+            <p onclick="chooseFoodFromSearchDropdown(this, '${type}', ${food.productId})">${food.productName}</p>
+            `;
+        }
+        if (type == 'meal') {
+            console.log(food.mealId);
+            document.querySelector("#foodOptions").innerHTML += `
+            <p onclick="chooseFoodFromSearchDropdown(this, '${type}',${food.mealId})">${food.mealName}</p>
+            `;
+        }
+    }
+
+    function chooseFoodFromSearchDropdown(food, addedType, foodId) {
+        addChoosenFoodToInputFields(addedType, foodId, `${food.innerHTML}`);
+        foodOptions.innerHTML = '';
+    }
+
+    function addChoosenFoodToInputFields(addedType, foodId, foodName) {
+        const searchFoodContainer = document.querySelector("#searchFoodContainer");
+        const type = searchFoodContainer.querySelector("input[name='Type']");
+        const id = searchFoodContainer.querySelector("input[name='ItemId']");
+
+        // Save values
+        type.value = addedType;
+        id.value = foodId;
+        searchFoodsInput.value = foodName;
+    }
+
+
+    function addToInput(prevIntakeId, prevIntakeName, prevIntakeQuantity, type) {
+        console.log(prevIntakeId);
+        addChoosenFoodToInputFields(`${type}`, prevIntakeId, prevIntakeName);
+        //let dotyfiedQuantity = parseInt(prevIntakeQuantity.replace(",", "."));
+        document.querySelector("input[name='Quantity']").value = prevIntakeQuantity;
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

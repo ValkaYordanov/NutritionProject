@@ -29,8 +29,7 @@
                 <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off">
                 <input asp-for="Type" type="hidden" />
                 <input asp-for="ItemId" type="hidden" />
-                <div id="foodOptions">
-                </div>
+                
                 <span class="text-danger"></span>
             </div>
 
@@ -48,17 +47,21 @@
 </div>
 
 <h2>Resent/Search</h2>
-
+<div id="foodOptions">
+</div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                @*@Html.DisplayNameFor(model => model.Quantity)*@
+                Grams
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @*@Html.DisplayNameFor(model => model.Type)*@
+                Product/Meal
             </th>
-            <th></th>
+            <th>Kcal</th>
+        
         </tr>
     </thead>
     <tbody>
@@ -66,31 +69,28 @@
         {
             if (item.Meal != null)
             {
-                <tr >
-                    <td onclick="console.log('meal'); addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
+                <tr onclick="console.log('meal'); addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
+                    <td >
                         @item.Quantity
                     </td>
                     <td>
                         @item.Meal.MealName
-                    </td>s
-                    <td>
-                        <input type="submit" asp-action="Create" value="Eat" class="btn btn-primary" />
                     </td>
+                    <td></td>
+                    
                 </tr>
             }
             if (item.Product != null)
             {
-                <tr>
-                    <td  onclick="console.log('produ'); addToInput(@item.Product.ProductId, '@item.Product.ProductName', '@item.Quantity', 'product');">
-                        @item.Quantity
-                    </td>
-                    <td>
-                        @item.Product.ProductName
-                    </td>
-                    <td>
-                        <input type="submit" asp-action="Create" value="Eat" class="btn btn-primary" />
-                    </td>
-                </tr>
+    <tr onclick="console.log('produ'); addToInput(@item.Product.ProductId, '@item.Product.ProductName', '@item.Quantity', 'product');">
+        <td >
+            @item.Quantity
+        </td>
+        <td>
+            @item.Product.ProductName
+        </td>
+        <td></td>
+    </tr>
             }
 
 
@@ -121,7 +121,7 @@
         console.log(food);
         if (type == 'product') {
             console.log(food.productId);
-            document.querySelector("#foodOptions").innerHTML += `
+            document.querySelector("tbody")[0].innerHTML += `
             <p onclick="chooseFoodFromSearchDropdown(this, '${type}', ${food.productId})">${food.productName}</p>
             `;
         }
@@ -131,6 +131,9 @@
             <p onclick="chooseFoodFromSearchDropdown(this, '${type}',${food.mealId})">${food.mealName}</p>
             `;
         }
+
+
+
     }
 
     function chooseFoodFromSearchDropdown(food, addedType, foodId) {

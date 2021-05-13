@@ -140,20 +140,47 @@ namespace NutritionApp.Controllers
         // GET: Intakes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            
             if (id == null)
             {
                 return NotFound();
             }
 
-            var intake = await _context.Intakes.FindAsync(id);
+            //var intake = await _context.Intakes.FindAsync(id);
+            var intake = await _context.Intakes.Include(i => i.Meal).Include(i => i.Product).FirstOrDefaultAsync(i => i.IntakeId == id);
             if (intake == null)
             {
                 return NotFound();
             }
+
+            IntakeViewModel intakeView = new IntakeViewModel();
+            intakeView.Quantity = intake.Quantity;
+            intakeView.Day = intake.Day;
+            intakeView.UserId = intake.UserId;
+            intakeView.IntakeId = intake.IntakeId;
+            
+
+             if (intake.Product != null)
+            {
+                intakeView.Type = "product";
+                intakeView.ItemId = intake.Product.ProductId;
+                intakeView.ItemName = intake.Product.ProductName;
+
+            }
+            else if (intake.Meal != null)
+            {
+
+                intakeView.Type = "meal";
+                intakeView.ItemId = intake.Meal.MealId;
+                intakeView.ItemName = intake.Meal.MealName;
+            }
+
+           
+          
             //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
             //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", intake.UserId);
-            return View(intake);
+            return View(intakeView);
         }
 
         // POST: Intakes/Edit/5
@@ -161,17 +188,45 @@ namespace NutritionApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IntakeId,UserId,MealId,ProductId,Quantity,Day")] Intake intake)
+        public async Task<IActionResult> Edit(int id, IntakeViewModel data)
         {
-            if (id != intake.IntakeId)
+           
+            if (id != data.IntakeId)
             {
                 return NotFound();
             }
+            Intake intake = _context.Intakes.Where(i => i.IntakeId == id).First();
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    //intake.IntakeId = data.Id;
+                    intake.Quantity = data.Quantity;
+                    //intake.Day = data.Day;
+                    //intake.UserId = data.UserId;
+
+                    if (data.Type == "product")
+                    {
+                        intake.Product = _context.Products.Where(p => p.ProductId == data.ItemId).First();
+                        //if (intake.Meal != null)
+                        //{
+                        //    intake.Meal= null;
+                        //}
+
+                    }
+                    else if (data.Type == "meal")
+                    {
+
+                        intake.Meal = _context.Meals.Where(p => p.MealId == data.ItemId).First();
+                        //if (intake.Product != null)
+                        //{
+                        //    intake.Product = null;
+                            
+                        //}
+                      
+                    }
+
                     _context.Update(intake);
                     await _context.SaveChangesAsync();
                 }
@@ -211,7 +266,7 @@ namespace NutritionApp.Controllers
             {
                 return NotFound();
             }
-
+            intake.IntakeId = (int) id;
             return View(intake);
         }
 
@@ -220,6 +275,10 @@ namespace NutritionApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            //IntakeViewModel intakeView = new IntakeViewModel();
+
+            //intakeView.IntakeId = id;
+
             var intake = await _context.Intakes.FindAsync(id);
             _context.Intakes.Remove(intake);
             await _context.SaveChangesAsync();
