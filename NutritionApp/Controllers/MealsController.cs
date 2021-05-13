@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NutritionApp.Data;
 using NutritionApp.Models;
+using NutritionApp.Models.ViewModels;
 
 namespace NutritionApp.Controllers
 {
     public class MealsController : Controller
     {
         private readonly NutritionAppContext _context;
+        private Basket basket;
+      
 
-        public MealsController(NutritionAppContext context)
+        public MealsController(NutritionAppContext context, Basket basketSesion)
         {
             _context = context;
+            basket = basketSesion;
         }
 
         // GET: Meals
@@ -49,7 +53,10 @@ namespace NutritionApp.Controllers
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
-            return View();
+            ViewData["AllProd"] = new SelectList(_context.Products, "ProductId", "ProductName");
+            BasketIndexViewModel model = new BasketIndexViewModel();
+          
+            return View(model);
         }
 
         // POST: Meals/Create
@@ -59,15 +66,24 @@ namespace NutritionApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MealId,UserId,Quantity,MealName")] Meal meal)
         {
+            IngredientController ingredientCtr = new IngredientController(_context, basket);
             if (ModelState.IsValid)
             {
                 _context.Add(meal);
                 await _context.SaveChangesAsync();
+                int id = meal.MealId;
+                ingredientCtr.AddIngredient(id,basket);
+
+                basket.Clear();
+                
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", meal.UserId);
+           
+            //ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", meal.UserId);
+            //BasketIndexViewModel model = new BasketIndexViewModel();
             return View(meal);
         }
+
 
         // GET: Meals/Edit/5
         public async Task<IActionResult> Edit(int? id)

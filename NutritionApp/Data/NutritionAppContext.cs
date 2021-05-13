@@ -13,6 +13,11 @@ namespace NutritionApp.Data
 {
     public class NutritionAppContext : IdentityDbContext<AppUser>
     {
+        public NutritionAppContext()
+        {
+        }
+
+        
 
         public NutritionAppContext(DbContextOptions<NutritionAppContext> options) : base(options) { }
        // public DbSet<User> Users { get; set; }
