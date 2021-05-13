@@ -34,11 +34,7 @@ namespace NutritionApp.Controllers
         // GET: Intakes
         public async Task<IActionResult> Index()
         {
-            AppUser user = await CurrentUser;
-            var username = HttpContext.User.Identity.Name;
-            var id = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ViewBag.CurrentUserId = id;
-
+          
             var nutritionAppContext = _context.Intakes.Include(i => i.Meal).Include(i => i.Product).Include(i => i.User);
             return View(await nutritionAppContext.ToListAsync());
         }
@@ -82,7 +78,9 @@ namespace NutritionApp.Controllers
              .Include(i => i.Meal)
              .Include(i => i.Product)
              .Include(i => i.User).ToList();
-            ViewBag.Intakes = intakes;
+            //ViewBag.Ingredients = _context.Ingredients
+            //              .Where(i => i.MealId == intakes.Meal.MealId);
+            //ViewBag.Intakes = intakes;
             return View(intake);
         }
 
@@ -124,10 +122,11 @@ namespace NutritionApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IntakeViewModel data)
         {
+            
             Intake intake = new Intake();
             if (ModelState.IsValid)
             {
-
+              
                 //intake.IntakeId = data.Id;
                 intake.Quantity = data.Quantity;
                 intake.Day = data.Day;
@@ -140,8 +139,12 @@ namespace NutritionApp.Controllers
                 }  else if (data.Type == "meal")
                 {
 
-                    intake.Meal = _context.Meals.Where(p => p.MealId == data.ItemId).First();                
+                    intake.Meal = _context.Meals.Where(p => p.MealId == data.ItemId).First();
+
+                   
                 }
+
+
 
                 _context.Add(intake);
                 try
