@@ -11,6 +11,8 @@ using NutritionApp.Data;
 using NutritionApp.Models;
 using NutritionApp.Models.ViewModels;
 
+
+
 namespace NutritionApp.Controllers
 {
     public class IntakesController : Controller
@@ -60,7 +62,11 @@ namespace NutritionApp.Controllers
             //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealName");
             //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductName");
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
-            ViewBag.Intakes = _context.Intakes;
+         var intakes= _context.Intakes
+             .Include(i => i.Meal)
+             .Include(i => i.Product)
+             .Include(i => i.User).ToList();
+            ViewBag.Intakes = intakes;
             return View(intake);
         }
 

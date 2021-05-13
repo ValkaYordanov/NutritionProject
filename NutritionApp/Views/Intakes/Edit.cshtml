@@ -38,6 +38,18 @@
                 <input asp-for="Day" class="form-control" />
                 <span asp-validation-for="Day" class="text-danger"></span>
             </div>
+
+            @*<div class="form-group" id="searchFoodContainer">
+                <label class="control-label">Search for food</label>
+                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off">
+                <input asp-for="Type" type="hidden" />
+                <input asp-for="ItemId" type="hidden" />
+                <div id="foodOptions">
+                </div>
+                <span class="text-danger"></span>
+            </div>*@
+
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

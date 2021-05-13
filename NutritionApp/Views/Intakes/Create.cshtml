@@ -36,12 +36,12 @@
 
             <div class="form-group" id="quantityContainer">
                 <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
+                <input asp-for="Quantity" class="form-control"  />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Eat" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -64,37 +64,44 @@
     <tbody>
         @foreach (var item in ViewBag.Intakes)
         {
-         
-            <tr onclick="addToInput(@item.Product)">
-                <td>
-                    @item.Quantity
-                </td>
-                <td>
-                   @item
-                </td>
-                <td>
-                    <input type="submit" asp-action="Create" value="Eat" class="btn btn-primary" />
-                </td>
-            </tr>
+            if (item.Meal != null)
+            {
+                <tr >
+                    <td onclick="console.log('meal'); addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
+                        @item.Quantity
+                    </td>
+                    <td>
+                        @item.Meal.MealName
+                    </td>s
+                    <td>
+                        <input type="submit" asp-action="Create" value="Eat" class="btn btn-primary" />
+                    </td>
+                </tr>
+            }
+            if (item.Product != null)
+            {
+                <tr>
+                    <td  onclick="console.log('produ'); addToInput(@item.Product.ProductId, '@item.Product.ProductName', '@item.Quantity', 'product');">
+                        @item.Quantity
+                    </td>
+                    <td>
+                        @item.Product.ProductName
+                    </td>
+                    <td>
+                        <input type="submit" asp-action="Create" value="Eat" class="btn btn-primary" />
+                    </td>
+                </tr>
+            }
+
+
         }
     </tbody>
 </table>
 
 
-
 <script>
 
-    function addToInput(prevIntake) {
-        console.log(prevIntake);
-        //document.querySelector("#quantityContainer input").value = prevFood;
-        //document.querySelector("#searchFoodContainer input[name='id']").value = preproductId;
-
-    }
-
-
-
     function searchForFoods(input) {
-
         if (input !== "") {
             const path = "https://localhost:44351/Intakes/SelectFromSp?Input=";
             fetch(`${path}${input}`)
@@ -107,58 +114,47 @@
                     data.productList.forEach(obj => addFoodOption(obj, 'product'))
                     data.mealList.forEach(obj => addFoodOption(obj, 'meal'))
                 });
-
-
-
-        }
+                    }
     }
 
     function addFoodOption(food, type) {
         console.log(food);
-
-
-
         if (type == 'product') {
             console.log(food.productId);
             document.querySelector("#foodOptions").innerHTML += `
-<p onclick="chooseFood(this, '${type}', ${food.productId});">${food.productName}</p>
-`;
+            <p onclick="chooseFoodFromSearchDropdown(this, '${type}', ${food.productId})">${food.productName}</p>
+            `;
         }
         if (type == 'meal') {
             console.log(food.mealId);
             document.querySelector("#foodOptions").innerHTML += `
-<p onclick="chooseFood(this, '${type}',${food.mealId});">${food.mealName}</p>
-`;
+            <p onclick="chooseFoodFromSearchDropdown(this, '${type}',${food.mealId})">${food.mealName}</p>
+            `;
         }
-
-
-
     }
 
-    function chooseFood(food, addedType, foodId) {
-        console.log(food);
-        console.log(foodId);
+    function chooseFoodFromSearchDropdown(food, addedType, foodId) {
+        addChoosenFoodToInputFields(addedType, foodId, `${food.innerHTML}`);    
+        foodOptions.innerHTML = '';
+    }
+
+    function addChoosenFoodToInputFields(addedType, foodId, foodName) {
         const searchFoodContainer = document.querySelector("#searchFoodContainer");
         const type = searchFoodContainer.querySelector("input[name='Type']");
         const id = searchFoodContainer.querySelector("input[name='ItemId']");
 
         // Save values
-
         type.value = addedType;
         id.value = foodId;
-      
-        //var num = +document.querySelector("#searchFoodContainer input[name='id']").value;
-        //id.value = num;
-        //parseInt(id.value);
-        console.log("value", foodId, typeof foodId, "new value", id.value, typeof id.value);
-
-        // Save value and Reset dropdown
-        searchFoodsInput.value = food.innerHTML;
-        foodOptions.innerHTML = '';
+        searchFoodsInput.value = foodName;
+    }
 
 
-
-
+    function addToInput(prevIntakeId, prevIntakeName, prevIntakeQuantity, type) {
+        console.log(prevIntakeId);
+        addChoosenFoodToInputFields(`${type}`, prevIntakeId, prevIntakeName);
+        //let dotyfiedQuantity = parseInt(prevIntakeQuantity.replace(",", "."));
+        document.querySelector("input[name='Quantity']").value = prevIntakeQuantity;
     }
 </script>
 
