@@ -110,6 +110,8 @@
             const inputDec = "Input=";
             const UserIdDec = "&UserId=";
 
+            console.log("currentUserId: ", currentUserId);
+
             let url = `${path}${inputDec}${input}${UserIdDec}${currentUserId}`;
             console.log(url);
             fetch(url)
@@ -134,7 +136,7 @@
                         
                     </td>
                     <td>
-                        <img src="/images/meal.svg" alt="Meal" /> ${food.productName}
+                        <img src="/images/product.svg" alt="Product" /> ${food.productName}
                     </td>
                     <td></td>
 
@@ -147,7 +149,7 @@
                         
                     </td>
                     <td>
-                       <img src="/images/product.svg" alt="Food" />  ${food.mealName}
+                       <img src="/images/meal.svg" alt="Meal" />  ${food.mealName}
                     </td>
                     <td></td>
 

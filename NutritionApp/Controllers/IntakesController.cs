@@ -63,21 +63,17 @@ namespace NutritionApp.Controllers
         // GET: Intakes/Create
         public IActionResult Create()
         {
-
-
-           
-
-
             IntakeViewModel intakeView = new IntakeViewModel();
             intakeView.Day = DateTime.Now;
-            intakeView.Quantity = 1;
+            intakeView.Quantity = 1.8M;
             intakeView.Ingredients = _context.Ingredients;
             intakeView.Intakes = _context.Intakes
                .Include(i => i.Meal).ThenInclude(i => i.Ingredients)
                .Include(i => i.Product)
                .Include(i => i.User).ToList();
-            intakeView.UserId = "1631d3b8-9724-4baf-a053-227c5ac06df6";
-            //intakeView.UserId = CurrentUser.UserId;
+            //intakeView.UserId = "1631d3b8-9724-4baf-a053-227c5ac06df6";
+            var id = _context.AppUsers.Where(i => i.Email == HttpContext.User.Identity.Name).First();
+            intakeView.UserId = id.Id;
 
 
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
