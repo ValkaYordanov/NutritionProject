@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -126,7 +127,7 @@ namespace NutritionApp.Controllers
             {
               
                 //intake.IntakeId = data.Id;
-                intake.Quantity = System.Convert.ToDecimal(data.Quantity);
+                intake.Quantity = Convert.ToDecimal(data.Quantity, CultureInfo.InvariantCulture);
                 intake.Day = data.Day;
                 intake.UserId = data.UserId;
 
