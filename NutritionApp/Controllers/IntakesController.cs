@@ -126,7 +126,7 @@ namespace NutritionApp.Controllers
             {
               
                 //intake.IntakeId = data.Id;
-                intake.Quantity = data.Quantity;
+                intake.Quantity = System.Convert.ToDecimal(data.Quantity);
                 intake.Day = data.Day;
                 intake.UserId = data.UserId;
 
