@@ -98,8 +98,28 @@ namespace NutritionApp.Controllers
             {
                 return NotFound();
             }
+
+            Basket basket = new Basket();
+            BasketLine line = new BasketLine();
+           
+                foreach (var ingredient in _context.Ingredients)
+                {
+                   if(ingredient.MealId == id)
+                    {
+                        line.Product = ingredient.Product;
+                        line.Quantity = Convert.ToInt32(ingredient.Quantity);
+                        basket.Lines.Add(line);
+                    }
+                }
+            
+            
+
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", meal.UserId);
-            return View(meal);
+            BasketIndexViewModel model = new BasketIndexViewModel();
+            model.Meal = meal;
+            model.Basket = basket;
+            ViewData["lines"] = basket;
+            return View(model);
         }
 
         // POST: Meals/Edit/5
