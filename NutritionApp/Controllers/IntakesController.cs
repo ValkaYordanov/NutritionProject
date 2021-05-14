@@ -76,7 +76,7 @@ namespace NutritionApp.Controllers
                .Include(i => i.Meal).ThenInclude(i => i.Ingredients)
                .Include(i => i.Product)
                .Include(i => i.User).ToList();
-            //intakeView.UserId = "1631d3b8-9724-4baf-a053-227c5ac06df6";
+            intakeView.UserId = "1631d3b8-9724-4baf-a053-227c5ac06df6";
             //intakeView.UserId = CurrentUser.UserId;
 
 
