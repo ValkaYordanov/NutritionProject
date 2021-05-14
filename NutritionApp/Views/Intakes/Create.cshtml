@@ -10,21 +10,18 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group" style="visibility: hidden;">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-            </div>
+          
 
-            <div class="form-group" style="visibility: hidden;">
-                <label asp-for="Day" class="control-label"></label>
-                <input asp-for="Day" class="form-control" />
-                <span asp-validation-for="Day" class="text-danger"></span>
-            </div>
+           
+                @*<input asp-for="UserId" class="form-control" type="hidden">*@
+                <input asp-for="Day" class="form-control" type="hidden"  />
+             
+       
 
 
             <div class="form-group" id="searchFoodContainer">
                 <label class="control-label">Search for food</label>
-                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value, '1631d3b8-9724-4baf-a053-227c5ac06df6')" autocomplete="off">
+                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value, '@Model.UserId')" autocomplete="off">
                 <input asp-for="Type" type="hidden" />
                 <input asp-for="ItemId" type="hidden" />
                 
@@ -48,8 +45,6 @@
 </div>
 
 <h2>Resent/Search</h2>
-<div id="foodOptions">
-</div>
 <table class="table">
     <thead>
         <tr>
@@ -70,6 +65,8 @@
         {
             if (item.Meal != null)
             {
+                if (item.Meal.UserId == Model.UserId)
+                {
                 <tr onclick="addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
                     <td >
                         @item.Quantity
@@ -80,10 +77,11 @@
                     <td>@foreach (var ingredient in @item.Meal.Ingredients)
                     {
                         @ingredient.Product.Kcal
-                        
+
                     }</td>
                     
                 </tr>
+                }
             }
             if (item.Product != null)
             {
@@ -119,7 +117,6 @@
                 .then(data => {
 
                     console.log(data);
-                    document.querySelector("#foodOptions").innerHTML = '';
                     document.querySelector("tbody").innerHTML = '';
 
                     data.productList.forEach(obj => addFoodOption(obj, 'product'))
@@ -168,10 +165,22 @@
         type.value = addedType;
         id.value = foodId;
         searchFoodsInput.value = foodName;
-
-        searchFoodContainer.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+        console.log(isInViewport(searchFoodContainer));
+        if(!isInViewport(searchFoodContainer)){
+            searchFoodContainer.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+        }
     }
 
+    function isInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+
+        );
+    }
 
     function addToInput(prevIntakeId, prevIntakeName, prevIntakeQuantity, type) {
         console.log(prevIntakeId);

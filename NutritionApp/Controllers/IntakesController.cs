@@ -63,28 +63,27 @@ namespace NutritionApp.Controllers
         // GET: Intakes/Create
         public IActionResult Create()
         {
-            var intakes = _context.Intakes
+
+
+           
+
+
+            IntakeViewModel intakeView = new IntakeViewModel();
+            intakeView.Day = DateTime.Now;
+            intakeView.Quantity = 1;
+            intakeView.Ingredients = _context.Ingredients;
+            intakeView.Intakes = _context.Intakes
                .Include(i => i.Meal).ThenInclude(i => i.Ingredients)
                .Include(i => i.Product)
                .Include(i => i.User).ToList();
-
-
-
-            IntakeViewModel intake = new IntakeViewModel();
-            intake.Day = DateTime.Now;
-            intake.Quantity = 1;
-            intake.Ingredients = _context.Ingredients;
-            intake.Intakes = _context.Intakes
-               .Include(i => i.Meal).ThenInclude(i => i.Ingredients)
-               .Include(i => i.Product)
-               .Include(i => i.User).ToList();
+            //intakeView.UserId = "1631d3b8-9724-4baf-a053-227c5ac06df6";
+            intakeView.UserId = CurrentUser.UserId;
 
 
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
 
-                         
-            ViewBag.Intakes = intakes;
-            return View(intake);
+        
+            return View(intakeView);
         }
 
         public JsonResult SelectFromSp(string input, string userId)
