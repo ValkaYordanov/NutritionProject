@@ -15,6 +15,7 @@
 
 .fadeString{
     color: dimgrey;
+    display: block;
 }
 /*------------------------Input Fields -------------------------*/
 input[type='text'] {
