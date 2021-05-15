@@ -72,7 +72,10 @@
                         @item.Quantity
                     </td>
                     <td>
-                        <img src="/images/meal.svg" alt="Meal" /> @item.Meal.MealName
+                        <img src="/images/meal.svg" alt="Meal" />
+                    </td>
+                    <td>
+                        @item.Meal.MealName
                     </td>
                     <td>@foreach (var ingredient in @item.Meal.Ingredients)
                     {
@@ -121,13 +124,13 @@
                     console.log(data);
                     document.querySelector("tbody").innerHTML = '';
 
-                    data.productList.forEach(obj => addFoodOption(obj, 'product'))
-                    data.mealList.forEach(obj => addFoodOption(obj, 'meal'))
+                    data.productList.forEach(obj => addFoodOption(obj, 'product', `${input}`))
+                    data.mealList.forEach(obj => addFoodOption(obj, 'meal', `${input}`))
                 });
                     }
     }
 
-    function addFoodOption(food, type) {
+    function addFoodOption(food, type, input) {
         console.log(food);
         if (type == 'product') {
                        document.querySelector("tbody").innerHTML += `
@@ -136,27 +139,44 @@
                         
                     </td>
                     <td>
-                        <img src="/images/product.svg" alt="Product" /> ${food.productName}
+                        <img src="/images/product.svg" alt="Product" /> 
                     </td>
+<td onload="highlightInput(this)"> ${food.productName}</td>
                     <td></td>
 
                 </tr>`
+           
         }
         if (type == 'meal') {
                        document.querySelector("tbody").innerHTML +=`
-             <tr onclick="addChoosenFoodToInputFields('${food.mealName}', '${type}',${food.mealId})">
+             <tr onclick="addChoosenFoodToInputFields('${food.mealName}', '${type}',${food.mealId})" >
                     <td >
                         
                     </td>
                     <td>
-                       <img src="/images/meal.svg" alt="Meal" />  ${food.mealName}
+                       <img src="/images/meal.svg" alt="Meal" />  
                     </td>
+<td onload="highlightInput(this)">  ${food.mealName}</td>
                     <td></td>
 
                 </tr>`
+
+            
         }
+
+      
     }
 
+    function highlightInput(element) {
+        console.log(element);
+        let input = document.querySelector("#searchFoodsInput").value;
+        var innerHTML = element.innerHTML;
+        var index = innerHTML.indexOf(input);
+        if (index >= 0) {
+            innerHTML = innerHTML.substring(0, index) + "<span class='highlightString'>" + innerHTML.substring(index, index + input.length) + "</span>" + innerHTML.substring(index + input.length);
+            element.innerHTML = innerHTML;
+        }
+    }
 
     function addChoosenFoodToInputFields(foodName, addedType, foodId) {
         const searchFoodContainer = document.querySelector("#searchFoodContainer");
@@ -190,6 +210,8 @@
         //let dotyfiedQuantity = parseInt(prevIntakeQuantity.replace(",", "."));
         document.querySelector("input[name='Quantity']").value = prevIntakeQuantity;
     }
+
+   
 </script>
 
 <style>

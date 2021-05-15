@@ -10,3 +10,9 @@
 .table th, .table td{
     padding: .75rem 0;
 }
+
+
+.highlightString{
+    font-weight: bold;
+    color: darkgoldenrod;
+}
