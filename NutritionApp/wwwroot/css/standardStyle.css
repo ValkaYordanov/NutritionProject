@@ -13,7 +13,9 @@
 }
 
 
-
+.fadeString{
+    color: dimgrey;
+}
 /*------------------------Input Fields -------------------------*/
 input[type='text'] {
     background-image: url(images/search-symbol.svg);
