@@ -1,18 +1,33 @@
 ﻿
+/*------------------------Boxex -------------------------*/
 .flexContainer{
     display:flex;
 }
 
-.table {
-    max-width: 100%;
-    table-layout: auto;
-}
-.table th, .table td{
-    padding: .75rem 0;
-}
 
 
+/*------------------------Text -------------------------*/
 .highlightString{
     font-weight: bold;
     color: darkgoldenrod;
 }
+
+
+
+/*------------------------Input Fields -------------------------*/
+input[type='text'] {
+    background-image: url(images/search-symbol.svg);
+    background-position: 7px 7px;
+    background-repeat: no-repeat;
+    text-indent: 1em;
+}
+
+/*------------------------Tables -------------------------*/
+.table {
+    max-width: 100%;
+    table-layout: auto;
+}
+
+    .table th, .table td {
+        padding: .75rem 0;
+    }
