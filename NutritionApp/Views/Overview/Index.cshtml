@@ -65,49 +65,48 @@
         @foreach (var item in Model)
         {
 
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-        </td>
-        <td class="name">
+        <tr>
+            <a asp-controller="Intakes" asp-action="Edit" asp-route-id="@item.IntakeId">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                </td>
+                <td class="name">
 
-            @Html.DisplayFor(modelItem => item.Meal.MealName)
-            @Html.DisplayFor(modelItem => item.Product.ProductName)
-        </td>
-        <td>
-            
+                    @Html.DisplayFor(modelItem => item.Meal.MealName)
+                    @Html.DisplayFor(modelItem => item.Product.ProductName)
+                </td>
+                <td>
 
-            <p>
-                @{ 
-                    var i = 0;
-                }
 
-                @foreach (var listitem in ViewData["KcalList"] as List<int>)
-                {
-                    i++;
-                    @if (i == p)
-                    {
-                        <p>
-                            @listitem
-                        </p>
+
+                    @{
+                        var i = 0;
                     }
-                }
 
-            <span class="kcal">Kcal</span></p>
+                    @foreach (var listitem in ViewData["KcalList"] as List<int>)
+                    {
+                        i++;
+                        @if (i == p)
+                        {
+                            <p class="kcal">
+                                @listitem
+                            </p>
+                        }
+                    }
 
-            @{
-                p++;
-            }
-            
-        </td>
-        <td>
-            <a asp-controller="Intakes" asp-action="Edit" asp-route-id="@item.IntakeId">Edit</a> |
-            <a asp-controller="Intakes" asp-action="Details" asp-route-id="@item.IntakeId">Details</a> |
-            <a asp-controller="Intakes" asp-action="Delete" asp-route-id="@item.IntakeId">Delete</a>
-        </td>
-    </tr>
+
+
+                    @{
+                        p++;
+                    }
+
+                </td>
+
+            </a>
+
+        </tr>
         }
 
 

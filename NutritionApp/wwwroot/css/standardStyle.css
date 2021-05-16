@@ -13,3 +13,7 @@
 .table th, .table td{
     padding: .75rem 0;
 }
+table .kcal::after {
+    content: "kcal";
+    font-size: 10px;
+}
