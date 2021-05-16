@@ -21,7 +21,7 @@
 
             <div class="form-group" id="searchFoodContainer">
                 <label class="control-label">Search for food</label>
-                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value, '@Model.UserId')" autocomplete="off">
+                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value, '@Model.UserId')" autocomplete="off" placeholder="Search for food or meal name">
                 <input asp-for="Type" type="hidden" />
                 <input asp-for="ItemId" type="hidden" />
                 
@@ -29,7 +29,7 @@
             </div>
 
             <div class="form-group" id="quantityContainer">
-                <label asp-for="Quantity" class="control-label"></label>
+                <label asp-for="Quantity" class="control-label">Grams</label>
                 <input asp-for="Quantity" inputmode="decimal" type="number" step="0,01" class="form-control"  />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
@@ -126,13 +126,16 @@
 
                     data.productList.forEach(obj => addFoodOption(obj, 'product', `${input}`))
                     data.mealList.forEach(obj => addFoodOption(obj, 'meal', `${input}`))
+                    highlightInput();
                 });
                     }
     }
 
     function addFoodOption(food, type, input) {
         console.log(food);
+        
         if (type == 'product') {
+            console.log("GTIN: ", food.gtin);
                        document.querySelector("tbody").innerHTML += `
              <tr onclick="addChoosenFoodToInputFields('${food.productName}', '${type}', ${food.productId})">
                     <td >
@@ -141,11 +144,11 @@
                     <td>
                         <img src="/images/product.svg" alt="Product" /> 
                     </td>
-<td onload="highlightInput(this)"> ${food.productName} <span class="fadeString">${food.GTIN}</span></td>
+<td > <div>${food.productName}</div> <span class="fadeString">${food.gtin}</span></td>
                     <td></td>
 
                 </tr>`
-           
+          
         }
         if (type == 'meal') {
                        document.querySelector("tbody").innerHTML +=`
@@ -156,7 +159,7 @@
                     <td>
                        <img src="/images/meal.svg" alt="Meal" />  
                     </td>
-<td onload="highlightInput(this)">  ${food.mealName}</td>
+<td> <div> ${food.mealName}</div></td>
                     <td></td>
 
                 </tr>`
@@ -167,16 +170,40 @@
       
     }
 
-    function highlightInput(element) {
-        console.log(element);
-        let input = document.querySelector("#searchFoodsInput").value;
-        var innerHTML = element.innerHTML;
-        var index = innerHTML.indexOf(input);
-        if (index >= 0) {
-            innerHTML = innerHTML.substring(0, index) + "<span class='highlightString'>" + innerHTML.substring(index, index + input.length) + "</span>" + innerHTML.substring(index + input.length);
-            element.innerHTML = innerHTML;
-        }
+    function highlightInput() {
+        var searchInput = document.querySelector('#searchFoodsInput');
+       
+        let rows = document.querySelectorAll("tbody tr");
+        rows.forEach(function (row) {
+            let foodName = row.querySelector(":nth-child(3)");
+            var regex = new RegExp(searchInput.value, 'gi')
+            var response = foodName.innerText.replace(regex, function (str) {
+                return "<span class='highlightString'>" + str + "</span>"
+            })
+            foodName.innerHTML = response
+        })
+        
+
+
+        //let input = document.querySelector("#searchFoodsInput").value;
+        //let rows = document.querySelectorAll("tbody tr");
+
+        //rows.forEach(function (row) {
+        //    console.log(row.querySelector(":nth-child(3)"))
+        //    let foodName = row.querySelector(":nth-child(3)");
+
+        //    var innerHTML = foodName.innerHTML;
+        //    var index = innerHTML.indexOf(input);
+        //    if (index >= 0) {
+        //        innerHTML = innerHTML.substring(0, index) + "<span class='highlightString'>" + innerHTML.substring(index, index + input.length) + "</span>" + innerHTML.substring(index + input.length);
+        //        foodName.innerHTML = innerHTML;
+        //    }
+        //});
+  
+     
     }
+    
+
 
     function addChoosenFoodToInputFields(foodName, addedType, foodId) {
         const searchFoodContainer = document.querySelector("#searchFoodContainer");

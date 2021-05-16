@@ -18,10 +18,11 @@
     display: block;
 }
 /*------------------------Input Fields -------------------------*/
-input[type='text'] {
-    background-image: url(images/search-symbol.svg);
-    background-position: 7px 7px;
+.form-control#searchFoodsInput {
+    background-image: url(../images/search-symbol.svg);
+    background-position: 7px 10px;
     background-repeat: no-repeat;
+    background-size: 1em;
     text-indent: 1em;
 }
 
