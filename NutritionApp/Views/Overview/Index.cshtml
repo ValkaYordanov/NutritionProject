@@ -6,6 +6,7 @@
     int prev = ViewBag.Count + 1;
     int next = ViewBag.Count - 1;
     var day = ViewBag.theDay;
+    var p = 1;
 
 
 }
@@ -70,45 +71,36 @@
         </td>
         <td>
         </td>
-        <td class="name" @*data-ingredients="
-
-                @foreach (var ingredient in item.Meal.Ingredients)
-
-            {
-                 @Html.DisplayFor(modelItem => ingredient.ProductId)@: :
-                 @Html.DisplayFor(modelItem => ingredient.Product.ProductId)
-            }"*@>
+        <td class="name">
 
             @Html.DisplayFor(modelItem => item.Meal.MealName)
             @Html.DisplayFor(modelItem => item.Product.ProductName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Product.Kcal)
+            
 
+            <p>
+                @{ 
+                    var i = 0;
+                }
 
-            <h3>
                 @foreach (var listitem in ViewData["KcalList"] as List<int>)
                 {
-                    <p>
-                        @listitem
-                    </p>
+                    i++;
+                    @if (i == p)
+                    {
+                        <p>
+                            @listitem
+                        </p>
+                    }
                 }
 
-                @foreach (var thitem in ViewData["plist"] as List<Intake>)
-                {
-                    @thitem.IntakeId
-                }
+            <span class="kcal">Kcal</span></p>
 
-                @ViewBag.Kcals
-
-                @*@ViewBag.Meal*@
-
-                @*@foreach (var item in ViewBag.Meal)
-            {
-                @item.Kcal
-            }*@
-
-            </h3>
+            @{
+                p++;
+            }
+            
         </td>
         <td>
             <a asp-controller="Intakes" asp-action="Edit" asp-route-id="@item.IntakeId">Edit</a> |
