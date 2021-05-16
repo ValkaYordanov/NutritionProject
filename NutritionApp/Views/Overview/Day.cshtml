@@ -6,18 +6,13 @@
     int prev = ViewBag.Count + 1;
     int next = ViewBag.Count - 1;
     var day = ViewBag.theDay;
-    var mids = ViewData["MealIds"];
+   
 
 }
 
 <h1>Overview</h1>
 <h3>@ViewBag.Name</h3>
-<p>
-    @foreach (var item in mids as IEnumerable<NutritionApp.Models.Intake>)
-    {
-        @: this is id <br />
-    }
-</p>
+
 <div id="day">
     <a asp-action="Day" asp-route-id="@prev">Prev</a>
     <span>

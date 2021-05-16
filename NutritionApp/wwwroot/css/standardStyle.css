@@ -1,4 +1,7 @@
 ﻿
+* {
+    font-family: 'Work Sans', sans-serif;
+}
 .flexContainer{
     display:flex;
 }

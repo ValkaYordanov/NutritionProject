@@ -15,5 +15,6 @@ namespace NutritionApp.Models
         public Product Product { get; set; }
         public Meal Meal { get; set; }
 
+
     }
 }
