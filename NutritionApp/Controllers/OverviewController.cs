@@ -33,6 +33,19 @@ namespace NutritionApp.Controllers
             var username = HttpContext.User.Identity.Name;
             var theid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            var weight = user.Weight;
+            var weightGoal = user.WeightGoal;
+            var kcalStandard = 28;
+            
+            if (weightGoal < weight)
+            {
+                kcalStandard = 23;
+            }
+
+            var kcalGoal = Convert.ToInt32(kcalStandard * weight);
+
+            ViewBag.KcalGoal = kcalGoal;
+
             if (id < 0) { id = 0; };
             ViewBag.Id = theid;
             ViewBag.Name = username;

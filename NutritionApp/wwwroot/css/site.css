@@ -209,7 +209,7 @@ body {
     }
     /*overview*/
     body.Overview {
-        background-image: url(../images/fruitbg.png);
+        background-image: url(../images/bg.png);
         /*background-size: cover;*/
         background-position: center center;
         background-repeat: repeat-y;
