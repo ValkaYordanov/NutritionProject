@@ -62,8 +62,15 @@ namespace NutritionApp.Controllers
         }
 
         // GET: Intakes/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
+         
+            var minusCount = -1 * id;
+            var theDay = DateTime.Today.AddDays(minusCount);
+            ViewBag.theDay = theDay;
+            ViewBag.Count = id;
+
+
             IntakeViewModel intakeView = new IntakeViewModel();
             intakeView.Day = DateTime.Now;
             intakeView.Quantity = 1.8M;
@@ -73,8 +80,8 @@ namespace NutritionApp.Controllers
                .Include(i => i.Product)
                .Include(i => i.User).ToList();
             //intakeView.UserId = "1631d3b8-9724-4baf-a053-227c5ac06df6";
-            var id = _context.AppUsers.Where(i => i.Email == HttpContext.User.Identity.Name).First();
-            intakeView.UserId = id.Id;
+            var userid = _context.AppUsers.Where(i => i.Email == HttpContext.User.Identity.Name).First();
+            intakeView.UserId = userid.Id;
 
 
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
@@ -129,6 +136,8 @@ namespace NutritionApp.Controllers
                 //intake.IntakeId = data.Id;
                 intake.Quantity = Convert.ToDecimal(data.Quantity, CultureInfo.InvariantCulture);
                 intake.Day = data.Day;
+                //intake.Day = ViewBag.theDay;
+
                 intake.UserId = data.UserId;
 
                 if (data.Type == "product")

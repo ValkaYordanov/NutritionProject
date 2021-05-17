@@ -1,4 +1,6 @@
-
+:root {
+    --green: #6CA15A;
+}
 body {
     background-color: #F3F3F3;
     font-family: 'Work Sans', sans-serif;
@@ -7,6 +9,7 @@ body {
 /*------------------------Boxex -------------------------*/
 .flexContainer {
     display: flex;
+    justify-content:space-between;
 }
 
 
@@ -32,13 +35,34 @@ body {
     text-indent: 1em;
 }
 
+input[type="submit"]{
+    width: 100%;
+    background-color: var(--green);
+    border-color: var(--green);
+}
 
+.flexContainer .searchFoodField{
+    width: 75%;
+}
+.flexContainer .gramsField{
+    width: 23%;
+}
 /*------------------------Tables -------------------------*/
 .table {
     max-width: 100%;
     table-layout: auto;
 }
-
+.table thead tr {
+    text-transform: uppercase;
+    font-size: .7em;
+    
+}
+    .table thead tr th {
+        font-weight: 400;
+        position: sticky;
+        top: 0;
+        background: #f3f3f3;
+    }
 .table th,
 .table td {
     padding: .75rem 0;
@@ -46,4 +70,8 @@ body {
 table .kcal::after {
     content: "kcal";
     font-size: 10px;
+}
+
+.table img {
+    height: 1em;
 }
