@@ -2,70 +2,183 @@
 }
 @addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<h2>Details Form</h2>
-<div id="gender-block">
-    <h3>Gender</h3>
-    <form id="genderForm" method="post" asp-controller="Account" asp-action="Gender">
-        <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
-        <input type="button" value="Submit" onclick="GenderFormSubmit()" />
-    </form>
-</div>
 
-<div id="weight-block">
-    <h3>Weight</h3>
-    <form id="weightForm" method="post" asp-controller="Account" asp-action="Weight">
-        <input type="text" name="weight" id="weight" />
-        <input type="button" value="Submit" onclick="WeightFormSubmit()" />
-    </form>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {box-sizing: border-box}
+        body {font-family: Verdana, sans-serif; margin:0}
+        .mySlides {display: none}
 
-<div id="goal-block">
-    <h3>Weight Goal</h3>
-    <form id="weightGoalForm" method="post" asp-controller="Account" asp-action="WeightGoal">
-        <input type="text" name="weightGoal" id="weightGoal" />
-        <input type="submit" />
-    </form>
-</div>
+        /* Slideshow container */
+        .slideshow-container {
+          max-width: 1000px;
+          position: relative;
+          margin: auto;
+        }
 
+        /* The dots/bullets/indicators */
+        .dot {
+          cursor: pointer;
+          height: 15px;
+          width: 15px;
+          margin: 0 2px;
+          background-color: #bbb;
+          border-radius: 50%;
+          display: inline-block;
+          transition: background-color 0.6s ease;
+        }
 
-<script type="text/javascript">
-    function GenderFormSubmit() {
-        let url = document.getElementById("genderForm").action;
-        let genderId = document.getElementById("genderId").value;
+        .active, .dot:hover {
+          background-color: #717171;
+        }
 
-        let formData = new FormData();
-        formData.append("genderId", genderId);
-        sendData(formData, url);
-    }
+        /* Fading animation */
+        .fade {
+          -webkit-animation-name: fade;
+          -webkit-animation-duration: 1.5s;
+          animation-name: fade;
+          animation-duration: 1.5s;
+        }
 
-    function WeightFormSubmit() {
-        let url = document.getElementById("weightForm").action;
-        let weight = document.getElementById("weight").value;
+        @@keyframes fade {
+          from {opacity: .4}
+          to {opacity: 1}
+        }
+    </style>
+</head>
 
-        let formData = new FormData();
-        formData.append("weight", weight);
-        sendData(formData, url);
-    }
+<body>
+    <section style="height:100vh">
+        <div class="slideshow-container">
 
-    function WeightGoalFormSubmit() {
-        let url = document.getElementById("weightGoalForm").action;
-        let weightGoal = document.getElementById("weightGoal").value;
+            <div class="mySlides fade" onclick="plusSlides(1);">
+                <div id="welcome-block">
+                    <p>
+                        Welcome to NutriApp!
+                        We hope you bla bla bla,
+                        and that NutriApp helps you
+                        bla bla bla.
+                    </p>
+                </div>
+            </div>
 
-        let formData = new FormData();
-        formData.append("weightGoal", weightGoal);
-        sendData(formData, url);
-    }
+            <div class="mySlides fade">
+                <div id="gender-block">
+                    <h3>Gender</h3>
+                    <form id="genderForm" method="post" asp-controller="Account" asp-action="Gender">
+                        <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
+                        <input type="button" value="Submit" onclick="GenderFormSubmit()" />
+                    </form>
+                </div>
+            </div>
 
-    function sendData(formData, url) {
-        const XHR = new XMLHttpRequest();
-        XHR.addEventListener('load', function (event) {
-            // Code upon success
-        });
+            <div class="mySlides fade">
+                <div id="weight-block">
+                    <h3>Weight</h3>
+                    <form id="weightForm" method="post" asp-controller="Account" asp-action="Weight">
+                        <input type="text" name="weight" id="weight" />
+                        <input type="button" value="Submit" onclick="WeightFormSubmit()" />
+                    </form>
+                </div>
+            </div>
 
-        XHR.addEventListener(' error', function (event) {
-            // Code upon error
-        });
-        XHR.open('POST', url);
-        XHR.send(formData);
-    }
-</script>
+            <div class="mySlides fade">
+                <div id="goal-block">
+                    <h3>Weight Goal</h3>
+                    <form id="weightGoalForm" method="post" asp-controller="Account" asp-action="WeightGoal">
+                        <input type="text" name="weightGoal" id="weightGoal" />
+                        <input type="submit" />
+                    </form>
+                </div>
+            </div>
+
+            @*<a class="next" onclick="plusSlides(1)">&#10095;</a>*@
+            <a href="/" style="display:none;" id="hmp-link"></a>
+
+        </div>
+
+        <div style="text-align:center;margin-top:auto;">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        function GenderFormSubmit() {
+            let url = document.getElementById("genderForm").action;
+            let genderId = document.getElementById("genderId").value;
+
+            let formData = new FormData();
+            formData.append("genderId", genderId);
+            const XHR = new XMLHttpRequest();
+            XHR.addEventListener('load', function (event) {
+                plusSlides(1);
+            });
+            XHR.open('POST', url);
+            XHR.send(formData);
+        }
+
+        function WeightFormSubmit() {
+            let url = document.getElementById("weightForm").action;
+            let weight = document.getElementById("weight").value;
+
+            let formData = new FormData();
+            formData.append("weight", weight);
+            const XHR = new XMLHttpRequest();
+            XHR.addEventListener('load', function (event) {
+                plusSlides(1);
+            });
+            XHR.open('POST', url);
+            XHR.send(formData);
+        }
+
+        function WeightGoalFormSubmit() {
+            let url = document.getElementById("weightGoalForm").action;
+            let weightGoal = document.getElementById("weightGoal").value;
+            let formData = new FormData();
+            formData.append("weightGoal", weightGoal);
+            const XHR = new XMLHttpRequest();
+            XHR.addEventListener('load', function (event) {
+                document.getElementById("hmp-link").click();
+            });
+            XHR.open('POST', url);
+            XHR.send(formData);
+        }
+    </script>
+
+    <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+                slides[0].classList.remove('show');
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            slides[slideIndex - 1].classList.add('show');
+            dots[slideIndex - 1].className += " active";
+        }
+    </script>
+</body>
