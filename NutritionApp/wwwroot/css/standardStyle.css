@@ -6,10 +6,19 @@ body {
     font-family: 'Work Sans', sans-serif;
 }
 
+/*Top nav*/
+nav a[href="/Settings"] {
+    position: fixed;
+    top:5px;
+    right:5px;
+}
+#day h3 {
+    text-align: center;
+}
 /*------------------------Boxex -------------------------*/
 .flexContainer {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
 }
 
 

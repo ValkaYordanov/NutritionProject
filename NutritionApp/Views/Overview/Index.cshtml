@@ -13,7 +13,7 @@
 
 <div id="day">
     <h3>
-        <a asp-action="Index" asp-route-id="@prev">Prev</a>
+        <a asp-action="Index" asp-route-id="@prev"><img src="~/images/prev.svg" /></a>
         <span>
             @{
                 if (ViewBag.Count <= 0)
@@ -32,7 +32,11 @@
         </span>
         @{ if (next >= 0)
             {
-                <a asp-action="Index" asp-route-id="@next">Next</a>
+                <a asp-action="Index" asp-route-id="@next"><img src="~/images/next.svg" /></a>
+            }
+            else
+            {
+                <a asp-action="Index" style="pointer-events: none; opacity: 0.1;"><img src="~/images/next.svg" /></a>
             }
         }
     </h3>
@@ -47,7 +51,7 @@
         <div id="appleStyle">
             <p>EATEN</p>
             <input id="toggle" type="checkbox" />
-            <label id="control" for="toggle"></label>
+            <label id="control" for="toggle" onclick="toggleView();"></label>
             <div id="container"></div>
         </div>
     </div>
@@ -193,50 +197,84 @@
     const carbText = document.querySelector('.bar-wrap.carbs ~ .graph-text p');
     const proteinText = document.querySelector('.bar-wrap.proteins ~ .graph-text p');
     const kcalText = document.querySelector('.bar-wrap.kcal ~ .graph-text p');
-    const kcalGoal = document.querySelector('#kcal-goal .goal')
+    const kcalGoal = document.querySelector('#kcal-goal .goal');
+    const appleStyle = document.getElementById('appleStyle')
+    const switchView = document.getElementById('toggle');
 
-    //let carbs = document.querySelectorAll('kcal-col');
-    var totalProteins = 0;
-    var totalFats = 0;
-    var totalCarbs = 0;
-    var totalKcal = 0;
 
-    //get totals - looping through data
-    for (i = 0; i < kcalCol.length; ++i) {
-        var carbs = kcalCol[i].getAttribute('data-carbs');
-        var fats = kcalCol[i].getAttribute('data-fat');
-        var proteins = kcalCol[i].getAttribute('data-proteins');
-        var kcal = kcalCol[i].getAttribute('data-kcal');
-        var qnt = kcalCol[i].getAttribute('data-qnt');
+    function fetchGraphData(remaining) {
 
-        //totalKcal += parseInt(kcalCol[i].querySelector(".kcal").innerText);
-        calqulatedKcal = Math.floor((parseFloat(kcal) / 100) * parseFloat(qnt));
+        var totalProteins = 0;
+        var totalFats = 0;
+        var totalCarbs = 0;
+        var totalKcal = 0;
 
-        totalProteins += parseFloat(proteins);
-        totalFats += parseFloat(fats);
-        totalCarbs += parseFloat(carbs);
-        totalKcal += calqulatedKcal;
-        //show calculated kcal on frontend
-        kcalCol[i].querySelector(".kcal").innerText = calqulatedKcal;
+        //get totals - looping through data
+        for (i = 0; i < kcalCol.length; ++i) {
+            var carbs = kcalCol[i].getAttribute('data-carbs');
+            var fats = kcalCol[i].getAttribute('data-fat');
+            var proteins = kcalCol[i].getAttribute('data-proteins');
+            var kcal = kcalCol[i].getAttribute('data-kcal');
+            var qnt = kcalCol[i].getAttribute('data-qnt');
+
+            //totalKcal += parseInt(kcalCol[i].querySelector(".kcal").innerText);
+            calqulatedKcal = Math.floor((parseFloat(kcal) / 100) * parseFloat(qnt));
+            calculatedCarb = Math.floor((parseFloat(carbs) / 100) * parseFloat(qnt));
+            calculatedProteins = Math.floor((parseFloat(proteins) / 100) * parseFloat(qnt));
+            calculatedFats = Math.floor((parseFloat(fats) / 100) * parseFloat(qnt));
+
+            totalProteins += calculatedProteins;
+            totalFats += calculatedFats;
+            totalCarbs += calculatedCarb;
+            totalKcal += calqulatedKcal;
+            //show calculated kcal on frontend
+            kcalCol[i].querySelector(".kcal").innerText = calqulatedKcal;
+        }
+
+        //calculate percentages
+        var goal = parseInt(kcalGoal.innerText);
+        var carbgoal = Math.floor((goal / 2) / 4);
+        var carbPct = (totalCarbs / carbgoal) * 100;
+        var kcalPct = ((totalKcal / goal) * 100);
+        var fatPct = ((totalFats / 60) * 100);
+        var proteinPct = ((totalProteins / 49) * 100);
+
+
+
+        if (switchView.checked) {
+            appleStyle.querySelector('p').innerText = "REMAIN";
+            //show totals on frontend
+            fatText.innerText = 60 - totalFats;
+            proteinText.innerText = 49 -totalProteins;
+            carbText.innerText = carbgoal - totalCarbs;
+            kcalText.innerText = goal - totalKcal;
+
+            //show percentages in graph
+            carbsBar.style.height = "" + (100 - carbPct) + "%";
+            fatsBar.style.height = "" + (100 - fatPct) + "%";
+            proteinsBar.style.height = "" + ( 100 - proteinPct) + "%";
+            kcalBar.style.height = "" + (100 - kcalPct) + "%";
+
+        } else {
+            appleStyle.querySelector('p').innerText = "EATEN";
+            //show totals on frontend
+            fatText.innerText = totalFats;
+            proteinText.innerText = totalProteins;
+            carbText.innerText = totalCarbs;
+            kcalText.innerText = totalKcal;
+
+            //show percentages in graph
+            carbsBar.style.height = "" + carbPct + "%";
+            fatsBar.style.height = "" + fatPct + "%";
+            proteinsBar.style.height = "" + proteinPct + "%";
+            kcalBar.style.height = "" + kcalPct + "%";
+        }
     }
-    //show totals on frontend
-    fatText.innerText = totalFats;
-    proteinText.innerText = totalProteins;
-    carbText.innerText = totalCarbs;
-    kcalText.innerText = totalKcal;
-
-    //calculate percantages
-    var goal = parseInt(kcalGoal.innerText);
-    var carbgoal = Math.floor((goal / 2) / 4);
-    var carbPct = (totalCarbs / carbgoal) * 100;
-    var kcalPct = ((totalKcal / goal) * 100);
-    var fatPct = ((totalFats / 60) * 100);
-    var proteinPct = ((totalProteins / 49) * 100);
-
-    //show percentages in graph
-    carbsBar.style.height = "" + carbPct + "%";
-    fatsBar.style.height = "" + fatPct + "%";
-    proteinsBar.style.height = "" + proteinPct + "%";
-    kcalBar.style.height = "" + kcalPct + "%";
+    fetchGraphData();
+    function toggleView() {
+        setTimeout(function () {
+            fetchGraphData();
+        }, 100);
+    }
 
 </script>
