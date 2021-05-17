@@ -51,49 +51,62 @@
 </head>
 
 <body>
-    <div class="slideshow-container">
+    <section style="height:100vh">
+        <div class="slideshow-container">
 
-        <div class="mySlides fade">
-            <div id="gender-block">
-                <h3>Gender</h3>
-                <form id="genderForm" method="post" asp-controller="Account" asp-action="Gender">
-                    <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
-                    <input type="button" value="Submit" onclick="GenderFormSubmit()" />
-                </form>
+            <div class="mySlides fade" onclick="plusSlides(1);">
+                <div id="welcome-block">
+                    <p>
+                        Welcome to NutriApp!
+                        We hope you bla bla bla,
+                        and that NutriApp helps you
+                        bla bla bla.
+                    </p>
+                </div>
             </div>
+
+            <div class="mySlides fade">
+                <div id="gender-block">
+                    <h3>Gender</h3>
+                    <form id="genderForm" method="post" asp-controller="Account" asp-action="Gender">
+                        <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
+                        <input type="button" value="Submit" onclick="GenderFormSubmit()" />
+                    </form>
+                </div>
+            </div>
+
+            <div class="mySlides fade">
+                <div id="weight-block">
+                    <h3>Weight</h3>
+                    <form id="weightForm" method="post" asp-controller="Account" asp-action="Weight">
+                        <input type="text" name="weight" id="weight" />
+                        <input type="button" value="Submit" onclick="WeightFormSubmit()" />
+                    </form>
+                </div>
+            </div>
+
+            <div class="mySlides fade">
+                <div id="goal-block">
+                    <h3>Weight Goal</h3>
+                    <form id="weightGoalForm" method="post" asp-controller="Account" asp-action="WeightGoal">
+                        <input type="text" name="weightGoal" id="weightGoal" />
+                        <input type="submit" />
+                    </form>
+                </div>
+            </div>
+
+            @*<a class="next" onclick="plusSlides(1)">&#10095;</a>*@
+            <a href="/" style="display:none;" id="hmp-link"></a>
+
         </div>
 
-        <div class="mySlides fade">
-            <div id="weight-block">
-                <h3>Weight</h3>
-                <form id="weightForm" method="post" asp-controller="Account" asp-action="Weight">
-                    <input type="text" name="weight" id="weight" />
-                    <input type="button" value="Submit" onclick="WeightFormSubmit()" />
-                </form>
-            </div>
+        <div style="text-align:center;margin-top:auto;">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
         </div>
-
-        <div class="mySlides fade">
-            <div id="goal-block">
-                <h3>Weight Goal</h3>
-                <form id="weightGoalForm" method="post" asp-controller="Account" asp-action="WeightGoal">
-                    <input type="text" name="weightGoal" id="weightGoal" />
-                    <input type="submit" />
-                </form>
-            </div>
-        </div>
-
-        @*<a class="next" onclick="plusSlides(1)">&#10095;</a>*@
-    <a href="/" style="display:none;" id="hmp-link"></a>
-
-    </div>
-    <br>
-
-    <div style="text-align:center">
-        <span class="dot" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
-        <span class="dot" onclick="currentSlide(3)"></span>
-    </div>
+    </section>
 
     <script type="text/javascript">
         function GenderFormSubmit() {
