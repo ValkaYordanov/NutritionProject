@@ -27,11 +27,24 @@ namespace NutritionApp.Controllers
         private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
         
-        public async Task<IActionResult> Index(int id, OverviewViewModel data)
+        public async Task<IActionResult> Index(int id)
         {
             AppUser user = await CurrentUser;
             var username = HttpContext.User.Identity.Name;
             var theid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var weight = user.Weight;
+            var weightGoal = user.WeightGoal;
+            var kcalStandard = 28;
+            
+            if (weightGoal < weight)
+            {
+                kcalStandard = 23;
+            }
+
+            var kcalGoal = Convert.ToInt32(kcalStandard * weight);
+
+            ViewBag.KcalGoal = kcalGoal;
 
             if (id < 0) { id = 0; };
             ViewBag.Id = theid;
@@ -40,7 +53,7 @@ namespace NutritionApp.Controllers
 
             var minusCount = (-1 * id);
             var theDay = DateTime.Today.AddDays(minusCount);
-            ViewBag.theDay = theDay;
+            ViewBag.theDay = theDay.ToString("dd/MM");
 
             var nutritionAppContext = _context.Intakes
                     .Where(s =>
@@ -110,55 +123,7 @@ namespace NutritionApp.Controllers
             ViewData["Fats"] = Fats;
             ViewData["Carbs"] = Carbs;
 
-
-            //EmployeeDBContext dbContext = new EmployeeDBContext();
-            //List<Department> listDepartments = dbContext.Departments.ToList();
-            //return View(listDepartments);
-
             return View(await nutritionAppContext.ToListAsync());
-        }
-
-
-
-        public async Task<IActionResult> Day(int id)
-        {
-            AppUser user = await CurrentUser;
-            var username = HttpContext.User.Identity.Name;
-            var theid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (id < 0) { id = 0; };
-            ViewBag.Id = theid;
-            ViewBag.Name = username;
-            ViewBag.Count = id;
-
-            var minusCount = (-1 * id);
-            var theDay = DateTime.Today.AddDays(minusCount);
-
-            var nutritionAppContext = _context.Intakes
-                    .Where(s =>
-                    s.User.Id == theid
-                    &&
-                    (s.Day >= theDay
-                    && s.Day < theDay.AddDays(1)))
-                    .Include(i => i.Product)
-                    .Include(i => i.Meal)
-                    //.ThenInclude(i => i.Ingredients)
-                   .ToListAsync()
-                    ;
-
-            var getMealId = _context.Intakes
-                    .Where(s =>
-                    s.User.Id == theid
-                    &&
-                    (s.Day >= theDay
-                    && s.Day < theDay.AddDays(1)))
-                    .Include(i => i.Meal)
-                    .ToArrayAsync()
-                    ;
-
-
-            ViewBag.theDay = theDay;
-            return View(await nutritionAppContext);
         }
     }
 }

@@ -153,6 +153,7 @@ body {
 }
 #appleStyle > p {
     margin-bottom: 5px !important;
+    width: 20px;
 }
     #toggle {
         display: none;
@@ -201,12 +202,13 @@ body {
 /*overview Graphs*/
 #graphs {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 }
     #graphs .graph {
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 20%;
     }
 .bar-wrap {
     height: 150px;
@@ -220,6 +222,7 @@ body {
         width: 28px;
         bottom: 0;
         max-height: 100%;
+        transition: height 300ms ease;
     }
     .bar-wrap.carbs .bar {
         background: #EFE93D;
@@ -255,7 +258,7 @@ body {
     }
     /*overview*/
     body.Overview {
-        background-image: url(../images/fruitbg.png);
+        background-image: url(../images/bg.png);
         /*background-size: cover;*/
         background-position: center center;
         background-repeat: repeat-y;
