@@ -46,7 +46,7 @@ namespace NutritionApp.Controllers
                     _context.Add(ingredient);
                 }
             }
-                     _context.SaveChangesAsync();
+                     _context.SaveChanges();
 
             
         }

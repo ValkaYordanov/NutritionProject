@@ -268,6 +268,8 @@ body {
 /* Input validation error
 -------------------------------------------------- */
 .field-validation-error{
-    border-color: mediumvioletred;
-    background-color: aqua;
+   
+}
+.input-validation-error {
+    background-color: lightcoral;
 }

@@ -21,17 +21,13 @@ namespace NutritionApp.Controllers
 {
     public class IntakesController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly NutritionAppContext _context;
+              private readonly NutritionAppContext _context;
 
-        public IntakesController(UserManager<AppUser> userMgr, NutritionAppContext context)
+        public IntakesController(NutritionAppContext context)
         {
-            _userManager = userMgr;
             _context = context;
         }
-        private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-
-
+      
         // GET: Intakes
         public async Task<IActionResult> Index()
         {
@@ -131,10 +127,6 @@ namespace NutritionApp.Controllers
             
             Intake intake = new Intake();
 
-            if (string.IsNullOrEmpty(data.Type))
-            {
-                ModelState.AddModelError("Type", "Please choose a food from the list or search for it");
-            }
 
             if (ModelState.IsValid)
             {
@@ -283,7 +275,7 @@ namespace NutritionApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Overview");
             }
             //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
             //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
@@ -324,7 +316,7 @@ namespace NutritionApp.Controllers
             var intake = await _context.Intakes.FindAsync(id);
             _context.Intakes.Remove(intake);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Overview");
         }
 
         private bool IntakeExists(int id)

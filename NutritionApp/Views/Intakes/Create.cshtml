@@ -63,12 +63,12 @@
 
                 <div class="form-group gramsField" id="quantityContainer">
                     <label asp-for="Quantity" class="control-label">Grams</label>
-                    <input asp-for="Quantity" class="field-validation-error form-control" autocomplete="off" />
+                    <input asp-for="Quantity" class="form-control" autocomplete="off" />
 
                 </div>
 
             </div>
-            <span asp-validation-for="Quantity" class="input-validation-error text-danger"></span>
+            <span asp-validation-for="Quantity" class="text-danger"></span>
             <span asp-validation-for="Type" class="text-danger"></span>
             <div class="form-group">
                 <input type="submit" value="Eat food" class="btn btn-primary" />
