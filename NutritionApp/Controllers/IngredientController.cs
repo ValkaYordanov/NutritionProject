@@ -50,5 +50,23 @@ namespace NutritionApp.Controllers
 
             
         }
+
+        //public async void Delete(int id)
+        //{
+        //    var meal = await _context.Ingredients.FindAsync(id);
+        //    _context.Ingredients.Remove(meal);
+        //    await _context.SaveChangesAsync();
+
+        //}
+
+        //// POST: Meals/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async void DeleteConfirmed(int id)
+        //{
+        //    var meal = await _context.Ingredients.FindAsync(id);
+        //    _context.Ingredients.Remove(meal);
+        //    await _context.SaveChangesAsync();
+        //}
     }
 }
