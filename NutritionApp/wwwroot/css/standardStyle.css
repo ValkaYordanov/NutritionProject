@@ -100,7 +100,7 @@ input[type="submit"]{
     .table thead tr th {
         font-weight: 400;
         position: sticky;
-        top: 0;
+        top: -1px;
         background: #f3f3f3;
     }
 .table th,

@@ -8,17 +8,17 @@
 
 <div class="food-listing">
 
-    <table class="table">
+    <table class="table products-table">
         <thead>
             <tr>
                 <th>
-                    <small>BRAND</small>
+                    <div><small>BRAND</small></div>
                 </th>
                 <th>
-                    <small>PRODUCT</small>
+                    <div><small>PRODUCT</small></div>
                 </th>
                 <th>
-                    <small>KCAL</small>
+                    <div><small>KCAL</small></div>
                 </th>
             </tr>
         </thead>
@@ -29,11 +29,11 @@
                     <td style="padding-right:1rem">
                         @Html.DisplayFor(modelItem => item.Brand)
                     </td>
-                    <td>
+                    <td style="padding-right:1rem">
                         @Html.DisplayFor(modelItem => item.ProductName)
                         @Html.DisplayFor(modelItem => item.GTIN)
                     </td>
-                    <td>
+                    <td style="padding-right:.5rem">
                         @Html.DisplayFor(modelItem => item.Kcal) <small>kcal</small>
                     </td>
                 </tr>
@@ -44,7 +44,7 @@
 
 <a asp-action="Create" class="create-link">
     <div class="create-container">
-        <small>ADD MEAL</small>
+        <small style="margin-left:-1rem">ADD PRODUCT</small>
         <div class="add-button">+</div>
     </div>
 </a>

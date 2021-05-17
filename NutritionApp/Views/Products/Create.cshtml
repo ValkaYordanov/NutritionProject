@@ -4,6 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
+<h1>Create</h1>
 
 
 <div class="row whiteBox">
@@ -22,11 +23,10 @@
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Barcode / GTIN</label>
-                <input asp-for="GTIN" class="form-control" autocomplete="off" />
-                <img src="~/images/barcode.png" id="barcode" style="width:auto; height:20px;" />
+                <label asp-for="GTIN" class="control-label"></label>
+                <input asp-for="GTIN" class="form-control" autocomplete="off"/>
                 <span asp-validation-for="GTIN" class="text-danger"></span>
-
+                <p id="barcode">Scan code</p>
             </div>
             <div id="barcode-scanner">
                 <video src=""></video>
