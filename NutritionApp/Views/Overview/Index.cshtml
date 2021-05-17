@@ -78,8 +78,8 @@
         @foreach (var item in Model)
         {
 
-        <tr>
-            <a asp-controller="Intakes" asp-action="Edit" asp-route-id="@item.IntakeId">
+        <tr onclick="location.href = '@(Url.Action("Edit", "Intakes",new { id= @item.IntakeId }))'">
+           
                 <td>
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
@@ -117,7 +117,7 @@
 
                 </td>
 
-            </a>
+           
 
         </tr>
         }
