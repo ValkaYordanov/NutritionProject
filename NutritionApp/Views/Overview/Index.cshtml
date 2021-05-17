@@ -1,7 +1,130 @@
-﻿
+﻿@model IEnumerable<NutritionApp.Models.Intake>
 
-<h1>overview</h1>
+@{
+    ViewData["Title"] = "Overview";
+
+    int prev = ViewBag.Count + 1;
+    int next = ViewBag.Count - 1;
+    var day = ViewBag.theDay;
+    var p = 1;
+
+
+}
+
+<h1>Overview</h1>
+
+<div id="day">
+    <a asp-action="Index" asp-route-id="@prev">Prev</a>
+    <span>
+        @{
+            if (ViewBag.Count <= 0)
+            {
+                @:Today
+            }
+            else if (ViewBag.Count == 1)
+            {
+                @:Yesterday
+            }
+            else
+            {
+                @ViewBag.theDay
+            }
+        }
+    </span>
+    @{ if (next >= 0)
+        {
+            <a asp-action="Index" asp-route-id="@next">Next</a>
+        }
+    }
+
+</div>
+<section class="overview-graphs">
+    <div id="top">
+        <div id="kcal-goal">
+            <p>GOAL</p>
+            <h4>1906</h4>
+            <p>kcal</p>
+        </div>
+        <div id="appleStyle">
+            <input id="toggle" type="checkbox" />
+            <label id="control" for="toggle"></label>
+            <div id="container"></div>
+        </div>
+    </div>
+</section>
+
 <p>
-    @ViewBag.Name <br />
-    @ViewBag.Id
+    <a asp-controller="Intakes" asp-action="Create" asp-route-id="@ViewBag.theDay">Create New</a>
 </p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Day)
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Kcal
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <a asp-controller="Intakes" asp-action="Edit" asp-route-id="@item.IntakeId">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                    </td>
+                    <td class="name">
+
+                        @Html.DisplayFor(modelItem => item.Meal.MealName)
+                        @Html.DisplayFor(modelItem => item.Product.ProductName)
+                    </td>
+                    <td>
+
+
+
+                        @{
+                            var i = 0;
+                        }
+
+                        @foreach (var listitem in ViewData["KcalList"] as List<int>)
+                        {
+                            i++;
+                            @if (i == p)
+                            {
+                                <p class="kcal">
+                                    @listitem
+                                </p>
+                            }
+                        }
+
+
+
+                        @{
+                            p++;
+                        }
+
+                    </td>
+
+                </a>
+
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+<script>
+    console.log("" + @ViewBag.List + "");
+</script>
