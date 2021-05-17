@@ -49,7 +49,7 @@
 
             <div class="form-group" id="searchFoodContainer">
                 <label class="control-label">Search for food</label>
-                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value)" autocomplete="off" value="@Model.ItemName">
+                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value, '@Model.UserId')" autocomplete="off" value="@Model.ItemName">
                 <input asp-for="Type" type="hidden" />
                 <input asp-for="ItemId" type="hidden" />
                 <div id="foodOptions">
@@ -80,10 +80,16 @@
 
 <script>
 
-    function searchForFoods(input) {
+    function searchForFoods(input, currentUserId) {
         if (input !== "") {
-            const path = "https://localhost:44351/Intakes/SelectFromSp?Input=";
-            fetch(`${path}${input}`)
+            const path = "https://localhost:44351/Intakes/SelectFromSp?";
+            const inputDec = "Input=";
+            const UserIdDec = "&UserId=";
+
+           
+
+            let url = `${path}${inputDec}${input}${UserIdDec}${currentUserId}`;
+            fetch(url)
                 .then(response => response.json())
                 .then(data => {
 
