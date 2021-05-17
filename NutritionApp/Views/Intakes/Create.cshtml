@@ -2,10 +2,38 @@
 
 @{
     ViewData["Title"] = "Create";
+    int prev = ViewBag.Count + 1;
+    int next = ViewBag.Count - 1;
+    var day = ViewBag.theDay;
+
 }
 
-<h1>What have you eaten today?</h1>
-<hr />
+<div id="day">
+    <a asp-action="Create" asp-route-id="@prev">Prev</a>
+    <span>
+        @{
+            if (ViewBag.Count <= 0)
+            {
+                @:Today
+            }
+            else if (ViewBag.Count == 1)
+            {
+                @:Yesterday
+            }
+            else
+            {
+                @ViewBag.theDay
+            }
+        }
+    </span>
+    @{ if (next >= 0)
+        {
+            <a asp-action="Create" asp-route-id="@next">Next</a>
+        }
+    }
+
+</div>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -14,28 +42,30 @@
 
 
             <input asp-for="UserId" class="form-control" type="hidden">
-            <input asp-for="Day" class="form-control" type="hidden" />
+            <input asp-for="Day" class="form-control" type="hidden" value="@ViewBag.theDay" />
 
 
+            <div class="flexContainer">
 
+                <div class="form-group searchFoodField" id="searchFoodContainer">
+                    <label class="control-label">Product/Meal</label>
+                    <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value, '@Model.UserId')" autocomplete="off" placeholder="Search for food or meal name">
+                    <input asp-for="Type" type="hidden" />
+                    <input asp-for="ItemId" type="hidden" />
 
-            <div class="form-group" id="searchFoodContainer">
-                <label class="control-label">Search for food</label>
-                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value, '@Model.UserId')" autocomplete="off" placeholder="Search for food or meal name">
-                <input asp-for="Type" type="hidden" />
-                <input asp-for="ItemId" type="hidden" />
+                    <span class="text-danger"></span>
+                </div>
 
-                <span class="text-danger"></span>
+                <div class="form-group gramsField" id="quantityContainer">
+                    <label asp-for="Quantity" class="control-label">Grams</label>
+                    <input asp-for="Quantity" class="form-control" autocomplete="off" />
+
+                </div>
+
             </div>
-
-            <div class="form-group" id="quantityContainer">
-                <label asp-for="Quantity" class="control-label">Grams</label>
-                <input asp-for="Quantity" class="form-control" autocomplete="off" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
-            </div>
-
+            <span asp-validation-for="Quantity" class="text-danger"></span>
             <div class="form-group">
-                <button type="submit" value="Eat" class="btn btn-primary"><img src="/images/intake.svg" alt="Open mouth" /></button>
+                <input type="submit" value="Eat food" class="btn btn-primary" />
 
 
 
@@ -43,8 +73,8 @@
         </form>
     </div>
 </div>
-
-<h2>Resent/Search</h2>
+<hr />
+<h2>Choose Foods</h2>
 <table class="table">
     <thead>
         <tr>
@@ -243,21 +273,7 @@
 
 </script>
 
-<style>
-    th {
-        position: sticky;
-        top: 0;
-        background-color: wheat;
-    }
 
-    button {
-        width: auto
-    }
-
-    img {
-        height: 2em;
-    }
-</style>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
