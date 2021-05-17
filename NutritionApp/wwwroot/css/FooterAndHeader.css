@@ -1,5 +1,5 @@
 ﻿header nav {
-    position: fixed;
+    position: sticky;
     top: 0;
     right: 0;
 }
