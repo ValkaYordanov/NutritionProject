@@ -263,3 +263,11 @@ body {
         background-position: center center;
         background-repeat: repeat-y;
     }
+
+
+/* Input validation error
+-------------------------------------------------- */
+.field-validation-error{
+    border-color: mediumvioletred;
+    background-color: aqua;
+}
