@@ -67,7 +67,7 @@ namespace NutritionApp.Controllers
             ViewBag.SelectedPage = "Intake";
             var minusCount = -1 * id;
             var theDay = DateTime.Today.AddDays(minusCount);
-            ViewBag.theDay = theDay;
+            ViewBag.theDay = theDay.ToString("dd/MM");
             ViewBag.Count = id;
 
 
