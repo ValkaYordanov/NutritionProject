@@ -4,39 +4,61 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="page-title">Your Meals</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MealName)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr onclick="location.href = '@(Url.Action("Edit", "Meals",new { id= @item.MealId }))'">
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-            @Html.DisplayFor(modelItem => item.MealName)
-            </td>
-           
-        </tr>
-}
-    </tbody>
-</table>
+<div class="food-listing">
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <small>GRAMS</small>
+                    </th>
+                    <th>
+                        <small>MEAL</small>
+                    </th>
+                    <th>
+                        <small>KCAL</small>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr onclick="location.href = '@(Url.Action("Edit", "Meals", new { id = @item.MealId }))'">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MealName)
+                        </td>
+                        <td>
+                            @{decimal ingCal = 0;}
+                            @foreach (Ingredient ing in item.Ingredients)
+                            {
+                                ingCal = (ingCal + (ing.Product.Kcal * ing.Quantity / 100));
+                            }
+                            @{ingCal = ingCal * item.Quantity;}
+                            @ingCal.ToString("0") <small>kcal</small>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div>
+            You have no added meals.
+        </div>
+    }
+</div>
+
+ <a asp-action="Create" class="create-link">
+     <div class="create-container">
+         <small>ADD MEAL</small>
+         <div class="add-button">+</div>
+     </div>
+ </a>
