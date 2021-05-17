@@ -171,13 +171,13 @@
             document.querySelector("tbody").innerHTML += `
              <tr onclick="addChoosenFoodToInputFields('${food.productName}', '${type}', ${food.productId})">
                     <td >
-
+                        100
                     </td>
                     <td>
                         <img src="/images/product.svg" alt="Product" />
                     </td>
 <td > <div>${food.productName}</div> <span class="fadeString">${food.gtin}</span></td>
-                    <td></td>
+                    <td>${food.kcal}</td>
 
                 </tr>`
 
@@ -186,13 +186,13 @@
             document.querySelector("tbody").innerHTML += `
              <tr onclick="addChoosenFoodToInputFields('${food.mealName}', '${type}',${food.mealId})" >
                     <td >
-
+                        100
                     </td>
                     <td>
                        <img src="/images/meal.svg" alt="Meal" />
                     </td>
 <td> <div> ${food.mealName}</div></td>
-                    <td></td>
+                    <td>${food.Meal}</td>
 
                 </tr>`
 
@@ -207,7 +207,7 @@
 
         let rows = document.querySelectorAll("tbody tr");
         rows.forEach(function (row) {
-            let foodName = row.querySelector(":nth-child(3)");
+            let foodName = row.querySelector(":nth-child(3) div");
             var regex = new RegExp(searchInput.value, 'gi')
             var response = foodName.innerText.replace(regex, function (str) {
                 return "<span class='highlightString'>" + str + "</span>"
