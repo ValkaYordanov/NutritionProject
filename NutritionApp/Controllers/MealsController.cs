@@ -28,6 +28,7 @@ namespace NutritionApp.Controllers
         // GET: Meals
         public async Task<IActionResult> Index()
         {
+            ViewBag.SelectedPage = "Meal";
             var nutritionAppContext = _context.Meals.Include(m => m.User);
             return View(await nutritionAppContext.ToListAsync());
         }

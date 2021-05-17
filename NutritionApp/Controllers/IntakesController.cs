@@ -64,7 +64,7 @@ namespace NutritionApp.Controllers
         // GET: Intakes/Create
         public IActionResult Create(int id)
         {
-         
+            ViewBag.SelectedPage = "Intake";
             var minusCount = -1 * id;
             var theDay = DateTime.Today.AddDays(minusCount);
             ViewBag.theDay = theDay;

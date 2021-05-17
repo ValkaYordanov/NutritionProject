@@ -26,6 +26,10 @@ body {
     display: block;
 }
 
+a, a:active,a:link, a:visited {
+    text-decoration: none;
+}
+
 /*------------------------Input Fields -------------------------*/
 .form-control#searchFoodsInput {
     background-image: url(../images/search-symbol.svg);
@@ -74,4 +78,5 @@ table .kcal::after {
 
 .table img {
     height: 1em;
+    
 }

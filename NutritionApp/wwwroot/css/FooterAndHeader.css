@@ -5,6 +5,9 @@
 }
 
 
+/* ----------------- footer ----------------*/
+
+
 footer nav {
     position: fixed;
     bottom: 0;
@@ -41,6 +44,7 @@ footer nav div img {
     display: block;
     margin: 0 auto;
     max-height: 2em;
+    filter: grayscale(100%);
 }
 
 footer nav div span {
@@ -68,4 +72,17 @@ nav div img {
     display: block;
     margin: 0 auto;
     max-height: 2em;
+}
+
+.active-page a, .active-page a:active, .active-page a:link, .active-page a:visited{
+    color: var(--green);
+    text-decoration: none;
+}
+.active-page img {
+    filter: none;
+}
+
+/* ------- footer active --------- */
+footer nav a:active {
+    background-color: blueviolet;
 }

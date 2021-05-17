@@ -29,6 +29,7 @@ namespace NutritionApp.Controllers
         
         public async Task<IActionResult> Index(int id, OverviewViewModel data)
         {
+            ViewBag.SelectedPage = "Overview";
             AppUser user = await CurrentUser;
             var username = HttpContext.User.Identity.Name;
             var theid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);

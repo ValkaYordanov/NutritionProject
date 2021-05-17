@@ -45,13 +45,13 @@
    
     <footer class="border-top footer text-muted">
         <nav class="flexContainer">
-            <div><a asp-area="" asp-controller="Meals" asp-action="Index"><img src="~/images/meal.svg" alt="Breakfast plate" /><span>Meals</span></a></div>
+            <div class="@(ViewBag.SelectedPage == "Meal" ? "active-page": "footerNavItem")"><a asp-area="" asp-controller="Meals" asp-action="Index"><img src="~/images/meal.svg" alt="Breakfast plate" /><span>Meals</span></a></div>
             <div class="middleNav">
-                <div><a asp-area="" asp-controller="Intakes" asp-action="Create"><img src="~/images/intake.svg" alt="Open mouth" /><span>Eat</span></a></div>
-                <div><a asp-area="" asp-controller="Overview" asp-action="Index"><img src="~/images/overview.svg" alt="Eye" /><span>Overview</span></a></div>
+                <div class="@(ViewBag.SelectedPage == "Intake" ? "active-page": "footerNavItem")"><a asp-area="" asp-controller="Intakes" asp-action="Create"><img src="~/images/intake.svg" alt="Open mouth" /><span>Intake</span></a></div>
+                <div class="@(ViewBag.SelectedPage == "Overview" ? "active-page": "footerNavItem")"><a asp-area="" asp-controller="Overview" asp-action="Index"><img src="~/images/overview.svg" alt="Eye" /><span>Overview</span></a></div>
             </div>
-            <div><a asp-area="" asp-controller="Products" asp-action="Index"><img src="~/images/product.svg" alt="Food" /><span>Foods</span></a></div>
-
+            <div class="@(ViewBag.SelectedPage == "Product" ? "active-page": "footerNavItem")"><a asp-area="" asp-controller="Products" asp-action="Index"><img src="~/images/product.svg" alt="Food" /><span>Foods</span></a></div>
+         
         </nav>
         @*<div class="container">
             &copy; 2021 - NutritionApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -62,6 +62,37 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        function selectThisNavItem(element) {
+            //('nav a[href^="/' + location.pathname.split("/")[1] + '"]').addClass('active');
+            console.log("i am an element: ", element);
+            element.classList.add("notActiveTab");
+            //let allNavItems = document.querySelectorAll(".footerNavItem");
+            //allNavItems.foreach(item => { console.log(navItem); });
+            
+        }
+
+
+        //document.addEventListener("DOMContentLoaded", function (event) {
+        //    console.log(location.pathname, event);
+        //    let allNavItems = document.querySelectorAll(".footerNavItem");
+        //    console.log(allNavItems);
+        //    if (location.pathname = "/Meals") {
+        //        console.log(allNavItems[0]);
+        //    }
+        //});
+
+        //window.onload = (event) => {
+        //    console.log(location.pathname, event);
+        //    let allNavItems = document.querySelectorAll(".footerNavItem");
+        //    console.log(allNavItems);
+        //    if (location.pathname = "/Meals") {
+        //        console.log(allNavItems[0]);
+        //    }
+        //};
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
