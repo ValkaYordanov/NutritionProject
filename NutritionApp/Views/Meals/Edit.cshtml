@@ -1,5 +1,5 @@
-﻿@model NutritionApp.Models.Meal
-
+﻿@using NutritionApp.Models.ViewModels
+@model BasketIndexViewModel
 @{
     ViewData["Title"] = "Edit";
 }
@@ -12,26 +12,64 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MealId" />
+            <input type="hidden" asp-for="Meal.MealId" />
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
+                <label asp-for="Meal.UserId" class="control-label"></label>
+                <select asp-for="Meal.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="Meal.UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" autocomplete="off" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
+                <label asp-for="Meal.Quantity" class="control-label"></label>
+                <input asp-for="Meal.Quantity" class="form-control" />
+                <span asp-validation-for="Meal.Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MealName" class="control-label"></label>
-                <input asp-for="MealName" class="form-control" autocomplete="off" />
-                <span asp-validation-for="MealName" class="text-danger"></span>
+                <label asp-for="Meal.MealName" class="control-label"></label>
+                <input asp-for="Meal.MealName" class="form-control" />
+                <span asp-validation-for="Meal.MealName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+            <div>
+                @*<p>@Model.Basket.Lines.Count.ToString()</p>*@
+              
+            </div>
         </form>
+        <div>
+            <table class="table table-bordered table-striped">
+
+                <thead>
+                    <tr>
+                        <th>ProductName</th>
+                        <th>Qunatity</th>
+                        @*<th>Delete</th>*@
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var line in Model.Basket.Lines)
+                    {
+                        <tr>
+                            <td class="text-center">@line.Product.ProductName</td>
+                            <td class="text-left">@line.Quantity</td>
+
+
+                            @*<td>
+                                <form asp-action="DeleteIngredientFromBasket" asp-controller="Meals" method="post">
+                                    <input type="hidden" name="ProductId" value="@line.Product.ProductId" />
+                                    <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                </form>
+                            </td>*@
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    
+
+        @*@await Component.InvokeAsync("MealEdit", Model.Basket)*@
     </div>
 </div>
 

@@ -15,7 +15,9 @@ namespace NutritionApp.Controllers
     {
         private readonly NutritionAppContext _context;
         private Basket basket;
-      
+        private Basket bas = new Basket();
+        
+
 
         public MealsController(NutritionAppContext context, Basket basketSesion)
         {
@@ -83,6 +85,7 @@ namespace NutritionApp.Controllers
             //BasketIndexViewModel model = new BasketIndexViewModel();
             return View(meal);
         }
+        
 
 
         // GET: Meals/Edit/5
@@ -98,8 +101,30 @@ namespace NutritionApp.Controllers
             {
                 return NotFound();
             }
+
+          
+                foreach (var ingredient in _context.Ingredients)
+                {
+                   if(ingredient.MealId == id)
+                    {
+                        BasketLine line = new BasketLine();
+                        Product prod = _context.Products.First(i => i.ProductId == ingredient.ProductId);
+                   
+                        line.Product = prod;
+                        line.Quantity = Convert.ToInt32(ingredient.Quantity);
+                        bas.Lines.Add(line);
+                    
+                   
+                    }
+                }
+            
+            
+
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", meal.UserId);
-            return View(meal);
+            BasketIndexViewModel model = new BasketIndexViewModel();
+            model.Meal = meal;
+            model.Basket = bas;
+            return View(model);
         }
 
         // POST: Meals/Edit/5
@@ -135,8 +160,31 @@ namespace NutritionApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", meal.UserId);
-            return View(meal);
+            BasketIndexViewModel model = new BasketIndexViewModel();
+            model.Meal = meal;
+            model.Basket = bas;
+            return View(model);
         }
+
+
+        //public ActionResult DeleteIngredientFromBasket(int id)
+        //{
+        //    foreach(var ingredient in bas.Lines)
+        //    {
+        //        if(ingredient.Product.ProductId == id)
+        //        {
+        //            bas.Lines.Remove(ingredient);
+        //            var ingre =  _context.Ingredients.Find(id);
+        //            _context.Ingredients.Remove(ingre);
+        //            _context.SaveChangesAsync();
+
+        //        }
+        //    }
+        //    BasketIndexViewModel model = new BasketIndexViewModel();
+        //    model.Basket = bas;
+        //    return View("Edit",model);
+        //}
+
 
         // GET: Meals/Delete/5
         public async Task<IActionResult> Delete(int? id)
