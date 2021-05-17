@@ -7,16 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NutritionApp.Data;
 using NutritionApp.Models;
+using NutritionApp.Models.ViewModels;
 
 namespace NutritionApp.Controllers
 {
     public class MealsController : Controller
     {
         private readonly NutritionAppContext _context;
+        private Basket basket;
+        private Basket bas = new Basket();
+        
 
-        public MealsController(NutritionAppContext context)
+
+        public MealsController(NutritionAppContext context, Basket basketSesion)
         {
             _context = context;
+            basket = basketSesion;
         }
 
         // GET: Meals
@@ -48,8 +54,11 @@ namespace NutritionApp.Controllers
         // GET: Meals/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id");
-            return View();
+            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
+            ViewData["AllProd"] = new SelectList(_context.Products, "ProductId", "ProductName");
+            BasketIndexViewModel model = new BasketIndexViewModel();
+          
+            return View(model);
         }
 
         // POST: Meals/Create
@@ -57,17 +66,27 @@ namespace NutritionApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MealId,UserId,Quantity")] Meal meal)
+        public async Task<IActionResult> Create([Bind("MealId,UserId,Quantity,MealName")] Meal meal)
         {
+            IngredientController ingredientCtr = new IngredientController(_context, basket);
             if (ModelState.IsValid)
             {
                 _context.Add(meal);
                 await _context.SaveChangesAsync();
+                int id = meal.MealId;
+                ingredientCtr.AddIngredient(id,basket);
+
+                basket.Clear();
+                
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", meal.UserId);
+           
+            //ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", meal.UserId);
+            //BasketIndexViewModel model = new BasketIndexViewModel();
             return View(meal);
         }
+        
+
 
         // GET: Meals/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -82,8 +101,30 @@ namespace NutritionApp.Controllers
             {
                 return NotFound();
             }
+
+          
+                foreach (var ingredient in _context.Ingredients)
+                {
+                   if(ingredient.MealId == id)
+                    {
+                        BasketLine line = new BasketLine();
+                        Product prod = _context.Products.First(i => i.ProductId == ingredient.ProductId);
+                   
+                        line.Product = prod;
+                        line.Quantity = Convert.ToInt32(ingredient.Quantity);
+                        bas.Lines.Add(line);
+                    
+                   
+                    }
+                }
+            
+            
+
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", meal.UserId);
-            return View(meal);
+            BasketIndexViewModel model = new BasketIndexViewModel();
+            model.Meal = meal;
+            model.Basket = bas;
+            return View(model);
         }
 
         // POST: Meals/Edit/5
@@ -91,7 +132,7 @@ namespace NutritionApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MealId,UserId,Quantity")] Meal meal)
+        public async Task<IActionResult> Edit(int id, [Bind("MealId,UserId,Quantity,MealName")] Meal meal)
         {
             if (id != meal.MealId)
             {
@@ -119,8 +160,31 @@ namespace NutritionApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", meal.UserId);
-            return View(meal);
+            BasketIndexViewModel model = new BasketIndexViewModel();
+            model.Meal = meal;
+            model.Basket = bas;
+            return View(model);
         }
+
+
+        //public ActionResult DeleteIngredientFromBasket(int id)
+        //{
+        //    foreach(var ingredient in bas.Lines)
+        //    {
+        //        if(ingredient.Product.ProductId == id)
+        //        {
+        //            bas.Lines.Remove(ingredient);
+        //            var ingre =  _context.Ingredients.Find(id);
+        //            _context.Ingredients.Remove(ingre);
+        //            _context.SaveChangesAsync();
+
+        //        }
+        //    }
+        //    BasketIndexViewModel model = new BasketIndexViewModel();
+        //    model.Basket = bas;
+        //    return View("Edit",model);
+        //}
+
 
         // GET: Meals/Delete/5
         public async Task<IActionResult> Delete(int? id)

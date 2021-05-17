@@ -12,6 +12,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using NutritionApp.Models;
+using NutritionApp.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
+
 
 namespace NutritionApp
 {
@@ -28,9 +31,16 @@ namespace NutritionApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<Basket>(sp => SessionBasket.GetBasket(sp));
             services.AddControllersWithViews();
-            services.AddDbContext<NutritionAppContext>(options => 
+            services.AddMemoryCache();
+            services.AddSession();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddDbContext<NutritionAppContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("NutritionAppContext")));
+
+
+
 
             services.AddIdentity<AppUser, IdentityRole>(opts => {
                 opts.User.RequireUniqueEmail = true;
@@ -54,6 +64,7 @@ namespace NutritionApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
             }
             else
             {
@@ -64,13 +75,15 @@ namespace NutritionApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+               
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

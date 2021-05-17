@@ -1,0 +1,38 @@
+﻿@model NutritionApp.Models.ViewModels.Basket
+@using NutritionApp.Infrastructure
+
+<div class="">
+
+   
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+            <tr>
+                <th>ProductName</th>
+                <th>Qunatity</th>
+                <th>Delete</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var line in Model.Lines)
+            {
+                <tr>
+                    <td class="text-center">@line.Product.ProductName</td>
+                    <td class="text-left">@line.Quantity</td>
+
+
+                    <td>
+                        <form asp-action="RemoveFromBasket" asp-controller="Basket" method="post">
+                            <input type="hidden" name="ProductId" value="@line.Product.ProductId" />
+                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>

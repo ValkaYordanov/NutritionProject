@@ -1,49 +1,257 @@
-﻿@model NutritionApp.Models.Intake
+﻿@model NutritionApp.Models.ViewModels.IntakeViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Intake</h4>
+<h1>What have you eaten today?</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+          
+
+           
+                <input asp-for="UserId" class="form-control" type="hidden">
+                <input asp-for="Day" class="form-control" type="hidden"  />
+             
+       
+
+
+            <div class="form-group" id="searchFoodContainer">
+                <label class="control-label">Search for food</label>
+                <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value, '@Model.UserId')" autocomplete="off" placeholder="Search for food or meal name">
+                <input asp-for="Type" type="hidden" />
+                <input asp-for="ItemId" type="hidden" />
+                
+                <span class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="MealId" class="control-label"></label>
-                <select asp-for="MealId" class ="form-control" asp-items="ViewBag.MealId"></select>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <select asp-for="ProductId" class ="form-control" asp-items="ViewBag.ProductId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
+
+            <div class="form-group" id="quantityContainer">
+                <label asp-for="Quantity" class="control-label">Grams</label>
+                <input asp-for="Quantity" inputmode="decimal" type="number" step="0,01" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Day" class="control-label"></label>
-                <input asp-for="Day" class="form-control" />
-                <span asp-validation-for="Day" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <button type="submit" value="Eat" class="btn btn-primary"><img src="/images/intake.svg" alt="Open mouth" /></button>
+                
+                
+
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<h2>Resent/Search</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Quantity)*@
+                Grams
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Type)*@
+                Product/Meal
+            </th>
+            <th>Kcal</th>
+        
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Intakes)
+        {
+            if (item.Meal != null)
+            {
+                if (item.Meal.UserId == Model.UserId)
+                {
+                <tr onclick="addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
+                    <td >
+                        @item.Quantity
+                    </td>
+                    <td>
+                        <img src="/images/meal.svg" alt="Meal" />
+                    </td>
+                    <td>
+                        @item.Meal.MealName
+                    </td>
+                    <td>@foreach (var ingredient in @item.Meal.Ingredients)
+                    {
+                        @*@ingredient.Product.Kcal*@
+
+                    }</td>
+                    
+                </tr>
+                }
+            }
+            if (item.Product != null)
+            {
+    <tr onclick="addToInput(@item.Product.ProductId, '@item.Product.ProductName', '@item.Quantity', 'product');">
+        <td >
+            @item.Quantity
+        </td>
+        <td>
+            <img src="/images/product.svg" alt="Food" /> @item.Product.ProductName
+        </td>
+        <td>@(item.Product.Kcal/100.0) * @item.Quantity </td>
+    </tr>
+            }
+
+
+        }
+    </tbody>
+</table>
+
+
+<script>
+
+    function searchForFoods(input, currentUserId) {
+        if (input !== "") {
+            const path = "https://localhost:44351/Intakes/SelectFromSp?";
+            const inputDec = "Input=";
+            const UserIdDec = "&UserId=";
+
+            console.log("currentUserId: ", currentUserId);
+
+            let url = `${path}${inputDec}${input}${UserIdDec}${currentUserId}`;
+            console.log(url);
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data);
+                    document.querySelector("tbody").innerHTML = '';
+
+                    data.productList.forEach(obj => addFoodOption(obj, 'product', `${input}`))
+                    data.mealList.forEach(obj => addFoodOption(obj, 'meal', `${input}`))
+                    highlightInput();
+                });
+                    }
+    }
+
+    function addFoodOption(food, type, input) {
+        console.log(food);
+        
+        if (type == 'product') {
+            console.log("GTIN: ", food.gtin);
+                       document.querySelector("tbody").innerHTML += `
+             <tr onclick="addChoosenFoodToInputFields('${food.productName}', '${type}', ${food.productId})">
+                    <td >
+                        
+                    </td>
+                    <td>
+                        <img src="/images/product.svg" alt="Product" /> 
+                    </td>
+<td > <div>${food.productName}</div> <span class="fadeString">${food.gtin}</span></td>
+                    <td></td>
+
+                </tr>`
+          
+        }
+        if (type == 'meal') {
+                       document.querySelector("tbody").innerHTML +=`
+             <tr onclick="addChoosenFoodToInputFields('${food.mealName}', '${type}',${food.mealId})" >
+                    <td >
+                        
+                    </td>
+                    <td>
+                       <img src="/images/meal.svg" alt="Meal" />  
+                    </td>
+<td> <div> ${food.mealName}</div></td>
+                    <td></td>
+
+                </tr>`
+
+            
+        }
+
+      
+    }
+
+    function highlightInput() {
+        var searchInput = document.querySelector('#searchFoodsInput');
+       
+        let rows = document.querySelectorAll("tbody tr");
+        rows.forEach(function (row) {
+            let foodName = row.querySelector(":nth-child(3)");
+            var regex = new RegExp(searchInput.value, 'gi')
+            var response = foodName.innerText.replace(regex, function (str) {
+                return "<span class='highlightString'>" + str + "</span>"
+            })
+            foodName.innerHTML = response
+        })
+        
+
+
+        //let input = document.querySelector("#searchFoodsInput").value;
+        //let rows = document.querySelectorAll("tbody tr");
+
+        //rows.forEach(function (row) {
+        //    console.log(row.querySelector(":nth-child(3)"))
+        //    let foodName = row.querySelector(":nth-child(3)");
+
+        //    var innerHTML = foodName.innerHTML;
+        //    var index = innerHTML.indexOf(input);
+        //    if (index >= 0) {
+        //        innerHTML = innerHTML.substring(0, index) + "<span class='highlightString'>" + innerHTML.substring(index, index + input.length) + "</span>" + innerHTML.substring(index + input.length);
+        //        foodName.innerHTML = innerHTML;
+        //    }
+        //});
+  
+     
+    }
+    
+
+
+    function addChoosenFoodToInputFields(foodName, addedType, foodId) {
+        const searchFoodContainer = document.querySelector("#searchFoodContainer");
+        const type = searchFoodContainer.querySelector("input[name='Type']");
+        const id = searchFoodContainer.querySelector("input[name='ItemId']");
+
+        // Save values
+        type.value = addedType;
+        id.value = foodId;
+        searchFoodsInput.value = foodName;
+        console.log(isInViewport(searchFoodContainer));
+        if(!isInViewport(searchFoodContainer)){
+            searchFoodContainer.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+        }
+    }
+
+    function isInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+
+        );
+    }
+
+    function addToInput(prevIntakeId, prevIntakeName, prevIntakeQuantity, type) {
+        console.log(prevIntakeId);
+        addChoosenFoodToInputFields(prevIntakeName, `${type}`, prevIntakeId);
+        //let dotyfiedQuantity = parseInt(prevIntakeQuantity.replace(",", "."));
+        document.querySelector("input[name='Quantity']").value = prevIntakeQuantity;
+    }
+
+   
+</script>
+
+<style>
+    th {
+        position: sticky;
+        top: 0;
+        background-color: wheat;
+    }
+    button{width: auto}
+    img{
+        height:2em;
+    }
+</style>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

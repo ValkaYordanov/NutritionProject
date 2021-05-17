@@ -248,6 +248,9 @@ namespace NutritionApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("MealId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -255,6 +258,8 @@ namespace NutritionApp.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IngredientId");
+
+                    b.HasIndex("MealId");
 
                     b.HasIndex("ProductId");
 
@@ -271,10 +276,10 @@ namespace NutritionApp.Migrations
                     b.Property<DateTime>("Day")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MealId")
+                    b.Property<int?>("MealId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
@@ -300,6 +305,9 @@ namespace NutritionApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("MealName")
+                        .HasColumnType("varchar(300)");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
@@ -336,8 +344,8 @@ namespace NutritionApp.Migrations
                     b.Property<decimal>("FromFatSaturated")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("GTIN")
-                        .HasColumnType("int");
+                    b.Property<string>("GTIN")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("KJ")
                         .HasColumnType("int");
@@ -438,19 +446,8 @@ namespace NutritionApp.Migrations
 
             modelBuilder.Entity("NutritionApp.Models.Ingredient", b =>
                 {
-                    b.HasOne("NutritionApp.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("NutritionApp.Models.Intake", b =>
-                {
                     b.HasOne("NutritionApp.Models.Meal", "Meal")
-                        .WithMany()
+                        .WithMany("Ingredients")
                         .HasForeignKey("MealId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -460,6 +457,21 @@ namespace NutritionApp.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Meal");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("NutritionApp.Models.Intake", b =>
+                {
+                    b.HasOne("NutritionApp.Models.Meal", "Meal")
+                        .WithMany()
+                        .HasForeignKey("MealId");
+
+                    b.HasOne("NutritionApp.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("NutritionApp.Models.AppUser", "User")
                         .WithMany()
@@ -479,6 +491,11 @@ namespace NutritionApp.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("NutritionApp.Models.Meal", b =>
+                {
+                    b.Navigation("Ingredients");
                 });
 #pragma warning restore 612, 618
         }

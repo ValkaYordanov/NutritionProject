@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 
 namespace NutritionApp.Models
 {
-    public class Meal:Item
+    public class Meal
     {
         public int MealId { get; set; }
+        public string MealName { get; set; }
         public string UserId { get; set; }
         public decimal Quantity { get; set; }
         public AppUser User { get; set; }
+        public IEnumerable<Ingredient> Ingredients { get; set; }
         //public virtual IEnumerable<Tag> Tags { get; set; }
         //public Meal()
         //{

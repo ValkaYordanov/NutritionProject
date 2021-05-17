@@ -1,0 +1,150 @@
+﻿@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Settings
+
+<h2>Settings</h2>
+
+<button class="accordion">Gender</button>
+<div class="panel">
+    <div id="gender-block">
+        <form id="genderForm" method="post" asp-controller="Settings" asp-action="Gender">
+            <select asp-for="GenderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
+            <input type="button" value="Change" onclick="GenderFormSubmit()" />
+        </form>
+    </div>
+</div>
+
+<button class="accordion">Weight</button>
+<div class="panel">
+    <div id="weight-block">
+        <form id="weightForm" method="post" asp-controller="Settings" asp-action="Weight">
+            <input type="text" class="text-input" name="weight" id="weight" asp-for="Weight" />
+            <input type="button" value="Change" onclick="WeightFormSubmit()" />
+        </form>
+    </div>
+</div>
+
+<button class="accordion">Weight Goal</button>
+<div class="panel">
+    <div id="goal-block">
+        <form id="weightGoalForm" method="post" asp-controller="Settings" asp-action="WeightGoal">
+            <input type="text" class="text-input" name="weightGoal" class="text-input" id="weightGoal" asp-for="WeightGoal" />
+            <input type="button" value="Change" onclick="WeightGoalFormSubmit()" />
+        </form>
+    </div>
+</div>
+
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    function GenderFormSubmit() {
+        let url = document.getElementById("genderForm");
+        let genderId = document.getElementById("genderId").value;
+
+        let formData = new FormData();
+        formData.append("genderId", genderId);
+        sendData(formData, url);
+    }
+
+    function WeightFormSubmit() {
+        let url = document.getElementById("weightForm");
+        let weight = document.getElementById("weight").value;
+
+        let formData = new FormData();
+        formData.append("weight", weight);
+        sendData(formData, url);
+    }
+
+    function WeightGoalFormSubmit() {
+        let form = document.getElementById("weightGoalForm");
+        let weightGoal = document.getElementById("weightGoal").value;
+
+        let formData = new FormData();
+        formData.append("weightGoal", weightGoal);
+        sendData(formData, form);
+    }
+
+    function sendData(formData, form) {
+        const XHR = new XMLHttpRequest();
+        XHR.addEventListener('load', function (event) {
+            let scs = document.createElement('p');
+            scs.classList.add('success');
+            scs.innerText = "Your new data has been saved!"
+            form.parentNode.insertBefore(scs, form.nextSibling);
+            setTimeout(() => { scs.remove(); }, 3000);
+        });
+
+        XHR.addEventListener('error', function (event) {
+            let scs = document.createElement('p');
+            scs.classList.add('fail');
+            scs.innerText = "There has been an error."
+            form.parentNode.insertBefore(scs, form.nextSibling);
+        });
+        XHR.open('POST', form.action);
+        XHR.send(formData);
+    }
+</script>
+
+<style>
+    select {
+        max-width: 210px;
+    }
+
+    .text-input {
+        width: 210px;
+        height: 33.5px;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+    }
+
+    .panel > div > form {
+        display: flex;
+        justify-content: space-between;
+        margin: 1.5rem 0;
+    }
+
+    .accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+
+    .success {
+        color: green;
+    }
+    .fail {
+        color: red;
+    }
+</style>

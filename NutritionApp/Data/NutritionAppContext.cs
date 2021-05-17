@@ -13,6 +13,11 @@ namespace NutritionApp.Data
 {
     public class NutritionAppContext : IdentityDbContext<AppUser>
     {
+        public NutritionAppContext()
+        {
+        }
+
+        
 
         public NutritionAppContext(DbContextOptions<NutritionAppContext> options) : base(options) { }
        // public DbSet<User> Users { get; set; }
@@ -41,6 +46,7 @@ namespace NutritionApp.Data
             modelBuilder.Entity<Intake>().Property(b => b.Quantity).HasColumnType("decimal(18,2)");
             modelBuilder.Entity<Ingredient>().Property(b => b.Quantity).HasColumnType("decimal(18,2)");
             modelBuilder.Entity<Meal>().Property(b => b.Quantity).HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<Meal>().Property(b => b.MealName).HasColumnType("varchar(300)");
             modelBuilder.Entity<Product>().Property(b => b.Brand).HasColumnType("varchar(60)");
             modelBuilder.Entity<Product>().Property(b => b.ProductName).HasColumnType("varchar(100)");
             modelBuilder.Entity<Tag>().Property(b => b.TagName).HasColumnType("varchar(50)");
@@ -52,6 +58,8 @@ namespace NutritionApp.Data
             modelBuilder.Entity<Product>().Property(b => b.FromCarbsSuggar).HasColumnType("decimal(18,2)");
             modelBuilder.Entity<Product>().Property(b => b.Protein).HasColumnType("decimal(18,2)");
             modelBuilder.Entity<Product>().Property(b => b.Salt).HasColumnType("decimal(18,2)");
+
+
 
         }
     }

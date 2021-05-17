@@ -4,12 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - NutritionApp</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/standardStyle.css" />
+    <link rel="stylesheet" href="~/css/FooterAndHeader.css" />
 </head>
-<body>
+<body class="@ViewData["Title"]">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NutritionApp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -24,21 +28,36 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Overview" asp-action="day">Overview</a>
+                        </li>
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav>*@
+        <nav> <div><a asp-area="" asp-controller="Settings" asp-action="Index"><img src="~/images/settings.svg" alt="Gears" />Settings</a></div></nav>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
+   
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <nav class="flexContainer">
+            <div><a asp-area="" asp-controller="Meals" asp-action="Index"><img src="~/images/meal.svg" alt="Breakfast plate" /><span>Meals</span></a></div>
+            <div class="middleNav">
+                <div><a asp-area="" asp-controller="Intakes" asp-action="Create"><img src="~/images/intake.svg" alt="Open mouth" /><span>Eat</span></a></div>
+                <div><a asp-area="" asp-controller="Overview" asp-action="Index"><img src="~/images/overview.svg" alt="Eye" /><span>Overview</span></a></div>
+            </div>
+            <div><a asp-area="" asp-controller="Products" asp-action="Index"><img src="~/images/product.svg" alt="Food" /><span>Foods</span></a></div>
+
+        </nav>
+        @*<div class="container">
             &copy; 2021 - NutritionApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+            Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a>, <a href="https://www.freepik.com" title="Freepik">Freepik</a>, <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> and <a href="" title="photo3idea_studio">photo3idea_studio</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+        </div>*@
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

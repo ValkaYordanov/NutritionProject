@@ -78,48 +78,48 @@
         @foreach (var item in Model)
         {
 
-            <tr>
-                <a asp-controller="Intakes" asp-action="Edit" asp-route-id="@item.IntakeId">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Quantity)
-                    </td>
-                    <td>
-                    </td>
-                    <td class="name">
+        <tr>
+            <a asp-controller="Intakes" asp-action="Edit" asp-route-id="@item.IntakeId">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                </td>
+                <td class="name">
 
-                        @Html.DisplayFor(modelItem => item.Meal.MealName)
-                        @Html.DisplayFor(modelItem => item.Product.ProductName)
-                    </td>
-                    <td>
+                    @Html.DisplayFor(modelItem => item.Meal.MealName)
+                    @Html.DisplayFor(modelItem => item.Product.ProductName)
+                </td>
+                <td>
 
 
 
-                        @{
-                            var i = 0;
-                        }
+                    @{
+                        var i = 0;
+                    }
 
-                        @foreach (var listitem in ViewData["KcalList"] as List<int>)
+                    @foreach (var listitem in ViewData["KcalList"] as List<int>)
+                    {
+                        i++;
+                        @if (i == p)
                         {
-                            i++;
-                            @if (i == p)
-                            {
-                                <p class="kcal">
-                                    @listitem
-                                </p>
-                            }
+                            <p class="kcal">
+                                @listitem
+                            </p>
                         }
+                    }
 
 
 
-                        @{
-                            p++;
-                        }
+                    @{
+                        p++;
+                    }
 
-                    </td>
+                </td>
 
-                </a>
+            </a>
 
-            </tr>
+        </tr>
         }
 
 

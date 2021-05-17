@@ -1,69 +1,164 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NutritionApp.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NutritionApp.Data;
-using NutritionApp.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.Extensions.Logging;
 using System.Security.Claims;
-
+using System.Collections.Generic;
+using NutritionApp.Models.ViewModels;
+using System.Collections;
 
 namespace NutritionApp.Controllers
 {
     public class OverviewController : Controller
     {
-        //context
+
+        private readonly UserManager<AppUser> _userManager;
         private readonly NutritionAppContext _context;
-
-        //authorize
-        private UserManager<AppUser> _userManager;
-        private readonly ILogger<OverviewController> _logger;
-        public OverviewController(NutritionAppContext context, UserManager<AppUser> userMgr, ILogger<OverviewController> logger)
+        public OverviewController(UserManager<AppUser> userMgr, NutritionAppContext context)
         {
-            _context = context;
             _userManager = userMgr;
-            _logger = logger;
-
+            _context = context;
         }
 
         private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-        //private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-        public async Task<IActionResult> Index()
+        
+        public async Task<IActionResult> Index(int id, OverviewViewModel data)
         {
             AppUser user = await CurrentUser;
             var username = HttpContext.User.Identity.Name;
-            var id = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var theid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-           
-                ViewBag.Name = username;
-                ViewBag.Id = id;
-                //var nutritionAppContext = _context.Intakes.Include(i => i.Meal).Include(i => i.Product).Include(i => i.User);
-                //return View(await nutritionAppContext.ToListAsync());
-                return View();
-            
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IntakeId,UserId,MealId,ProductId,Quantity,Day")] Intake intake)
-        {
-            if (ModelState.IsValid)
+            if (id < 0) { id = 0; };
+            ViewBag.Id = theid;
+            ViewBag.Name = username;
+            ViewBag.Count = id;
+
+            var minusCount = (-1 * id);
+            var theDay = DateTime.Today.AddDays(minusCount);
+            ViewBag.theDay = theDay;
+
+            var nutritionAppContext = _context.Intakes
+                    .Where(s =>
+                    s.User.Id == theid
+                    &&
+                    (s.Day >= theDay
+                    && s.Day < theDay.AddDays(1)))
+                    .Include(i => i.Product)
+                    .Include(i => i.Meal)
+                    .ThenInclude(i => i.Ingredients)
+                    ;
+
+            var i = 0;
+            var KcalList = new List<int>();
+            var Proteins = new List<decimal>();
+            var Fats = new List<decimal>();
+            var Carbs = new List<decimal>();
+            var Stats = new List<string>();
+            var plist = new List<Intake>();
+
+            var vm = new List<OverviewViewModel>();
+            foreach (var item in nutritionAppContext.ToList() )
             {
-                _context.Add(intake);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                
+                if (item.Product != null)
+                {
+                    KcalList.Add(item.Product.Kcal);
+                    Proteins.Add(item.Product.Protein);
+                    Carbs.Add(item.Product.Carbs);
+                    Fats.Add(item.Product.Fat);
+                    //KcalList.Add(item.Product.Kcal);
+                    // use viewmodel to collect data - send viewmodel to vm list ?
+                }
+                else
+                {
+                    //var MealKcals = new List<int>();
+                    var totalMealKcal = 0;
+                    decimal totalProtein = 0;
+                    decimal totalFat = 0;
+                    decimal totalCarbs = 0;
+                    foreach (var ingr in item.Meal.Ingredients)
+                    {
+                        //MealKcals.Add(ingr.Product.Kcal);
+
+                        var prod_id = ingr.ProductId;
+                        var prodContext = _context.Products
+                            .Where(p => p.ProductId == prod_id)
+                            .FirstOrDefault()
+                            ;
+
+                        
+                        totalMealKcal += prodContext.Kcal;
+                        totalProtein += prodContext.Protein;
+                        totalFat += prodContext.Fat;
+                        totalCarbs += prodContext.Carbs;
+                    }
+                    KcalList.Add(totalMealKcal);
+                    Proteins.Add(totalProtein);
+                    Fats.Add(totalFat);
+                    Carbs.Add(totalCarbs);
+                }
             }
-            ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
-            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", intake.UserId);
-            return View(intake);
+
+            ViewData["KcalList"] = KcalList;
+            ViewData["plist"]   = plist;
+            ViewData["Proteins"] = Proteins;
+            ViewData["Fats"] = Fats;
+            ViewData["Carbs"] = Carbs;
+
+
+            //EmployeeDBContext dbContext = new EmployeeDBContext();
+            //List<Department> listDepartments = dbContext.Departments.ToList();
+            //return View(listDepartments);
+
+            return View(await nutritionAppContext.ToListAsync());
         }
 
+
+
+        public async Task<IActionResult> Day(int id)
+        {
+            AppUser user = await CurrentUser;
+            var username = HttpContext.User.Identity.Name;
+            var theid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (id < 0) { id = 0; };
+            ViewBag.Id = theid;
+            ViewBag.Name = username;
+            ViewBag.Count = id;
+
+            var minusCount = (-1 * id);
+            var theDay = DateTime.Today.AddDays(minusCount);
+
+            var nutritionAppContext = _context.Intakes
+                    .Where(s =>
+                    s.User.Id == theid
+                    &&
+                    (s.Day >= theDay
+                    && s.Day < theDay.AddDays(1)))
+                    .Include(i => i.Product)
+                    .Include(i => i.Meal)
+                    //.ThenInclude(i => i.Ingredients)
+                   .ToListAsync()
+                    ;
+
+            var getMealId = _context.Intakes
+                    .Where(s =>
+                    s.User.Id == theid
+                    &&
+                    (s.Day >= theDay
+                    && s.Day < theDay.AddDays(1)))
+                    .Include(i => i.Meal)
+                    .ToArrayAsync()
+                    ;
+
+
+            ViewBag.theDay = theDay;
+            return View(await nutritionAppContext);
+        }
     }
 }
