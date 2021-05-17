@@ -80,6 +80,7 @@ nav div img {
 }
 .active-page img {
     filter: none;
+    transform: scale(1.2);
 }
 
 /* ------- footer active --------- */
