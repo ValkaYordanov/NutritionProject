@@ -1,4 +1,5 @@
 ﻿@{
+    Layout = "";
 }
 @addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
 
@@ -8,52 +9,82 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        * {box-sizing: border-box}
-        body {font-family: Verdana, sans-serif; margin:0}
-        .mySlides {display: none}
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Verdana, sans-serif;
+            margin: 0
+        }
+
+        .mySlides {
+            display: none;
+            height: 100%;
+        }
 
         /* Slideshow container */
         .slideshow-container {
-          max-width: 1000px;
-          position: relative;
-          margin: auto;
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+        }
+
+        .nav-dots {
+            text-align: center;
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
         }
 
         /* The dots/bullets/indicators */
         .dot {
-          cursor: pointer;
-          height: 15px;
-          width: 15px;
-          margin: 0 2px;
-          background-color: #bbb;
-          border-radius: 50%;
-          display: inline-block;
-          transition: background-color 0.6s ease;
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
         }
 
-        .active, .dot:hover {
-          background-color: #717171;
-        }
+            .active, .dot:hover {
+                background-color: #717171;
+            }
 
         /* Fading animation */
         .fade {
-          -webkit-animation-name: fade;
-          -webkit-animation-duration: 1.5s;
-          animation-name: fade;
-          animation-duration: 1.5s;
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        #new-user-deets {
+            position: relative;
+            height: 100vh;
+        }
+
+        .slideshow-container {
+            height: 100%;
         }
 
         @@keyframes fade {
-          from {opacity: .4}
-          to {opacity: 1}
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
         }
     </style>
 </head>
 
 <body>
-    <section style="height:100vh">
+    <section id="new-user-deets">
         <div class="slideshow-container">
-
             <div class="mySlides fade" onclick="plusSlides(1);">
                 <div id="welcome-block">
                     <p>
@@ -95,12 +126,11 @@
                 </div>
             </div>
 
-            @*<a class="next" onclick="plusSlides(1)">&#10095;</a>*@
             <a href="/" style="display:none;" id="hmp-link"></a>
 
         </div>
 
-        <div style="text-align:center;margin-top:auto;">
+        <div class="nav-dots">
             <span class="dot" onclick="currentSlide(1)"></span>
             <span class="dot" onclick="currentSlide(2)"></span>
             <span class="dot" onclick="currentSlide(3)"></span>
@@ -180,5 +210,39 @@
             slides[slideIndex - 1].classList.add('show');
             dots[slideIndex - 1].className += " active";
         }
+    </script>
+    <script>
+        document.addEventListener('touchstart', handleTouchStart, false);
+        document.addEventListener('touchmove', handleTouchMove, false);
+
+        var xDown = null;
+
+        function getTouches(evt) {
+            return evt.touches ||    
+                evt.originalEvent.touches;
+        }
+
+        function handleTouchStart(evt) {
+            const firstTouch = getTouches(evt)[0];
+            xDown = firstTouch.clientX;
+        };                   
+        
+        function handleTouchMove(evt) {
+            if (!xDown) {
+                return;
+            }
+
+            var xUp = evt.touches[0].clientX;
+
+            var xDiff = xDown - xUp;
+
+            if (xDiff > 0) {
+                plusSlides(1);
+            } else {
+                plusSlides(-1);
+            }
+
+            xDown = null;
+        };
     </script>
 </body>
