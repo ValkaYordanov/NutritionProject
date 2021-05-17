@@ -130,6 +130,12 @@ namespace NutritionApp.Controllers
         {
             
             Intake intake = new Intake();
+
+            if (string.IsNullOrEmpty(data.Type))
+            {
+                ModelState.AddModelError("Type", "Please choose a food from the list or search for it");
+            }
+
             if (ModelState.IsValid)
             {
               

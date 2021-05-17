@@ -59,7 +59,7 @@ a {
 }
 
 .food-listing .table td {
-    font-weight: bold;
+    /*font-weight: bold;*/
     color:gray;
 }
 
