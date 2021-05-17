@@ -1,4 +1,5 @@
 ﻿@{
+    Layout = "";
 }
 @addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
 
@@ -8,55 +9,98 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        * {box-sizing: border-box}
-        body {font-family: Verdana, sans-serif; margin:0}
-        .mySlides {display: none}
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Verdana, sans-serif;
+            margin: 0
+        }
+
+        .fail {
+            color: red;
+        }
+
+        .mySlides {
+            display: none;
+            height: 80%;
+        }
 
         /* Slideshow container */
         .slideshow-container {
-          max-width: 1000px;
-          position: relative;
-          margin: auto;
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+        }
+
+        .bottom-links {
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
+        }
+
+        .nav-dots {
+            text-align: center;
         }
 
         /* The dots/bullets/indicators */
         .dot {
-          cursor: pointer;
-          height: 15px;
-          width: 15px;
-          margin: 0 2px;
-          background-color: #bbb;
-          border-radius: 50%;
-          display: inline-block;
-          transition: background-color 0.6s ease;
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
         }
 
-        .active, .dot:hover {
-          background-color: #717171;
-        }
+            .active, .dot:hover {
+                background-color: #717171;
+            }
 
         /* Fading animation */
         .fade {
-          -webkit-animation-name: fade;
-          -webkit-animation-duration: 1.5s;
-          animation-name: fade;
-          animation-duration: 1.5s;
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        #new-user-deets {
+            position: relative;
+            height: 100vh;
+        }
+
+        .story-style {
+            font-size: 2rem;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .slideshow-container {
+            height: 100%;
         }
 
         @@keyframes fade {
-          from {opacity: .4}
-          to {opacity: 1}
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
         }
     </style>
 </head>
 
 <body>
-    <section style="height:100vh">
+    <section id="new-user-deets">
         <div class="slideshow-container">
-
             <div class="mySlides fade" onclick="plusSlides(1);">
                 <div id="welcome-block">
-                    <p>
+                    <p class="story-style">
                         Welcome to NutriApp!
                         We hope you bla bla bla,
                         and that NutriApp helps you
@@ -67,44 +111,56 @@
 
             <div class="mySlides fade">
                 <div id="gender-block">
-                    <h3>Gender</h3>
-                    <form id="genderForm" method="post" asp-controller="Account" asp-action="Gender">
-                        <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
-                        <input type="button" value="Submit" onclick="GenderFormSubmit()" />
+                    <form id="genderForm" class="story-style" method="post" asp-controller="Account" asp-action="Gender">
+                        <p>
+                            Great! I'm ready to start. First, my gender is 
+                            <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
+                        </p>
+                        <input type="button" value="Continue" onclick="GenderFormSubmit()" />
                     </form>
                 </div>
             </div>
 
             <div class="mySlides fade">
                 <div id="weight-block">
-                    <h3>Weight</h3>
-                    <form id="weightForm" method="post" asp-controller="Account" asp-action="Weight">
-                        <input type="text" name="weight" id="weight" />
-                        <input type="button" value="Submit" onclick="WeightFormSubmit()" />
+                    <form id="weightForm" class="story-style" method="post" asp-controller="Account" asp-action="Weight">
+                        <p>
+                            At the current moment, I weight
+                            <input type="text" name="weight" id="weight" onkeyup="validateWeight(this)" />
+                            kg. 
+                        </p>
+                        <input type="button" value="Continue" onclick="WeightFormSubmit()" />
                     </form>
+                    <p class="fail"></p>
                 </div>
             </div>
 
             <div class="mySlides fade">
                 <div id="goal-block">
-                    <h3>Weight Goal</h3>
-                    <form id="weightGoalForm" method="post" asp-controller="Account" asp-action="WeightGoal">
-                        <input type="text" name="weightGoal" id="weightGoal" />
+                    <form id="weightGoalForm" class="story-style" method="post" asp-controller="Account" asp-action="WeightGoal">
+                        <p>
+                            One last thing... My weight goal is to weight
+                            <input type="text" name="weightGoal" id="weightGoal" onkeyup="validateWeight(this)" />
+                            kg.
+                        </p>
                         <input type="submit" />
                     </form>
+                    <p class="fail"></p>
                 </div>
             </div>
 
-            @*<a class="next" onclick="plusSlides(1)">&#10095;</a>*@
             <a href="/" style="display:none;" id="hmp-link"></a>
 
         </div>
 
-        <div style="text-align:center;margin-top:auto;">
-            <span class="dot" onclick="currentSlide(1)"></span>
-            <span class="dot" onclick="currentSlide(2)"></span>
-            <span class="dot" onclick="currentSlide(3)"></span>
-            <span class="dot" onclick="currentSlide(4)"></span>
+        <div class="bottom-links">
+            <div class="nav-dots">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+            <p class="nav-dots">Or you can <a asp-controller="Account" asp-action="Login">log in</a> instead.</p>
         </div>
     </section>
 
@@ -179,6 +235,52 @@
             slides[slideIndex - 1].style.display = "block";
             slides[slideIndex - 1].classList.add('show');
             dots[slideIndex - 1].className += " active";
+        }
+    </script>
+    <script id="swiping-script">
+        document.addEventListener('touchstart', handleTouchStart, false);
+        document.addEventListener('touchmove', handleTouchMove, false);
+
+        var xDown = null;
+
+        function getTouches(evt) {
+            return evt.touches ||
+                evt.originalEvent.touches;
+        }
+
+        function handleTouchStart(evt) {
+            const firstTouch = getTouches(evt)[0];
+            xDown = firstTouch.clientX;
+        };
+
+        function handleTouchMove(evt) {
+            if (!xDown) {
+                return;
+            }
+
+            var xUp = evt.touches[0].clientX;
+
+            var xDiff = xDown - xUp;
+
+            if (xDiff > 0) {
+                plusSlides(1);
+            } else {
+                plusSlides(-1);
+            }
+
+            xDown = null;
+        };
+    </script>
+
+    <script>
+        function validateWeight(self) {
+            let value = self.value;
+            let er = self.parentNode.parentNode.getElementsByClassName('fail')[0];
+            if (isNaN(value) || value < 0) {
+                er.innerText = "The value provided should be a positive number.";
+            } else {
+                er.innerText = "";
+            }
         }
     </script>
 </body>

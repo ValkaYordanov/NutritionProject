@@ -30,7 +30,6 @@ namespace NutritionApp.Controllers
             if (user != null)
             {
                 ViewData["Genders"] = new SelectList(_context.Genders, "GenderId", "Label");
-                settings.Email = user.Email;
                 settings.GenderId = user.GenderId;
                 settings.Weight = user.Weight;
                 settings.WeightGoal = user.WeightGoal;
