@@ -1,6 +1,8 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-
+:root {
+    --green: #6CA15A;
+}
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -76,31 +78,40 @@ body {
     border-radius: 8px;
 }
 .overview-graphs #top {
-    background: rgba(255,255,255,.6);
-    backdrop-filter: blur(14px);
-    border-radius: 8px;
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+}
+.overview-graphs {
     margin: 15px 0;
     padding: 10px;
+    background: rgba(255,255,255,.6);
+    backdrop-filter: blur(14px);
+    border-radius: 8px;
 }
-    .overview-graphs #top > div {
-
-    }
+.overview-graphs #top > div p {
+    margin: 0;
+    text-align: center;
+}
+.overview-graphs #top h4.goal {
+    margin-bottom: 0 !important;
+}
 
 #appleStyle {
     position: relative;
-
-    margin: 10px;
 }
-#toggle {
-    display: none;
+#appleStyle > p {
+    margin-bottom: 5px !important;
 }
+    #toggle {
+        display: none;
+    }
 
     #toggle:checked ~ #container {
-        background: #2ecc71;
-        border: 1px solid #2ecc71;
+        background: var(--green);
+        border: 1px solid var(--green);
         transition: .2s cubic-bezier(.55,0,.1,1);
     }
 
@@ -138,3 +149,65 @@ body {
     right: 0;
 }
 
+/*overview Graphs*/
+#graphs {
+    display: flex;
+    justify-content: space-evenly;
+}
+    #graphs .graph {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+.bar-wrap {
+    height: 150px;
+    position: relative;
+    width: 28px;
+    background-color: #f3f3f3;
+    box-shadow: 0 0 0 1px #e3e3e3;
+}
+    .bar-wrap .bar {
+        position: absolute;
+        width: 28px;
+        bottom: 0;
+        max-height: 100%;
+    }
+    .bar-wrap.carbs .bar {
+        background: #EFE93D;
+    }
+    .bar-wrap.kcal .bar {
+        background: var(--green);
+    }
+    .bar-wrap.fats .bar {
+        background: #378FDC;
+    }
+    .bar-wrap.proteins .bar {
+        background: #E13D3D;
+    }
+    .bar-wrap.carbs ~ .graph-text p {
+        color: #EFE93D;
+    }
+    .bar-wrap.kcal ~ .graph-text p {
+        color: var(--green);
+    }
+    .bar-wrap.fats ~ .graph-text p {
+        color: #378FDC;
+    }
+    .bar-wrap.proteins ~ .graph-text p {
+        color: #E13D3D;
+    }
+    .graph-text {
+        text-align: center;
+    }
+    .graph-text p {
+        font-size: 20px;
+        margin: 0;
+        font-weight: 700;
+    }
+    /*overview*/
+    body.Overview {
+        background-image: url(../images/fruitbg.png);
+        /*background-size: cover;*/
+        background-position: center center;
+        background-repeat: repeat-y;
+    }
