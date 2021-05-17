@@ -10,13 +10,13 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-          
 
-           
-                <input asp-for="UserId" class="form-control" type="hidden">
-                <input asp-for="Day" class="form-control" type="hidden"  />
-             
-       
+
+
+            <input asp-for="UserId" class="form-control" type="hidden">
+            <input asp-for="Day" class="form-control" type="hidden" />
+
+
 
 
             <div class="form-group" id="searchFoodContainer">
@@ -24,20 +24,20 @@
                 <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value, '@Model.UserId')" autocomplete="off" placeholder="Search for food or meal name">
                 <input asp-for="Type" type="hidden" />
                 <input asp-for="ItemId" type="hidden" />
-                
+
                 <span class="text-danger"></span>
             </div>
 
             <div class="form-group" id="quantityContainer">
                 <label asp-for="Quantity" class="control-label">Grams</label>
-                <input asp-for="Quantity" inputmode="decimal" type="number" step="0,01" class="form-control" autocomplete="off" />
+                <input asp-for="Quantity" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <button type="submit" value="Eat" class="btn btn-primary"><img src="/images/intake.svg" alt="Open mouth" /></button>
-                
-                
+
+
 
             </div>
         </form>
@@ -57,7 +57,7 @@
                 Product/Meal
             </th>
             <th>Kcal</th>
-        
+
         </tr>
     </thead>
     <tbody>
@@ -67,44 +67,46 @@
             {
                 if (item.Meal.UserId == Model.UserId)
                 {
-                <tr onclick="addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
-                    <td >
-                        @item.Quantity
-                    </td>
-                    <td>
-                        <img src="/images/meal.svg" alt="Meal" />
-                    </td>
-                    <td>
-                        @item.Meal.MealName
-                    </td>
-                    <td>@foreach (var ingredient in @item.Meal.Ingredients)
-                    {
-                        @*@ingredient.Product.Kcal*@
+                    <tr onclick="addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
+                        <td>
+                            @item.Quantity
+                        </td>
+                        <td>
+                            <img src="/images/meal.svg" alt="Meal" />
+                        </td>
+                        <td>
+                            @item.Meal.MealName
+                        </td>
+                        <td>
+                            @foreach (var ingredient in @item.Meal.Ingredients)
+                            {
+                                @*@ingredient.Product.Kcal*@
 
-                    }</td>
-                    
+                            }
+                    </td>
+
                 </tr>
-                }
             }
-            if (item.Product != null)
-            {
-    <tr onclick="addToInput(@item.Product.ProductId, '@item.Product.ProductName', '@item.Quantity', 'product');">
-        <td >
-            @item.Quantity
-        </td>
-        <td>
-            <img src="/images/product.svg" alt="Food" /> @item.Product.ProductName
-        </td>
-        <td>@(item.Product.Kcal/100.0) * @item.Quantity </td>
-    </tr>
-            }
-
-
         }
+        if (item.Product != null)
+        {
+            <tr onclick="addToInput(@item.Product.ProductId, '@item.Product.ProductName', '@item.Quantity', 'product');">
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    <img src="/images/product.svg" alt="Food" /> @item.Product.ProductName
+                </td>
+                <td>@(item.Product.Kcal/100M * item.Quantity) </td>
+            </tr>
+        }
+
+
+    }
     </tbody>
 </table>
 
-
+<script>$.validator.methods.number = function (value, element) { return this.optional(element) || /-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value); };</script>
 <script>
 
     function searchForFoods(input, currentUserId) {
@@ -128,51 +130,51 @@
                     data.mealList.forEach(obj => addFoodOption(obj, 'meal', `${input}`))
                     highlightInput();
                 });
-                    }
+        }
     }
 
     function addFoodOption(food, type, input) {
         console.log(food);
-        
+
         if (type == 'product') {
             console.log("GTIN: ", food.gtin);
-                       document.querySelector("tbody").innerHTML += `
+            document.querySelector("tbody").innerHTML += `
              <tr onclick="addChoosenFoodToInputFields('${food.productName}', '${type}', ${food.productId})">
                     <td >
-                        
+
                     </td>
                     <td>
-                        <img src="/images/product.svg" alt="Product" /> 
+                        <img src="/images/product.svg" alt="Product" />
                     </td>
 <td > <div>${food.productName}</div> <span class="fadeString">${food.gtin}</span></td>
                     <td></td>
 
                 </tr>`
-          
+
         }
         if (type == 'meal') {
-                       document.querySelector("tbody").innerHTML +=`
+            document.querySelector("tbody").innerHTML += `
              <tr onclick="addChoosenFoodToInputFields('${food.mealName}', '${type}',${food.mealId})" >
                     <td >
-                        
+
                     </td>
                     <td>
-                       <img src="/images/meal.svg" alt="Meal" />  
+                       <img src="/images/meal.svg" alt="Meal" />
                     </td>
 <td> <div> ${food.mealName}</div></td>
                     <td></td>
 
                 </tr>`
 
-            
+
         }
 
-      
+
     }
 
     function highlightInput() {
         var searchInput = document.querySelector('#searchFoodsInput');
-       
+
         let rows = document.querySelectorAll("tbody tr");
         rows.forEach(function (row) {
             let foodName = row.querySelector(":nth-child(3)");
@@ -182,7 +184,7 @@
             })
             foodName.innerHTML = response
         })
-        
+
 
 
         //let input = document.querySelector("#searchFoodsInput").value;
@@ -199,10 +201,10 @@
         //        foodName.innerHTML = innerHTML;
         //    }
         //});
-  
-     
+
+
     }
-    
+
 
 
     function addChoosenFoodToInputFields(foodName, addedType, foodId) {
@@ -215,7 +217,7 @@
         id.value = foodId;
         searchFoodsInput.value = foodName;
         console.log(isInViewport(searchFoodContainer));
-        if(!isInViewport(searchFoodContainer)){
+        if (!isInViewport(searchFoodContainer)) {
             searchFoodContainer.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
         }
     }
@@ -238,7 +240,7 @@
         document.querySelector("input[name='Quantity']").value = prevIntakeQuantity;
     }
 
-   
+
 </script>
 
 <style>
@@ -247,9 +249,13 @@
         top: 0;
         background-color: wheat;
     }
-    button{width: auto}
-    img{
-        height:2em;
+
+    button {
+        width: auto
+    }
+
+    img {
+        height: 2em;
     }
 </style>
 

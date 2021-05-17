@@ -156,7 +156,7 @@ namespace NutritionApp.Controllers
                     Console.WriteLine(e.Message);
 
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
             //ViewData["MealId"] = new SelectList(_context.Meals, "MealId", "MealId", intake.MealId);
             //ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", intake.ProductId);
@@ -236,22 +236,22 @@ namespace NutritionApp.Controllers
                     if (data.Type == "product")
                     {
                         intake.Product = _context.Products.Where(p => p.ProductId == data.ItemId).First();
-                        //if (intake.Meal != null)
-                        //{
-                        //    intake.Meal= null;
-                        //}
+                        if (intake.Meal != null)
+                        {
+                            intake.Meal = null;
+                        }
 
                     }
                     else if (data.Type == "meal")
                     {
 
                         intake.Meal = _context.Meals.Where(p => p.MealId == data.ItemId).First();
-                        //if (intake.Product != null)
-                        //{
-                        //    intake.Product = null;
-                            
-                        //}
-                      
+                        if (intake.Product != null)
+                        {
+                            intake.Product = null;
+
+                        }
+
                     }
 
                     _context.Update(intake);
