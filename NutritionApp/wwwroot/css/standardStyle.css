@@ -1,15 +1,43 @@
-﻿
-* {
+﻿* {
     font-family: 'Work Sans', sans-serif;
 }
-.flexContainer{
-    display:flex;
+
+/*------------------------Boxex -------------------------*/
+.flexContainer {
+    display: flex;
 }
 
+
+
+/*------------------------Text -------------------------*/
+.highlightString {
+    font-weight: bold;
+    color: darkgoldenrod;
+}
+
+
+.fadeString {
+    color: dimgrey;
+    display: block;
+}
+
+/*------------------------Input Fields -------------------------*/
+.form-control#searchFoodsInput {
+    background-image: url(../images/search-symbol.svg);
+    background-position: 7px 10px;
+    background-repeat: no-repeat;
+    background-size: 1em;
+    text-indent: 1em;
+}
+
+
+/*------------------------Tables -------------------------*/
 .table {
     max-width: 100%;
     table-layout: auto;
 }
-.table th, .table td{
+
+.table th,
+.table td {
     padding: .75rem 0;
 }
