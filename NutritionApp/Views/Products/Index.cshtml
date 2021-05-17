@@ -18,72 +18,23 @@
             <th>
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GTIN)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Kcal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.KJ)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FromFatSaturated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Carbs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FromCarbsSuggar)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Protein)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salt)
-            </th>
+          
+           
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr onclick="location.href = '@(Url.Action("Edit", "Products",new { id= @item.ProductId }))'">
             <td>
                 @Html.DisplayFor(modelItem => item.Brand)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.GTIN)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Kcal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KJ)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FromFatSaturated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Carbs)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FromCarbsSuggar)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Protein)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salt)
-            </td>
+         
+           
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
@@ -93,3 +44,10 @@
 }
     </tbody>
 </table>
+
+
+<script>
+    function navigateToEdit(productId) {
+
+    }
+</script>
