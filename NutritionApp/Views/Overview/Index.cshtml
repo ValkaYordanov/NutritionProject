@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<NutritionApp.Models.Intake>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Overview";
 
     int prev = ViewBag.Count + 1;
     int next = ViewBag.Count - 1;
@@ -12,7 +12,6 @@
 }
 
 <h1>Overview</h1>
-<h3>@ViewBag.Name</h3>
 
 <div id="day">
     <a asp-action="Index" asp-route-id="@prev">Prev</a>
@@ -39,6 +38,20 @@
     }
 
 </div>
+<section class="overview-graphs">
+    <div id="top">
+        <div id="kcal-goal">
+            <p>GOAL</p>
+            <h4>1906</h4>
+            <p>kcal</p>
+        </div>
+        <div id="appleStyle">
+            <input id="toggle" type="checkbox" />
+            <label id="control" for="toggle"></label>
+            <div id="container"></div>
+        </div>
+    </div>
+</section>
 
 <p>
     <a asp-controller="Intakes" asp-action="Create" asp-route-id="@ViewBag.theDay">Create New</a>

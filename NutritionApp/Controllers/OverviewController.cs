@@ -9,6 +9,7 @@ using NutritionApp.Data;
 using System.Security.Claims;
 using System.Collections.Generic;
 using NutritionApp.Models.ViewModels;
+using System.Collections;
 
 namespace NutritionApp.Controllers
 {
@@ -54,19 +55,32 @@ namespace NutritionApp.Controllers
 
             var i = 0;
             var KcalList = new List<int>();
+            var Proteins = new List<decimal>();
+            var Fats = new List<decimal>();
+            var Carbs = new List<decimal>();
+            var Stats = new List<string>();
             var plist = new List<Intake>();
+
+            var vm = new List<OverviewViewModel>();
             foreach (var item in nutritionAppContext.ToList() )
             {
                 
                 if (item.Product != null)
                 {
                     KcalList.Add(item.Product.Kcal);
+                    Proteins.Add(item.Product.Protein);
+                    Carbs.Add(item.Product.Carbs);
+                    Fats.Add(item.Product.Fat);
                     //KcalList.Add(item.Product.Kcal);
+                    // use viewmodel to collect data - send viewmodel to vm list ?
                 }
                 else
                 {
                     //var MealKcals = new List<int>();
                     var totalMealKcal = 0;
+                    decimal totalProtein = 0;
+                    decimal totalFat = 0;
+                    decimal totalCarbs = 0;
                     foreach (var ingr in item.Meal.Ingredients)
                     {
                         //MealKcals.Add(ingr.Product.Kcal);
@@ -77,46 +91,24 @@ namespace NutritionApp.Controllers
                             .FirstOrDefault()
                             ;
 
-                        Console.Write(prodContext);
-
                         
                         totalMealKcal += prodContext.Kcal;
+                        totalProtein += prodContext.Protein;
+                        totalFat += prodContext.Fat;
+                        totalCarbs += prodContext.Carbs;
                     }
                     KcalList.Add(totalMealKcal);
+                    Proteins.Add(totalProtein);
+                    Fats.Add(totalFat);
+                    Carbs.Add(totalCarbs);
                 }
-
-                //var productIds = new List<int>();
-                //if (item.Meal != null)
-                //{
-                //    var ingredients = item.Meal.Ingredients;
-                //    foreach (var ingredient in ingredients)
-                //    {
-                //        var ing = ingredient.ProductId;
-                //        productIds.Add(ing);
-                //    }
-                //    ViewBag.List = productIds;
-
-                //    var kcals = new List<Product>();
-                //    foreach (var pId in productIds)
-                //    {
-                //        var productContext = _context.Products
-                //             .Where(p => p.ProductId == pId)
-                //             .Include(p => p.Kcal)
-                //           ;
-                //    }
-                //    i++;
-
-                //    var total = 0;
-                //    foreach (var k in kcals)
-                //    {
-                //        total += k.Kcal;
-                //    }
-                //    ViewBag.Kcals = total;
-                //}
-                
             }
+
             ViewData["KcalList"] = KcalList;
-            ViewData["plist"] = plist;
+            ViewData["plist"]   = plist;
+            ViewData["Proteins"] = Proteins;
+            ViewData["Fats"] = Fats;
+            ViewData["Carbs"] = Carbs;
 
 
             //EmployeeDBContext dbContext = new EmployeeDBContext();
