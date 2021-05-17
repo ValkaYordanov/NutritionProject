@@ -29,7 +29,6 @@ namespace NutritionApp.Models
 
     public class Settings
     {
-        public string Email { get; set; }
         public int GenderId { get; set; }
         public decimal Weight { get; set; }
         public decimal WeightGoal { get; set; }
