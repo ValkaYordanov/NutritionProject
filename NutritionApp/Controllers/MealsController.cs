@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NutritionApp.Data;
 using NutritionApp.Models;
+using Microsoft.AspNetCore.Identity;
 using NutritionApp.Models.ViewModels;
 
 namespace NutritionApp.Controllers
@@ -16,20 +17,24 @@ namespace NutritionApp.Controllers
         private readonly NutritionAppContext _context;
         private Basket basket;
         private Basket bas = new Basket();
-        
+        private readonly UserManager<AppUser> _userManager;
 
-
-        public MealsController(NutritionAppContext context, Basket basketSesion)
+        public MealsController(NutritionAppContext context, Basket basketSesion, UserManager<AppUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
             basket = basketSesion;
         }
+
+        private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
         // GET: Meals
         public async Task<IActionResult> Index()
         {
             ViewBag.SelectedPage = "Meal";
-            var nutritionAppContext = _context.Meals.Include(m => m.User);
+            var user = await CurrentUser;
+            var nutritionAppContext = _context.Meals.Where(m => m.User == user).Include(i => i.Ingredients)
+                    .ThenInclude(i => i.Product);
             return View(await nutritionAppContext.ToListAsync());
         }
 

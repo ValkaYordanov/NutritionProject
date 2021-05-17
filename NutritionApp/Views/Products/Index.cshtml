@@ -4,39 +4,53 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="page-title">Products</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductName)
-            </th>
-          
-           
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr onclick="location.href = '@(Url.Action("Edit", "Products",new { id= @item.ProductId }))'">
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-                @Html.DisplayFor(modelItem => item.GTIN)
-            </td>
-         
-           
-         
-        </tr>
-}
-    </tbody>
-</table>
+<div class="food-listing">
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <small>BRAND</small>
+                </th>
+                <th>
+                    <small>PRODUCT</small>
+                </th>
+                <th>
+                    <small>KCAL</small>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr onclick="location.href = '@(Url.Action("Edit", "Products",new { id= @item.ProductId }))'">
+                    <td style="padding-right:1rem">
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                        @Html.DisplayFor(modelItem => item.GTIN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kcal) <small>kcal</small>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<a asp-action="Create" class="create-link">
+    <div class="create-container">
+        <small>ADD MEAL</small>
+        <div class="add-button">+</div>
+    </div>
+</a>
+
+<script>
+    function navigateToEdit(productId) {
+
+    }
+</script>

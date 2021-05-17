@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NutritionApp.Data;
 using NutritionApp.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace NutritionApp.Controllers
 {
