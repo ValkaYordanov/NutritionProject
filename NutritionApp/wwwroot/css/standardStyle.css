@@ -1,9 +1,13 @@
 :root {
     --green: #6CA15A;
+    --whiteTransparent: rgba(255, 255, 255, 0.4);
+    --blur: blur(14px);
 }
 body {
     background-color: #F3F3F3;
     font-family: 'Work Sans', sans-serif;
+    background-image: url(../images/bg2.png);
+    background-attachment: fixed;
 }
 
 /*Top nav*/
@@ -20,21 +24,36 @@ nav a[href="/Settings"] {
     display: flex;
     justify-content: space-between;
 }
-
-
-
+.justifyCenter {
+    justify-content: center;
+}
+.whiteBox {
+    background-color: var(--whiteTransparent);
+    backdrop-filter: var(--blur);
+    padding: 1rem;
+    margin: 10px 0 !important;
+    border-radius: 8px;
+}
 /*------------------------Text -------------------------*/
 .highlightString {
     font-weight: bold;
     color: darkgoldenrod;
 }
 
-
 .fadeString {
     color: dimgrey;
     display: block;
 }
-
+.pageTitle,
+.page-title {
+    text-align: center;
+    color: #000;
+    width: 100%;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-bottom: 1em;
+    font-size: 2.5em;
+}
 /*------------------------Input Fields -------------------------*/
 .form-control#searchFoodsInput {
     background-image: url(../images/search-symbol.svg);
@@ -83,4 +102,12 @@ table .kcal::after {
 
 .table img {
     height: 1em;
+}
+/*------------------------ Misc -------------------------*/
+.rotate45 {
+    transform: rotate(45deg);
+}
+a:focus,
+a:hover{
+    text-decoration: none;
 }

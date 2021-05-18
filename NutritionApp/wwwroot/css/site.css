@@ -1,8 +1,5 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-:root {
-    --green: #6CA15A;
-}
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -15,8 +12,8 @@ a {
 }
 
 .create-link {
-    position:absolute;
-    bottom: 120px;
+    position: fixed;
+    bottom: 85px;
     right: 10px;
 }
 
@@ -263,3 +260,57 @@ body {
         background-position: center center;
         background-repeat: repeat-y;
     }
+
+
+/* --------------------------- Barcode Scanner --------------------------------*/
+form[action="/Products/Create"] {
+    position: relative; 
+}
+form[action="/Products/Create"] label {
+    font-size: 10px;
+    text-transform: uppercase;
+}
+    #barcode-scanner {
+        display: none;
+    }
+    #barcode-scanner canvas {
+        max-width: 100%  !important;
+    }
+    #barcode-scanner.visible {
+        display: block;
+        max-width: 100% !important;
+        position: relative;
+        height: auto;
+        max-height: 62vw;
+        margin-bottom: 1em;
+    }
+    #barcode-scanner .drawingBuffer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+    }
+    #barcode-scanner.error {
+        background: #eee;
+    }
+    #barcode-scanner.visible video {
+        max-width: 100%;
+        position: relative;
+        z-index: 1;
+    }
+    #barcode-scanner.error::after {
+        content: "There was a problem loading the video stream";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+        z-index: 0;
+    }
+#barcode {
+    width: auto;
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    transform: translateY(-130%);
+}
