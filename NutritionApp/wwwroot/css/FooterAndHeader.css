@@ -2,9 +2,9 @@
     position: sticky;
     top: 0;
     right: 0;
- 
+
 }
- 
+
 
 
 /* ----------------- footer ----------------*/
@@ -17,8 +17,8 @@ footer nav {
     width: 100vw;
     background: #f7f7f7;
     box-shadow: 0 -1px 6px rgba(0, 0, 0, .1);
-   
     align-items: center;
+    min-height: 65px;
 }
 
 .middleNav {
@@ -28,7 +28,7 @@ footer nav {
     background: #fff;
     box-shadow: 0 0 23px rgba(0, 0, 0, .13);
     border-radius: 25px;
-   
+
 }
 
 footer nav div {
@@ -42,7 +42,7 @@ footer nav div {
     padding: .5em 0;
 }
 
- nav div img {
+nav div img {
     display: block;
     margin: 0 auto;
     max-height: 2em;
@@ -86,6 +86,16 @@ nav div img {
 }
 
 /* ------- footer active --------- */
-/*footer nav a:active {
+/* footer nav a:active {
     background-color: blueviolet;
-}*/
+} */
+footer nav .greenBtn_wrap {
+    width: 80%;
+    background: var(--green);
+    display: flex;
+    justify-content: center;
+}
+
+footer nav .greenBtn_wrap .greenBtn {
+    color: #fff;
+}
