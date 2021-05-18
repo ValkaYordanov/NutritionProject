@@ -108,14 +108,14 @@ namespace NutritionApp.Controllers
         }
 
 
-        public ActionResult GetAllIntakes(string userId)
-        {
-            SqlParameter currentId = new SqlParameter("@id", userId);
-            List<Intake> intakes = _context.Intakes.FromSqlRaw<Intake>("select * from Intake where UserId = @id", currentId).ToList();
-            //List<Product> p = _context.Products.FromSqlRaw<Product>("select * from Product where ProductId = @id", currentId).ToList();
-            //List<Ingredient> ingre = _context.Ingredients.FromSqlRaw<Ingredient>("select * from Ingredient where IngredientId > @id", currentId).ToList();
-            return Json(intakes);
-        }
+        //public ActionResult GetAllIntakes(string userId)
+        //{
+        //    SqlParameter currentId = new SqlParameter("@id", userId);
+        //    List<Intake> intakes = _context.Intakes.FromSqlRaw<Intake>("select * from Intake where UserId = @id", currentId).ToList();
+        //    //List<Product> p = _context.Products.FromSqlRaw<Product>("select * from Product where ProductId = @id", currentId).ToList();
+        //    //List<Ingredient> ingre = _context.Ingredients.FromSqlRaw<Ingredient>("select * from Ingredient where IngredientId > @id", currentId).ToList();
+        //    return Json(intakes);
+        //}
 
         // POST: Intakes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
