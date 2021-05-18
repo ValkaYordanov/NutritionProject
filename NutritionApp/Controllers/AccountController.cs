@@ -44,7 +44,7 @@ namespace NutritionApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel details, string returnUrl)
+        public async Task<IActionResult> Login(LoginModel details)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +56,7 @@ namespace NutritionApp.Controllers
                         await _signInManager.PasswordSignInAsync(user, details.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return Redirect(returnUrl ?? "/");
+                        return RedirectToAction("Create", "Intakes");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");
