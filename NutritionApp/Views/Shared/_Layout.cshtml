@@ -53,16 +53,17 @@
     }
     else
     {
-        <footer class="border-top footer text-muted">
-            <nav class="flexContainer">
-                <div><a asp-area="" asp-controller="Meals" asp-action="Index"><img src="~/images/meal.svg" alt="Breakfast plate" /><span>Meals</span></a></div>
-                <div class="middleNav">
-                    <div><a asp-area="" asp-controller="Intakes" asp-action="Create"><img src="~/images/intake.svg" alt="Open mouth" /><span>Eat</span></a></div>
-                    <div><a asp-area="" asp-controller="Overview" asp-action="Index"><img src="~/images/overview.svg" alt="Eye" /><span>Overview</span></a></div>
-                </div>
-                <div><a asp-area="" asp-controller="Products" asp-action="Index"><img src="~/images/product.svg" alt="Food" /><span>Foods</span></a></div>
-            </nav>
-        </footer>
+<footer class="border-top footer text-muted">
+    <nav class="flexContainer">
+        <div class="@(ViewBag.SelectedPage == "Meal" ? "active-page": "footerNavItem")"><a asp-area="" asp-controller="Meals" asp-action="Index"><img src="~/images/meal.svg" alt="Breakfast plate" /><span>Meals</span></a></div>
+        <div class="middleNav">
+            <div class="@(ViewBag.SelectedPage == "Intake" ? "active-page": "footerNavItem")"><a asp-area="" asp-controller="Intakes" asp-action="Create"><img src="~/images/intake.svg" alt="Open mouth" /><span>Intake</span></a></div>
+            <div class="@(ViewBag.SelectedPage == "Overview" ? "active-page": "footerNavItem")"><a asp-area="" asp-controller="Overview" asp-action="Index"><img src="~/images/overview.svg" alt="Eye" /><span>Overview</span></a></div>
+        </div>
+        <div class="@(ViewBag.SelectedPage == "Product" ? "active-page": "footerNavItem")"><a asp-area="" asp-controller="Products" asp-action="Index"><img src="~/images/product.svg" alt="Food" /><span>Foods</span></a></div>
+
+    </nav>-->
+</footer>
     }
 
 
