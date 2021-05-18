@@ -109,7 +109,7 @@
                     {
                         if (item.Meal.UserId == Model.UserId)
                         {
-                            <tr onclick="addToInput('@item.Meal.MealName', 'meal',@item.Meal.MealId, '@Decimal.Truncate(item.Quantity)'); addSelectedStyle(this);">
+                            <tr class="userIntake" onclick="addToInput('@item.Meal.MealName', 'meal',@item.Meal.MealId, '@Decimal.Truncate(item.Quantity)'); addSelectedStyle(this);">
                                 <td>
                                     @Decimal.Truncate(item.Quantity)
                                 </td>
@@ -134,7 +134,7 @@
                     if (item.Product != null)
                     {
 
-                        <tr onclick="addToInput('@item.Product.ProductName', 'product', @item.Product.ProductId, '@Decimal.Truncate(item.Quantity)'); addSelectedStyle(this);">
+                        <tr class="userIntake" onclick="addToInput('@item.Product.ProductName', 'product', @item.Product.ProductId, '@Decimal.Truncate(item.Quantity)'); addSelectedStyle(this);">
                             <td>
                                 @Decimal.Truncate(item.Quantity)
                                                          </td>
@@ -188,15 +188,18 @@
                 .then(data => {
 
                     console.log(data);
-                    document.querySelector("tbody").innerHTML = '';
+                    
+                    showUserIntakes(false);
 
                     data.productList.forEach(obj => addFoodOption(obj, 'product', `${input}`))
                     data.mealList.forEach(obj => addFoodOption(obj, 'meal', `${input}`))
                     highlightInput();
                 });
         } else {
+            console.log("else")
             document.querySelector("input[type='submit']").disabled = true;
             document.querySelector("#foodsHeadline").innerHTML = "Recent intakes";
+            showUserIntakes(true);
 
             //const path = "https://localhost:44351/Intakes/GetAllIntakes?";
             //const UserIdDec = "userId=";
@@ -253,6 +256,19 @@
 
     }
 
+    function showUserIntakes(show) {
+        let userIntakes = document.querySelectorAll("userIntake");
+        
+        userIntakes.forEach(intake => {
+            console.log(intake);
+            if (show) {
+                intake.style.display = "table-row";
+            } else {
+                intake.style.display = "none";
+            }
+
+        })
+    }
 
 
     function addToInput(foodName, addedType, foodId, foodQuantity) {
