@@ -29,6 +29,7 @@ namespace NutritionApp.Controllers
         
         public async Task<IActionResult> Index(int id)
         {
+            ViewBag.SelectedPage = "Overview";
             AppUser user = await CurrentUser;
             var username = HttpContext.User.Identity.Name;
             var theid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -75,47 +76,51 @@ namespace NutritionApp.Controllers
             var plist = new List<Intake>();
 
             var vm = new List<OverviewViewModel>();
-            foreach (var item in nutritionAppContext.ToList() )
-            {
-                
-                if (item.Product != null)
+           
+                foreach (var item in nutritionAppContext.ToList())
                 {
-                    KcalList.Add(item.Product.Kcal);
-                    Proteins.Add(item.Product.Protein);
-                    Carbs.Add(item.Product.Carbs);
-                    Fats.Add(item.Product.Fat);
-                    //KcalList.Add(item.Product.Kcal);
-                    // use viewmodel to collect data - send viewmodel to vm list ?
-                }
-                else
-                {
-                    //var MealKcals = new List<int>();
-                    var totalMealKcal = 0;
-                    decimal totalProtein = 0;
-                    decimal totalFat = 0;
-                    decimal totalCarbs = 0;
-                    foreach (var ingr in item.Meal.Ingredients)
+
+                    if (item.Product != null)
                     {
-                        //MealKcals.Add(ingr.Product.Kcal);
-
-                        var prod_id = ingr.ProductId;
-                        var prodContext = _context.Products
-                            .Where(p => p.ProductId == prod_id)
-                            .FirstOrDefault()
-                            ;
-
-                        
-                        totalMealKcal += prodContext.Kcal;
-                        totalProtein += prodContext.Protein;
-                        totalFat += prodContext.Fat;
-                        totalCarbs += prodContext.Carbs;
+                        KcalList.Add(item.Product.Kcal);
+                        Proteins.Add(item.Product.Protein);
+                        Carbs.Add(item.Product.Carbs);
+                        Fats.Add(item.Product.Fat);
+                        //KcalList.Add(item.Product.Kcal);
+                        // use viewmodel to collect data - send viewmodel to vm list ?
                     }
-                    KcalList.Add(totalMealKcal);
-                    Proteins.Add(totalProtein);
-                    Fats.Add(totalFat);
-                    Carbs.Add(totalCarbs);
+                    else if(item.Meal != null)
+                    {
+                        //var MealKcals = new List<int>();
+                        var totalMealKcal = 0;
+                        decimal totalProtein = 0;
+                        decimal totalFat = 0;
+                        decimal totalCarbs = 0;
+                 
+                        foreach (var ingr in item.Meal.Ingredients)
+                        {
+                            //MealKcals.Add(ingr.Product.Kcal);
+
+                            var prod_id = ingr.ProductId;
+                            var prodContext = _context.Products
+                                .Where(p => p.ProductId == prod_id)
+                                .FirstOrDefault()
+                                ;
+
+
+                            totalMealKcal += prodContext.Kcal;
+                            totalProtein += prodContext.Protein;
+                            totalFat += prodContext.Fat;
+                            totalCarbs += prodContext.Carbs;
+                        }
+                        KcalList.Add(totalMealKcal);
+                        Proteins.Add(totalProtein);
+                        Fats.Add(totalFat);
+                        Carbs.Add(totalCarbs);
+                    
+                    }
                 }
-            }
+            
 
             ViewData["KcalList"] = KcalList;
             ViewData["plist"]   = plist;

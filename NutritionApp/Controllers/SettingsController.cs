@@ -26,6 +26,7 @@ namespace NutritionApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(Settings settings)
         {
+            ViewBag.SelectedPage = "Settings";
             AppUser user = await CurrentUser;
             if (user != null)
             {

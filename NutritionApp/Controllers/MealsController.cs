@@ -31,6 +31,7 @@ namespace NutritionApp.Controllers
         // GET: Meals
         public async Task<IActionResult> Index()
         {
+            ViewBag.SelectedPage = "Meal";
             var user = await CurrentUser;
             var nutritionAppContext = _context.Meals.Where(m => m.User == user).Include(i => i.Ingredients)
                     .ThenInclude(i => i.Product);

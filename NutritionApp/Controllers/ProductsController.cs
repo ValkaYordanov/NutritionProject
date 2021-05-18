@@ -23,6 +23,7 @@ namespace NutritionApp.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
+            ViewBag.SelectedPage = "Product";
             return View(await _context.Products.ToListAsync());
         }
 

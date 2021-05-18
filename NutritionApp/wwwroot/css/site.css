@@ -59,14 +59,14 @@ a {
 }
 
 .food-listing .table td {
-    font-weight: bold;
+    /*font-weight: bold;*/
     color:gray;
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: var(--green);
+    border-color: var(--green);
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -263,3 +263,13 @@ body {
         background-position: center center;
         background-repeat: repeat-y;
     }
+
+
+/* Input validation error
+-------------------------------------------------- */
+.field-validation-error{
+   
+}
+.input-validation-error {
+    background-color: lightcoral;
+}

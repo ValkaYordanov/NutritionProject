@@ -35,6 +35,10 @@ nav a[href="/Settings"] {
     display: block;
 }
 
+a, a:active,a:link, a:visited {
+    text-decoration: none;
+}
+
 /*------------------------Input Fields -------------------------*/
 .form-control#searchFoodsInput {
     background-image: url(../images/search-symbol.svg);
@@ -66,6 +70,13 @@ input[type="submit"]{
     font-size: .7em;
     
 }
+    .table tbody tr:focus::after {
+        background-color: mediumpurple;
+    }
+
+.selectedRow {
+    background-color: #a8d998;
+}
     .table thead tr th {
         font-weight: 400;
         position: sticky;
@@ -83,4 +94,5 @@ table .kcal::after {
 
 .table img {
     height: 1em;
+    
 }
