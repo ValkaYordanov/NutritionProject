@@ -73,11 +73,19 @@ namespace NutritionApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MealId,Quantity,MealName")] Meal meal)
         {
+            var user = await CurrentUser;
             IngredientController ingredientCtr = new IngredientController(_context, basket);
             if (ModelState.IsValid)
             {
-                var userid = _context.AppUsers.Where(i => i.Email == HttpContext.User.Identity.Name).First();
-                meal.UserId = userid.Id;
+                decimal quant = 0;
+
+                foreach (var element in basket.Lines)
+                {
+                    quant = quant + element.Quantity;
+                }
+
+                meal.User = user;
+                meal.Quantity = quant;
                 _context.Add(meal);
                 await _context.SaveChangesAsync();
                 int id = meal.MealId;

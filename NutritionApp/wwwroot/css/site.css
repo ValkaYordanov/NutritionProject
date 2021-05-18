@@ -19,7 +19,25 @@ a {
 
 .page-title {
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 1rem;
+}
+
+.products-table {
+    display: inline-block;
+    overflow-y: scroll;
+    height: 280px;
+    width: 100%;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .3);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
 .create-container {
@@ -42,13 +60,24 @@ a {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
+
+    .add-button.btn-prple {
+        width: 40px;
+        height: 40px;
+        line-height: 35px;
+        background-color: #0A0A3A;
+        margin-top:1.5rem;
+        color: white;
+        border: none;
+    }
+
 .food-listing {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.4);
-    padding: 1rem;
+    padding: 1rem .5rem 1rem 1rem;
     backdrop-filter: blur(14px);
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .food-listing .table th {
