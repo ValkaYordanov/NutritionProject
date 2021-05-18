@@ -54,7 +54,7 @@
 
                 <div class="form-group searchFoodField" id="searchFoodContainer">
                     <label class="control-label">Product/Meal</label>
-                    <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value, '@Model.UserId')" autocomplete="off" placeholder="Search for food or meal name">
+                    <input id="searchFoodsInput" class="form-control" onkeyup="searchForFoods(this.value, '@Model.UserId')" autocomplete="off" placeholder="Search for food or meal">
                     <input asp-for="Type" type="hidden" />
                     <input asp-for="ItemId" type="hidden" />
 
@@ -71,7 +71,7 @@
             <span asp-validation-for="Quantity" class="text-danger"></span>
             <span asp-validation-for="Type" class="text-danger"></span>
             <div class="form-group">
-                <input type="submit" value="Eat food" class="btn btn-primary" />
+                <input type="submit" value="Eat food" class="btn btn-primary" disabled/>
 
 
 
@@ -80,7 +80,7 @@
     </div>
 </div>
 <hr />
-<h2>Choose Foods</h2>
+<h2 id="foodsHeadline">Recent Intakes</h2>
 <div class="food-listing">
     <table class="table">
         <thead>
@@ -109,7 +109,7 @@
                     {
                         if (item.Meal.UserId == Model.UserId)
                         {
-                            <tr onclick="addToInput('@item.Meal.MealName', 'meal',@item.Meal.MealId, '@Decimal.Truncate(item.Quantity)'); addSelectedStyle(this);">
+                            <tr class="userIntake" onclick="addToInput('@item.Meal.MealName', 'meal',@item.Meal.MealId, '@Decimal.Truncate(item.Quantity)'); addSelectedStyle(this);">
                                 <td>
                                     @Decimal.Truncate(item.Quantity)
                                 </td>
@@ -134,7 +134,7 @@
                     if (item.Product != null)
                     {
 
-                        <tr onclick="addToInput('@item.Product.ProductName', 'product', @item.Product.ProductId, '@Decimal.Truncate(item.Quantity)'); addSelectedStyle(this);">
+                        <tr class="userIntake" onclick="addToInput('@item.Product.ProductName', 'product', @item.Product.ProductId, '@Decimal.Truncate(item.Quantity)'); addSelectedStyle(this);">
                             <td>
                                 @Decimal.Truncate(item.Quantity)
                                                          </td>
@@ -169,9 +169,14 @@
 <script>
 
     function searchForFoods(input, currentUserId) {
-        console.log(currentUserId);
+        resetSearchedFoods();
         if (input !== "") {
             const path = "https://nutriwebapp.azurewebsites.net/Intakes/SelectFromSp?";
+            document.querySelector("input[type='submit']").disabled = false;
+            document.querySelector("#foodsHeadline").innerHTML = "Select food"
+
+
+        
             const inputDec = "Input=";
             const UserIdDec = "&UserId=";
 
@@ -184,13 +189,58 @@
                 .then(data => {
 
                     console.log(data);
-                    document.querySelector("tbody").innerHTML = '';
+
+                   
+                    showUserIntakes(false);
 
                     data.productList.forEach(obj => addFoodOption(obj, 'product', `${input}`))
                     data.mealList.forEach(obj => addFoodOption(obj, 'meal', `${input}`))
-                                 });
+                    highlightInput();
+                });
+        } else {
+            console.log("else")
+            document.querySelector("input[type='submit']").disabled = true;
+            document.querySelector("#foodsHeadline").innerHTML = "Recent intakes";
+            showUserIntakes(true);
+
+            //const path = "https://localhost:44351/Intakes/GetAllIntakes?";
+            //const UserIdDec = "userId=";
+            //let url = `${path}${UserIdDec}${currentUserId}`;
+            //fetch(url)
+            //    .then(response => response.json())
+            //    .then(data => {
+
+            //        document.querySelector("tbody").innerHTML = '';
+
+            //        data.forEach(obj => addFoodOption(obj, 'meal', `${input}`))
+            //        highlightInput();
+            //    })
+
         }
     }
+
+    function resetSearchedFoods() {
+        console.log("reset foods");
+        let tableBody = document.querySelector("tbody");
+        let searchedFoods = tableBody.querySelectorAll("tr:not(.userIntake)")
+        console.log(searchedFoods);
+        searchedFoods.forEach(food => {
+            console.log(food);
+            tableBody.removeChild(food);
+        })
+    }
+
+    function showUserIntakes(show) {
+        let userIntakes = document.querySelectorAll(".userIntake");
+                userIntakes.forEach(intake => {
+                   if (show) {      
+                intake.style.display = "table-row";
+            } else {
+                intake.style.display = "none";
+            }
+        })
+    }
+
 
     function addFoodOption(food, type, input) {
         console.log(food);
@@ -198,7 +248,7 @@
         if (type == 'product') {
             console.log("GTIN: ", food.gtin);
             document.querySelector("tbody").innerHTML += `
-             <tr onclick="addToInput('${food.productName}', '${type}', ${food.productId}, '100')">
+             <tr onclick="addToInput('${food.productName}', '${type}', ${food.productId}, '100');addSelectedStyle(this);">
                     <td >
                         100
                     </td>
@@ -213,7 +263,7 @@
         }
         if (type == 'meal') {
             document.querySelector("tbody").innerHTML += `
-             <tr onclick="addToInput('${food.mealName}', '${type}',${food.mealId}), '100'" >
+             <tr onclick="addToInput('${food.mealName}', '${type}',${food.mealId}), '100'";addSelectedStyle(this); >
                     <td >
                         100
                     </td>
@@ -231,14 +281,14 @@
 
     }
 
-
+   
 
     function addToInput(foodName, addedType, foodId, foodQuantity) {
         const searchFoodContainer = document.querySelector("#searchFoodContainer");
         const type = searchFoodContainer.querySelector("input[name='Type']");
         const id = searchFoodContainer.querySelector("input[name='ItemId']");
         const quantity = document.querySelector("input[name='Quantity']");
-
+        document.querySelector("input[type='submit']").disabled = false;
         // Save values
         type.value = addedType;
         id.value = foodId;
@@ -254,7 +304,7 @@
     function addSelectedStyle(elem) {
         let allSelected = document.querySelectorAll(".selectedRow");
         if (allSelected.length != 0) {
-            allSelected.forEach(element => element.classList.remove('selectedRow'));            
+            allSelected.forEach(element => element.classList.remove('selectedRow'));
        }
         elem.classList.toggle('selectedRow');
     }
@@ -269,8 +319,20 @@
                     );
     }
 
-   
 
+    function highlightInput() {
+        var searchInput = document.querySelector('#searchFoodsInput');
+
+        let rows = document.querySelectorAll("tbody tr");
+        rows.forEach(function (row) {
+            let foodName = row.querySelector(":nth-child(3)");
+            var regex = new RegExp(searchInput.value, 'gi')
+            var response = foodName.innerText.replace(regex, function (str) {
+                return "<span class='highlightString'>" + str + "</span>"
+            })
+            foodName.innerHTML = response
+        });
+    }
 
 </script>
 

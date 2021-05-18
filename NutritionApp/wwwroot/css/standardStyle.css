@@ -80,6 +80,26 @@ input[type="submit"]{
 .flexContainer .gramsField{
     width: 23%;
 }
+
+.btn-primary:hover, .btn-primary:active{
+    color: #fff;
+    background-color: var(--green);
+    border-color: var(--green);
+    background-color: darkseagreen;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+    background: #a8d998 !important;
+    background-color: var(--green) !important;
+    border-bottom-color: darkgreen !important;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+    color: #fff;
+    background-color: #a8d998;
+    border-color: #a8d998;
+}
+
 /*------------------------Tables -------------------------*/
 .table {
     max-width: 100%;
@@ -90,9 +110,6 @@ input[type="submit"]{
     font-size: .7em;
     
 }
-    .table tbody tr:focus::after {
-        background-color: mediumpurple;
-    }
 
 .selectedRow {
     background-color: #a8d998;
