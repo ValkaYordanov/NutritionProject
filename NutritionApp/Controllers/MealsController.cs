@@ -71,11 +71,13 @@ namespace NutritionApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MealId,UserId,Quantity,MealName")] Meal meal)
+        public async Task<IActionResult> Create([Bind("MealId,Quantity,MealName")] Meal meal)
         {
             IngredientController ingredientCtr = new IngredientController(_context, basket);
             if (ModelState.IsValid)
             {
+                var userid = _context.AppUsers.Where(i => i.Email == HttpContext.User.Identity.Name).First();
+                meal.UserId = userid.Id;
                 _context.Add(meal);
                 await _context.SaveChangesAsync();
                 int id = meal.MealId;
@@ -135,8 +137,10 @@ namespace NutritionApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MealId,UserId,Quantity,MealName")] Meal meal)
+        public async Task<IActionResult> Edit(int id, [Bind("MealId,Quantity,MealName")] Meal meal)
         {
+            var userid = _context.AppUsers.Where(i => i.Email == HttpContext.User.Identity.Name).First();
+            meal.UserId = userid.Id;
             if (id != meal.MealId)
             {
                 return NotFound();
