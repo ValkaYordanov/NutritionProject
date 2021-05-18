@@ -77,4 +77,5 @@ footer nav .greenBtn_wrap {
 }
 footer nav .greenBtn_wrap .greenBtn {
     color: #fff;
+    cursor: pointer;
 }

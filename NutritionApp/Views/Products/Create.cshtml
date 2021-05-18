@@ -27,7 +27,6 @@
                 <input asp-for="GTIN" class="form-control" autocomplete="off" />
                 <img src="~/images/barcode.png" id="barcode" style="width:auto; height:20px;" />
                 <span asp-validation-for="GTIN" class="text-danger"></span>
-
             </div>
             <div id="barcode-scanner">
                 <video src=""></video>
@@ -40,7 +39,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Kj / 100 gram</label>
-                <input asp-for="KJ" class="form-control" autocomplete="off" />
+                <input asp-for="KJ" class="form-control" autocomplete="off" value="0" />
                 <span asp-validation-for="KJ" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Saturated Fats / 100 gram</label>
-                <input asp-for="FromFatSaturated" class="form-control" autocomplete="off" />
+                <input asp-for="FromFatSaturated" class="form-control" autocomplete="off" value="0" />
                 <span asp-validation-for="FromFatSaturated" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -60,7 +59,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Sugar / 100 gram</label>
-                <input asp-for="FromCarbsSuggar" class="form-control" autocomplete="off" />
+                <input asp-for="FromCarbsSuggar" class="form-control" autocomplete="off" value="0" />
                 <span asp-validation-for="FromCarbsSuggar" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -70,7 +69,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label"> Salt / 100 gram</label>
-                <input asp-for="Salt" class="form-control" autocomplete="off" />
+                <input asp-for="Salt" class="form-control" autocomplete="off" value="0" />
                 <span asp-validation-for="Salt" class="text-danger"></span>
             </div>
             <div class="form-group" style="display: none;">
@@ -158,10 +157,10 @@
                 var carbs = nutri['CHOCDF'];
                 var kcal = nutri['ENERC_KCAL'];
 
-                kcalField.value = kcal;
-                fatField.value = fat;
-                carbField.value = carbs;
-                proteinField.value = protein;
+                kcalField.value = Math.floor(kcal);
+                fatField.value = Math.floor(fat);
+                carbField.value = Math.floor(carbs);
+                proteinField.value = Math.floor(protein);
                 kjField.value = Math.floor(kcal * 4.184);
                 var ptitle = searchTerm[0].toUpperCase() + searchTerm.slice(1);
                 pName.value = ptitle;
