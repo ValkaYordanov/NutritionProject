@@ -1,0 +1,29 @@
+﻿{
+  "name": "NutritionApp",
+  "short_name": "Nutri",
+  "description": "Easy calorie tracking wtih NutritionApp.",
+  "icons": [
+    {
+      "src": "images/appicons/144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/appicons/192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/appicons/168x168.png",
+      "sizes": "168x168",
+      "type": "image/png"
+    },
+    {
+      "src": "images/appicons/512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "display": "standalone",
+  "start_url": "/"
+}     

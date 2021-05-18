@@ -38,6 +38,7 @@ namespace NutritionApp
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<NutritionAppContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("NutritionAppContext")));
+            services.AddProgressiveWebApp();
 
 
 
