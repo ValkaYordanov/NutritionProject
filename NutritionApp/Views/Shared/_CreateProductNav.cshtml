@@ -1,7 +1,15 @@
 ﻿<footer class="border-top footer text-muted">
     <nav class="flexContainer justifyCenter">
         <div class="middleNav greenBtn_wrap">
-            <div><a id="newBtn" class="greenBtn createProductBtn">Create Product</a></div> 
+            <div><a id="newBtn" class="greenBtn createProductBtn">Create Product</a></div>
         </div>
     </nav>
 </footer>
+<script>
+    const newBtn = document.getElementById('newBtn');
+    const form = document.getElementById('addProductForm');
+
+    document.getElementById("newBtn").addEventListener("click", function () {
+        form.submit();
+    });
+</script>
