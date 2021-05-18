@@ -41,14 +41,13 @@ namespace NutritionApp.Controllers
                 ingredient.MealId = mealId;
                 ingredient.ProductId = line.Product.ProductId;
                 ingredient.Quantity = line.Quantity;
-                if (ModelState.IsValid)
-                {
-                    _context.Add(ingredient);
-                }
+                _context.Add(ingredient);
+                
             }
-                     _context.SaveChangesAsync();
+          
+              _context.SaveChanges();
+         
 
-            
         }
 
         //public async void Delete(int id)

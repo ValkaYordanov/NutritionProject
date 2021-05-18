@@ -37,6 +37,12 @@
             </div>
         </form>
         <div>
+            <form asp-action="Delete" asp-route-id="@Model.Meal.MealId">
+                <input type="hidden" asp-for="Meal.MealId" />
+                <input type="submit" value="Delete" class="btn btn-danger" /> 
+            </form>
+        </div>
+        <div>
             <table class="table table-bordered table-striped">
 
                 <thead>
@@ -55,12 +61,13 @@
                             <td class="text-left">@line.Quantity</td>
 
 
-                            @*<td>
-                                <form asp-action="DeleteIngredientFromBasket" asp-controller="Meals" method="post">
+                            <td>
+                                <form asp-action="DeleteIngredientFromBasket" asp-route-id="" asp-controller="Meals" method="post">
                                     <input type="hidden" name="ProductId" value="@line.Product.ProductId" />
+                                    <input type="hidden" name="MealId" value="@Model.Meal.MealId" />
                                     <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                                 </form>
-                            </td>*@
+                            </td>
                         </tr>
                     }
                 </tbody>
