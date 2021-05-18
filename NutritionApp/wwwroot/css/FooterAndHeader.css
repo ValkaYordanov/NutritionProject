@@ -76,16 +76,16 @@ nav div img {
     max-height: 2em;
 }
 
-.active-page a, .active-page a:active, .active-page a:link, .active-page a:visited{
+/*.active-page a, .active-page a:active, .active-page a:link, .active-page a:visited{
     color: var(--green);
     text-decoration: none;
-}
+}*/
 .active-page img {
     filter: none;
     transform: scale(1.2);
 }
 
 /* ------- footer active --------- */
-footer nav a:active {
+/*footer nav a:active {
     background-color: blueviolet;
-}
+}*/

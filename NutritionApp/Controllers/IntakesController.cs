@@ -69,7 +69,7 @@ namespace NutritionApp.Controllers
 
             IntakeViewModel intakeView = new IntakeViewModel();
             intakeView.Day = DateTime.Now;
-            intakeView.Quantity = 1.8M;
+            intakeView.Quantity = 100M;
             intakeView.Ingredients = _context.Ingredients;
             intakeView.Intakes = _context.Intakes
                .Include(i => i.Meal).ThenInclude(i => i.Ingredients)
@@ -108,19 +108,19 @@ namespace NutritionApp.Controllers
         }
 
 
-        public ActionResult GetCalories(int id)
+        public ActionResult GetAllIntakes(string userId)
         {
-            SqlParameter currentId = new SqlParameter("@id", id);
-            List<Intake> inta=_context.Intakes.FromSqlRaw<Intake>("select * from Intake where IntakeId > @id", currentId).ToList();
-            List<Product> p=_context.Products.FromSqlRaw<Product>("select * from Product where ProductId > @id", currentId).ToList();
-            List<Ingredient> ingre =_context.Ingredients.FromSqlRaw<Ingredient>("select * from Ingredient where IngredientId > @id", currentId).ToList();
-               return Json(p);
+            SqlParameter currentId = new SqlParameter("@id", userId);
+            List<Intake> intakes = _context.Intakes.FromSqlRaw<Intake>("select * from Intake where UserId = @id", currentId).ToList();
+            //List<Product> p = _context.Products.FromSqlRaw<Product>("select * from Product where ProductId = @id", currentId).ToList();
+            //List<Ingredient> ingre = _context.Ingredients.FromSqlRaw<Ingredient>("select * from Ingredient where IngredientId > @id", currentId).ToList();
+            return Json(intakes);
         }
 
-            // POST: Intakes/Create
-            // To protect from overposting attacks, enable the specific properties you want to bind to.
-            // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-            [HttpPost]
+        // POST: Intakes/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IntakeViewModel data)
         {
