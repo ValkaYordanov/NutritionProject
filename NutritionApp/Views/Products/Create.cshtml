@@ -162,7 +162,7 @@
                 fatField.value = fat;
                 carbField.value = carbs;
                 proteinField.value = protein;
-                kjField.value = kcal * 4.184;
+                kjField.value = Math.floor(kcal * 4.184);
                 var ptitle = searchTerm[0].toUpperCase() + searchTerm.slice(1);
                 pName.value = ptitle;
                 //4.184
