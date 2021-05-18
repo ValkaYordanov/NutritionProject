@@ -1,14 +1,14 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .create-link {
@@ -86,7 +86,7 @@ a {
 
 .food-listing .table td {
     /*font-weight: bold;*/
-    color:gray;
+    color: gray;
 }
 
 .btn-primary {
@@ -95,50 +95,54 @@ a {
     border-color: var(--green);
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
 /*.footer {
   position: relative;
   bottom: 0;
@@ -148,10 +152,11 @@ body {
 }*/
 
 .Overview table {
-    background: rgba(255,255,255,.6);
+    background: rgba(255, 255, 255, .6);
     backdrop-filter: blur(14px);
     border-radius: 8px;
 }
+
 .overview-graphs #top {
 
     display: flex;
@@ -159,17 +164,20 @@ body {
     justify-content: space-between;
 
 }
+
 .overview-graphs {
     margin: 15px 0;
     padding: 10px;
-    background: rgba(255,255,255,.6);
+    background: rgba(255, 255, 255, .6);
     backdrop-filter: blur(14px);
     border-radius: 8px;
 }
-.overview-graphs #top > div p {
+
+.overview-graphs #top>div p {
     margin: 0;
     text-align: center;
 }
+
 .overview-graphs #top h4.goal {
     margin-bottom: 0 !important;
 }
@@ -177,24 +185,26 @@ body {
 #appleStyle {
     position: relative;
 }
-#appleStyle > p {
+
+#appleStyle>p {
     margin-bottom: 5px !important;
     width: 20px;
 }
-    #toggle {
-        display: none;
-    }
 
-    #toggle:checked ~ #container {
-        background: var(--green);
-        border: 1px solid var(--green);
-        transition: .2s cubic-bezier(.55,0,.1,1);
-    }
+#toggle {
+    display: none;
+}
 
-    #toggle:checked ~ #control {
-        transform: translate(19px);
-        transition: .2s cubic-bezier(.55,0,.1,1);
-    }
+#toggle:checked~#container {
+    background: var(--green);
+    border: 1px solid var(--green);
+    transition: .2s cubic-bezier(.55, 0, .1, 1);
+}
+
+#toggle:checked~#control {
+    transform: translate(19px);
+    transition: .2s cubic-bezier(.55, 0, .1, 1);
+}
 
 
 #control {
@@ -204,7 +214,7 @@ body {
     height: 24px;
     margin-left: 4px;
     position: relative;
-    transition: .2s cubic-bezier(.55,0,.1,1);
+    transition: .2s cubic-bezier(.55, 0, .1, 1);
     width: 24px;
     z-index: 2;
     margin-bottom: 1px;
@@ -219,7 +229,7 @@ body {
     height: 30px;
     position: relative;
     transform: translateY(-38px);
-    transition: .2s cubic-bezier(.55,0,.1,1);
+    transition: .2s cubic-bezier(.55, 0, .1, 1);
     width: 50px;
     top: 10px;
     right: 0;
@@ -230,12 +240,14 @@ body {
     display: flex;
     justify-content: center;
 }
-    #graphs .graph {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 20%;
-    }
+
+#graphs .graph {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+}
+
 .bar-wrap {
     height: 150px;
     position: relative;
@@ -243,106 +255,129 @@ body {
     background-color: #f3f3f3;
     box-shadow: 0 0 0 1px #e3e3e3;
 }
-    .bar-wrap .bar {
-        position: absolute;
-        width: 28px;
-        bottom: 0;
-        max-height: 100%;
-        transition: height 300ms ease;
-    }
-    .bar-wrap.carbs .bar {
-        background: #EFE93D;
-    }
-    .bar-wrap.kcal .bar {
-        background: var(--green);
-    }
-    .bar-wrap.fats .bar {
-        background: #378FDC;
-    }
-    .bar-wrap.proteins .bar {
-        background: #E13D3D;
-    }
-    .bar-wrap.carbs ~ .graph-text p {
-        color: #EFE93D;
-    }
-    .bar-wrap.kcal ~ .graph-text p {
-        color: var(--green);
-    }
-    .bar-wrap.fats ~ .graph-text p {
-        color: #378FDC;
-    }
-    .bar-wrap.proteins ~ .graph-text p {
-        color: #E13D3D;
-    }
-    .graph-text {
-        text-align: center;
-    }
-    .graph-text p {
-        font-size: 20px;
-        margin: 0;
-        font-weight: 700;
-    }
-    /*overview*/
-    body.Overview {
-        background-image: url(../images/bg.png);
-        /*background-size: cover;*/
-        background-position: center center;
-        background-repeat: repeat-y;
-    }
+
+.bar-wrap .bar {
+    position: absolute;
+    width: 28px;
+    bottom: 0;
+    max-height: 100%;
+    transition: height 300ms ease;
+}
+
+.bar-wrap.carbs .bar {
+    background: #EFE93D;
+}
+
+.bar-wrap.kcal .bar {
+    background: var(--green);
+}
+
+.bar-wrap.fats .bar {
+    background: #378FDC;
+}
+
+.bar-wrap.proteins .bar {
+    background: #E13D3D;
+}
+
+.bar-wrap.carbs~.graph-text p {
+    color: #EFE93D;
+}
+
+.bar-wrap.kcal~.graph-text p {
+    color: var(--green);
+}
+
+.bar-wrap.fats~.graph-text p {
+    color: #378FDC;
+}
+
+.bar-wrap.proteins~.graph-text p {
+    color: #E13D3D;
+}
+
+.graph-text {
+    text-align: center;
+}
+
+.graph-text p {
+    font-size: 20px;
+    margin: 0;
+    font-weight: 700;
+}
+
+/*overview*/
+body.Overview {
+    background-image: url(../images/bg.png);
+    /*background-size: cover;*/
+    background-position: center center;
+    background-repeat: repeat-y;
+}
 
 
 /* Input validation error
 -------------------------------------------------- */
-.field-validation-error{
+/* .field-validation-error{
    
-}
+} */
 .input-validation-error {
     background-color: lightcoral;
+}
+
 /* --------------------------- Barcode Scanner --------------------------------*/
 form[action="/Products/Create"] {
-    position: relative; 
+    position: relative;
 }
+
 form[action="/Products/Create"] label {
     font-size: 10px;
     text-transform: uppercase;
 }
-    #barcode-scanner {
-        display: none;
-    }
-    #barcode-scanner canvas {
-        max-width: 100%  !important;
-    }
-    #barcode-scanner.visible {
-        display: block;
-        max-width: 100% !important;
-        position: relative;
-        height: auto;
-        max-height: 62vw;
-        margin-bottom: 1em;
-    }
-    #barcode-scanner .drawingBuffer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 2;
-    }
-    #barcode-scanner.error {
-        background: #eee;
-    }
-    #barcode-scanner.visible video {
-        max-width: 100%;
-        position: relative;
-        z-index: 1;
-    }
-    #barcode-scanner.error::after {
-        content: "There was a problem loading the video stream";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-        text-align: center;
-        z-index: 0;
-    }
+
+#barcode-scanner {
+    display: none;
+}
+
+#barcode-scanner canvas {
+    max-width: 100% !important;
+}
+
+#barcode-scanner.visible {
+    display: block;
+    max-width: 100% !important;
+    position: relative;
+    height: auto;
+    max-height: 62vw;
+    margin-bottom: 1em;
+}
+
+#barcode-scanner .drawingBuffer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+#barcode-scanner.error {
+    background: #eee;
+}
+
+#barcode-scanner.visible video {
+    max-width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+#barcode-scanner.error::after {
+    content: "There was a problem loading the video stream";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 0;
+}
+
 #barcode {
     width: auto;
     height: 20px;
