@@ -217,6 +217,18 @@
         }
     }
 
+    function showUserIntakes(show) {
+                let userIntakes = document.querySelectorAll(".userIntake");
+                userIntakes.forEach(intake => {
+                   if (show) {      
+                intake.style.display = "table-row";
+            } else {
+                intake.style.display = "none";
+            }
+        })
+    }
+
+
     function addFoodOption(food, type, input) {
         console.log(food);
 
@@ -256,20 +268,7 @@
 
     }
 
-    function showUserIntakes(show) {
-        let userIntakes = document.querySelectorAll("userIntake");
-        
-        userIntakes.forEach(intake => {
-            console.log(intake);
-            if (show) {
-                intake.style.display = "table-row";
-            } else {
-                intake.style.display = "none";
-            }
-
-        })
-    }
-
+   
 
     function addToInput(foodName, addedType, foodId, foodQuantity) {
         const searchFoodContainer = document.querySelector("#searchFoodContainer");
