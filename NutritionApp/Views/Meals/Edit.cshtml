@@ -12,18 +12,20 @@
     <div class="col-md-4">
         <div>
             <form asp-action="AddToBasketEditMeal" asp-controller="Basket" method="post">
-                <div class="form-group">
-                    <label class="control-label">Choose new product:</label>
-                    <select name="productId" id="productId" class="form-control" asp-items="ViewBag.AllProd as SelectList"></select>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Qunatity</label>
-                    <input name="qunatity" class="form-control" autocomplete="off" />
-                    <span class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="hidden" name="MealId" value="@Model.Meal.MealId" />
-                    <input type="submit" value="Add" class="btn btn-primary" />
+                <div style="display:flex;justify-content:space-between" class="form-group">
+                    <div style="width:55%" >
+                        <label class="control-label">Choose new product:</label>
+                        <select name="productId" id="productId" class="form-control" asp-items="ViewBag.AllProd as SelectList"></select>
+                    </div>
+                    <div style="width:15%" class="form-group">
+                        <label class="control-label">GRAMS</label>
+                        <input name="qunatity" class="form-control" autocomplete="off" />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="MealId" value="@Model.Meal.MealId" />
+                        <input type="submit" value="+" class="add-button btn-prple" />
+                    </div>
                 </div>
             </form>
         </div>

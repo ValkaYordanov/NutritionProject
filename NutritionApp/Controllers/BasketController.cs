@@ -52,9 +52,9 @@ namespace NutritionApp.Controllers
 
 
             Product productObj = _context.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
-            
-            var ingre = _context.Ingredients.Where(i => i.ProductId == product.ProductId && i.MealId == MealId).First();
-            decimal qunatityFromOld;
+            var ingre = new Ingredient();
+            ingre = _context.Ingredients.Where(i => i.ProductId == product.ProductId && i.MealId == MealId).FirstOrDefault();
+            decimal qunatityFromOld = 0;
            
 
             if (productObj == null)
@@ -68,12 +68,13 @@ namespace NutritionApp.Controllers
                 _context.Ingredients.Remove(ingre);
                 _context.SaveChanges();
 
+            }
                 if (productObj != null)
                 {
                     var resultOfQunatities = qunatity + qunatityFromOld;
                     basket.AddProduct(productObj, (int)resultOfQunatities);
                 }
-            }
+            
             return RedirectToAction("Edit", "Meals", new { id = MealId });
         }
 
