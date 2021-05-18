@@ -47,6 +47,36 @@ namespace NutritionApp.Controllers
             return RedirectToAction("Create", "Meals");
         }
 
+        public IActionResult AddToBasketEditMeal (Product product, int qunatity, int MealId)
+        {
+
+
+            Product productObj = _context.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
+            
+            var ingre = _context.Ingredients.Where(i => i.ProductId == product.ProductId && i.MealId == MealId).First();
+            decimal qunatityFromOld;
+           
+
+            if (productObj == null)
+            {
+                return NotFound();
+            }
+
+            if (ingre != null)
+            {
+                qunatityFromOld = ingre.Quantity;
+                _context.Ingredients.Remove(ingre);
+                _context.SaveChanges();
+
+                if (productObj != null)
+                {
+                    var resultOfQunatities = qunatity + qunatityFromOld;
+                    basket.AddProduct(productObj, (int)resultOfQunatities);
+                }
+            }
+            return RedirectToAction("Edit", "Meals", new { id = MealId });
+        }
+
         [HttpPost]
         public IActionResult RemoveFromBasket(int productId)
         {
@@ -58,6 +88,19 @@ namespace NutritionApp.Controllers
             }
 
             return RedirectToAction("Create", "Meals");
+        }
+
+        [HttpPost]
+        public IActionResult RemoveFromBasketEditMeal(int productId,int MealId)
+        {
+
+            Product productObj = _context.Products.FirstOrDefault(p => p.ProductId == productId);
+            if (productObj != null)
+            {
+                basket.RemoveLine(productObj);
+            }
+
+            return RedirectToAction("Edit", "Meals", new { id = MealId });
         }
     }
 }

@@ -59,7 +59,6 @@ namespace NutritionApp.Controllers
         // GET: Meals/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "UserName");
             ViewData["AllProd"] = new SelectList(_context.Products, "ProductId", "ProductName");
             BasketIndexViewModel model = new BasketIndexViewModel();
           
@@ -125,10 +124,12 @@ namespace NutritionApp.Controllers
             
             
 
-            ViewData["UserId"] = new SelectList(_context.AppUsers, "Id", "Id", meal.UserId);
+           
+            ViewData["AllProd"] = new SelectList(_context.Products, "ProductId", "ProductName");
             BasketIndexViewModel model = new BasketIndexViewModel();
             model.Meal = meal;
             model.Basket = bas;
+            ViewBag.Bas = basket;
             return View(model);
         }
 
@@ -141,6 +142,8 @@ namespace NutritionApp.Controllers
         {
             var userid = _context.AppUsers.Where(i => i.Email == HttpContext.User.Identity.Name).First();
             meal.UserId = userid.Id;
+            IngredientController ingredientCtr = new IngredientController(_context, basket);
+
             if (id != meal.MealId)
             {
                 return NotFound();
@@ -152,6 +155,10 @@ namespace NutritionApp.Controllers
                 {
                     _context.Update(meal);
                     await _context.SaveChangesAsync();
+                    int idMeal = meal.MealId;
+                    ingredientCtr.AddIngredient(idMeal, basket);
+
+                    basket.Clear();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
