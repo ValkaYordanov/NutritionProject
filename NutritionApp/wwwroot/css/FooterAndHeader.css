@@ -17,8 +17,8 @@ footer nav {
     width: 100vw;
     background: #f7f7f7;
     box-shadow: 0 -1px 6px rgba(0, 0, 0, .1);
-   
     align-items: center;
+    min-height: 65px;
 }
 
 .middleNav {
@@ -88,4 +88,12 @@ nav div img {
 /* ------- footer active --------- */
 footer nav a:active {
     background-color: blueviolet;
+footer nav .greenBtn_wrap {
+    width: 80%;
+    background: var(--green);
+    display: flex;
+    justify-content: center;
+}
+footer nav .greenBtn_wrap .greenBtn {
+    color: #fff;
 }
