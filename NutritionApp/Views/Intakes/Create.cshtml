@@ -180,8 +180,6 @@
             const inputDec = "Input=";
             const UserIdDec = "&UserId=";
 
-            console.log("currentUserId: ", currentUserId);
-
             let url = `${path}${inputDec}${input}${UserIdDec}${currentUserId}`;
             console.log(url);
             fetch(url)
@@ -198,35 +196,17 @@
                     highlightInput();
                 });
         } else {
-            console.log("else")
             document.querySelector("input[type='submit']").disabled = true;
             document.querySelector("#foodsHeadline").innerHTML = "Recent intakes";
             showUserIntakes(true);
-
-            //const path = "https://localhost:44351/Intakes/GetAllIntakes?";
-            //const UserIdDec = "userId=";
-            //let url = `${path}${UserIdDec}${currentUserId}`;
-            //fetch(url)
-            //    .then(response => response.json())
-            //    .then(data => {
-
-            //        document.querySelector("tbody").innerHTML = '';
-
-            //        data.forEach(obj => addFoodOption(obj, 'meal', `${input}`))
-            //        highlightInput();
-            //    })
-
         }
     }
 
     function resetSearchedFoods() {
-        console.log("reset foods");
         let tableBody = document.querySelector("tbody");
         let searchedFoods = tableBody.querySelectorAll("tr:not(.userIntake)")
-        console.log(searchedFoods);
         searchedFoods.forEach(food => {
-            console.log(food);
-            tableBody.removeChild(food);
+           tableBody.removeChild(food);
         })
     }
 
@@ -243,11 +223,9 @@
 
 
     function addFoodOption(food, type, input) {
-        console.log(food);
-
+        
         if (type == 'product') {
-            console.log("GTIN: ", food.gtin);
-            document.querySelector("tbody").innerHTML += `
+                        document.querySelector("tbody").innerHTML += `
              <tr onclick="addToInput('${food.productName}', '${type}', ${food.productId}, '100');addSelectedStyle(this);">
                     <td >
                         100
@@ -294,7 +272,7 @@
         id.value = foodId;
         searchFoodsInput.value = foodName;
         quantity.value = foodQuantity;
-        console.log(isInViewport(searchFoodContainer));
+        
         if (!isInViewport(searchFoodContainer)) {
             searchFoodContainer.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
         }
