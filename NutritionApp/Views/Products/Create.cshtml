@@ -4,7 +4,6 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
 
 <div class="row whiteBox">
@@ -24,22 +23,10 @@
                 <span asp-validation-for="Brand" class="text-danger"></span>
             </div>
             <div class="form-group">
-<<<<<<< HEAD
-                <label class="control-label">Product Name</label>
-                <input asp-for="ProductName" class="form-control" autocomplete="off" />
-                <span asp-validation-for="ProductName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GTIN" class="control-label"></label>
-=======
                 <label class="control-label">Barcode / GTIN</label>
->>>>>>> styling---create-product
                 <input asp-for="GTIN" class="form-control" autocomplete="off" />
+                <img src="~/images/barcode.png" id="barcode" style="width:auto; height:20px;" />
                 <span asp-validation-for="GTIN" class="text-danger"></span>
-<<<<<<< HEAD
-                <p id="barcode">Scan code</p>
-=======
->>>>>>> styling---create-product
             </div>
             <div id="barcode-scanner">
                 <video src=""></video>
@@ -97,6 +84,7 @@
         <div class="add-button rotate45">+</div>
     </div>
 </a>
+<partial name="_CreateProductNav" />
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/js/quagga.min.js"></script>
@@ -115,7 +103,7 @@
     var appId = '2d5554ad';
     var appKey = 'e73fa7cbae14ba52da921ddee52baec5';
     var searchTerm = "";
-    
+
 
 
 
@@ -148,7 +136,7 @@
             .catch(err => {
                 console.log(err);
             })
-    
+
     });
 
     function searchItem(name) {
@@ -184,7 +172,7 @@
                 [].forEach.call(list, function (li) {
                     li.remove();
                 });
-                
+
             })
             .catch(err => {
                 console.log(err);
@@ -192,7 +180,7 @@
     }
 </script>
 
-@await Html.PartialAsync("_CreateProductNav")
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
