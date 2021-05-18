@@ -120,12 +120,12 @@
                                     @item.Meal.MealName
                                 </td>
                                 <td>
-                                    @{int sum = 0;
+                                    @*@{int sum = 0;
                                     foreach(var ingredient in @item.Meal.Ingredients)
                                     {
                                             sum += ingredient.Product.Kcal;
                                                                                  } }
-                                    @sum
+                                    @sum*@
                                 </td>
 
                             </tr>
@@ -171,7 +171,7 @@
     function searchForFoods(input, currentUserId) {
         console.log(currentUserId);
         if (input !== "") {
-            const path = "https://localhost:44351/Intakes/SelectFromSp?";
+            const path = "https://nutriwebapp.azurewebsites.net/Intakes/SelectFromSp?";
             const inputDec = "Input=";
             const UserIdDec = "&UserId=";
 
