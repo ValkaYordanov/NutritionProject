@@ -63,7 +63,7 @@
 
                 <div class="form-group gramsField" id="quantityContainer">
                     <label asp-for="Quantity" class="control-label">Grams</label>
-                    <input asp-for="Quantity" class="form-control" autocomplete="off" />
+                    <input asp-for="Quantity" class="form-control" autocomplete="off" inputmode="numeric" />
 
                 </div>
 
@@ -89,6 +89,7 @@
                     @*@Html.DisplayNameFor(model => model.Quantity)*@
                     Grams
                 </th>
+                <th></th>
                 <th>
                     @*@Html.DisplayNameFor(model => model.Type)*@
                     Product/Meal
@@ -99,7 +100,7 @@
         </thead>
         <tbody>
             @{bool anyUserIntakes = false; }
-            @foreach (var item in Model.Intakes)
+            @foreach (var item in Model.Intakes.Reverse())
             {
                 if (item.UserId == Model.UserId)
                 {
@@ -108,9 +109,9 @@
                     {
                         if (item.Meal.UserId == Model.UserId)
                         {
-                            <tr onclick="addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
+                            <tr onclick="addToInput('@item.Meal.MealName', 'meal',@item.Meal.MealId, '@Decimal.Truncate(item.Quantity)'); addSelectedStyle(this);">
                                 <td>
-                                    @item.Quantity
+                                    @Decimal.Truncate(item.Quantity)
                                 </td>
                                 <td>
                                     <img src="/images/meal.svg" alt="Meal" />
@@ -119,11 +120,12 @@
                                     @item.Meal.MealName
                                 </td>
                                 <td>
-                                    @foreach (var ingredient in @item.Meal.Ingredients)
+                                    @{int sum = 0;
+                                    foreach(var ingredient in @item.Meal.Ingredients)
                                     {
-                                        @*@ingredient.Product.Kcal*@
-
-                                    }
+                                            sum += ingredient.Product.Kcal;
+                                                                                 } }
+                                    @sum
                                 </td>
 
                             </tr>
@@ -132,12 +134,15 @@
                     if (item.Product != null)
                     {
 
-                        <tr onclick="addToInput(@item.Product.ProductId, '@item.Product.ProductName', '@item.Quantity', 'product');">
+                        <tr onclick="addToInput('@item.Product.ProductName', 'product', @item.Product.ProductId, '@Decimal.Truncate(item.Quantity)'); addSelectedStyle(this);">
                             <td>
                                 @Decimal.Truncate(item.Quantity)
                                                          </td>
                             <td>
-                                <img src="/images/product.svg" alt="Food" /> @item.Product.ProductName
+                                <img src="/images/product.svg" alt="Food" />
+                            </td>
+                            <td>
+                                @item.Product.ProductName
                             </td>
                             <td class="kcal">@(Decimal.Truncate(item.Product.Kcal / 100M * item.Quantity)) </td>
                         </tr>
@@ -183,8 +188,7 @@
 
                     data.productList.forEach(obj => addFoodOption(obj, 'product', `${input}`))
                     data.mealList.forEach(obj => addFoodOption(obj, 'meal', `${input}`))
-                    highlightInput();
-                });
+                                 });
         }
     }
 
@@ -194,7 +198,7 @@
         if (type == 'product') {
             console.log("GTIN: ", food.gtin);
             document.querySelector("tbody").innerHTML += `
-             <tr onclick="addChoosenFoodToInputFields('${food.productName}', '${type}', ${food.productId})">
+             <tr onclick="addToInput('${food.productName}', '${type}', ${food.productId}, '100')">
                     <td >
                         100
                     </td>
@@ -209,7 +213,7 @@
         }
         if (type == 'meal') {
             document.querySelector("tbody").innerHTML += `
-             <tr onclick="addChoosenFoodToInputFields('${food.mealName}', '${type}',${food.mealId})" >
+             <tr onclick="addToInput('${food.mealName}', '${type}',${food.mealId}), '100'" >
                     <td >
                         100
                     </td>
@@ -227,54 +231,32 @@
 
     }
 
-    function highlightInput() {
-        var searchInput = document.querySelector('#searchFoodsInput');
-
-        let rows = document.querySelectorAll("tbody tr");
-        rows.forEach(function (row) {
-            let foodName = row.querySelector(":nth-child(3) div");
-            var regex = new RegExp(searchInput.value, 'gi')
-            var response = foodName.innerText.replace(regex, function (str) {
-                return "<span class='highlightString'>" + str + "</span>"
-            })
-            foodName.innerHTML = response
-        })
 
 
-
-        //let input = document.querySelector("#searchFoodsInput").value;
-        //let rows = document.querySelectorAll("tbody tr");
-
-        //rows.forEach(function (row) {
-        //    console.log(row.querySelector(":nth-child(3)"))
-        //    let foodName = row.querySelector(":nth-child(3)");
-
-        //    var innerHTML = foodName.innerHTML;
-        //    var index = innerHTML.indexOf(input);
-        //    if (index >= 0) {
-        //        innerHTML = innerHTML.substring(0, index) + "<span class='highlightString'>" + innerHTML.substring(index, index + input.length) + "</span>" + innerHTML.substring(index + input.length);
-        //        foodName.innerHTML = innerHTML;
-        //    }
-        //});
-
-
-    }
-
-
-
-    function addChoosenFoodToInputFields(foodName, addedType, foodId) {
+    function addToInput(foodName, addedType, foodId, foodQuantity) {
         const searchFoodContainer = document.querySelector("#searchFoodContainer");
         const type = searchFoodContainer.querySelector("input[name='Type']");
         const id = searchFoodContainer.querySelector("input[name='ItemId']");
+        const quantity = document.querySelector("input[name='Quantity']");
 
         // Save values
         type.value = addedType;
         id.value = foodId;
         searchFoodsInput.value = foodName;
+        quantity.value = foodQuantity;
         console.log(isInViewport(searchFoodContainer));
         if (!isInViewport(searchFoodContainer)) {
             searchFoodContainer.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
         }
+    }
+
+
+    function addSelectedStyle(elem) {
+        let allSelected = document.querySelectorAll(".selectedRow");
+        if (allSelected.length != 0) {
+            allSelected.forEach(element => element.classList.remove('selectedRow'));            
+       }
+        elem.classList.toggle('selectedRow');
     }
 
     function isInViewport(el) {
@@ -284,16 +266,10 @@
             rect.left >= 0 &&
             rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
             rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-
-        );
+                    );
     }
 
-    function addToInput(prevIntakeId, prevIntakeName, prevIntakeQuantity, type) {
-        console.log(prevIntakeId);
-        addChoosenFoodToInputFields(prevIntakeName, `${type}`, prevIntakeId);
-        //let dotyfiedQuantity = parseInt(prevIntakeQuantity.replace(",", "."));
-        document.querySelector("input[name='Quantity']").value = prevIntakeQuantity;
-    }
+   
 
 
 </script>

@@ -70,6 +70,13 @@ input[type="submit"]{
     font-size: .7em;
     
 }
+    .table tbody tr:focus::after {
+        background-color: mediumpurple;
+    }
+
+.selectedRow {
+    background-color: #a8d998;
+}
     .table thead tr th {
         font-weight: 400;
         position: sticky;
