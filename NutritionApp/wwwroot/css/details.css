@@ -1,0 +1,143 @@
+﻿* {
+    box-sizing: border-box
+}
+
+body {
+
+    background: #6CA15A;
+    color: #fff;
+}
+
+.fail {
+    color: red;
+}
+
+.mySlides {
+    display: none;
+    height: 80%;
+}
+
+/* Slideshow container */
+.slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+}
+
+.bottom-links {
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+}
+
+.nav-dots {
+    text-align: center;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+    .active, .dot:hover {
+        background-color: #fff;
+    }
+
+/* Fading animation */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+#new-user-deets {
+    position: relative;
+    height: 100vh;
+}
+
+.story-style {
+    font-size: 2rem;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.slideshow-container {
+    height: 100%;
+}
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+
+/*------------- Stuff -------------*/
+input[type="number"],
+select#genderId {
+    background: unset;
+    border: unset;
+    border-bottom: 2px solid #fff;
+    font-size: 1em;
+    color: #fff;
+    max-width: 200px;
+    display: inline-block;
+}
+
+.mySlides p {
+    display: inline-block;
+    margin: 0;
+    text-align: center;
+}
+input[type="number"] {
+    max-width: 2em;
+    margin-bottom: 0;
+    text-align: center;
+}
+select#genderId option {
+    color: #000;
+    font-size: 0.7em;
+    background: rgba(255,255,255,.8);
+}
+.mySlides > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.nav-dots a {
+    text-decoration: underline;
+    color: #fff;
+}
+.mySlides form input[type="button"],
+.mySlides form input[type="submit"] {
+    display: none;
+}
+div.submit {
+    background: #fff;
+    padding: 14px 30px;
+    font-size: 0.7em;
+    text-align: center;
+    color: #2c4125;
+    font-weight: bold;
+    border-radius: 50px;
+    box-shadow: 0 0 15px rgba(0,0,0,.15);
+    margin-top: 25px;
+}
+    div.submit:active {
+        background: #e7e7e7;
+    }

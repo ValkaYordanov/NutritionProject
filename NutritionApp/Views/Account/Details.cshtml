@@ -9,90 +9,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        * {
-            box-sizing: border-box
-        }
-
-        body {
-            font-family: Verdana, sans-serif;
-            margin: 0
-        }
-
-        .fail {
-            color: red;
-        }
-
-        .mySlides {
-            display: none;
-            height: 80%;
-        }
-
-        /* Slideshow container */
-        .slideshow-container {
-            max-width: 1000px;
-            position: relative;
-            margin: auto;
-        }
-
-        .bottom-links {
-            position: absolute;
-            bottom: 50px;
-            width: 100%;
-        }
-
-        .nav-dots {
-            text-align: center;
-        }
-
-        /* The dots/bullets/indicators */
-        .dot {
-            cursor: pointer;
-            height: 15px;
-            width: 15px;
-            margin: 0 2px;
-            background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.6s ease;
-        }
-
-            .active, .dot:hover {
-                background-color: #717171;
-            }
-
-        /* Fading animation */
-        .fade {
-            -webkit-animation-name: fade;
-            -webkit-animation-duration: 1.5s;
-            animation-name: fade;
-            animation-duration: 1.5s;
-        }
-
-        #new-user-deets {
-            position: relative;
-            height: 100vh;
-        }
-
-        .story-style {
-            font-size: 2rem;
-            text-align: center;
-            padding: 4rem 2rem;
-        }
-
-        .slideshow-container {
-            height: 100%;
-        }
-
-        @@keyframes fade {
-            from {
-                opacity: .4
-            }
-
-            to {
-                opacity: 1
-            }
-        }
     </style>
+    <link href="~/css/standardStyle.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/details.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -113,9 +33,10 @@
                 <div id="gender-block">
                     <form id="genderForm" class="story-style" method="post" asp-controller="Account" asp-action="Gender">
                         <p>
-                            Great! I'm ready to start. First, my gender is 
-                            <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
+                            Great! I'm ready to start. First, my gender is
                         </p>
+                            <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
+                        
                         <input type="button" value="Continue" onclick="GenderFormSubmit()" />
                     </form>
                 </div>
@@ -126,9 +47,10 @@
                     <form id="weightForm" class="story-style" method="post" asp-controller="Account" asp-action="Weight">
                         <p>
                             At the current moment, I weight
-                            <input type="text" name="weight" id="weight" onkeyup="validateWeight(this)" />
-                            kg. 
                         </p>
+                            <input type="number" name="weight" id="weight" onkeyup="validateWeight(this)" />
+                            <p>  kg. </p>
+                        
                         <input type="button" value="Continue" onclick="WeightFormSubmit()" />
                     </form>
                     <p class="fail"></p>
@@ -140,8 +62,11 @@
                     <form id="weightGoalForm" class="story-style" method="post" asp-controller="Account" asp-action="WeightGoal">
                         <p>
                             One last thing... My weight goal is to weight
-                            <input type="text" name="weightGoal" id="weightGoal" onkeyup="validateWeight(this)" />
+                            <input type="number" name="weightGoal" id="weightGoal" onkeyup="validateWeight(this)" />
                             kg.
+                        </p>
+                        <p>
+                            <div class="submit" id="mySubmit">All set - Let's go!</div>
                         </p>
                         <input type="submit" />
                     </form>
@@ -160,7 +85,7 @@
                 <span class="dot" onclick="currentSlide(3)"></span>
                 <span class="dot" onclick="currentSlide(4)"></span>
             </div>
-            <p class="nav-dots">Or you can <a asp-controller="Account" asp-action="Login">log in</a> instead.</p>
+            <p class="nav-dots">Already have an account? <a asp-controller="Account" asp-action="Login">Log in</a> instead.</p>
         </div>
     </section>
 
@@ -282,5 +207,30 @@
                 er.innerText = "";
             }
         }
+    </script>
+    <script>
+        //auto submit forms
+        const genderForm = document.getElementById('genderForm');
+        const weightForm = document.getElementById('weightForm');
+        const mySubmit = document.getElementById('mySubmit');
+        //const weightGoalForm = document.getElementById('weightGoalForm');
+
+        document.getElementById('genderId').addEventListener("keyup", function () {
+            genderForm.submit();
+        });
+
+        mySubmit.addEventListener('click', function () {
+            weightForm.submit();
+            weightGoalForm.submit();
+        });
+
+        //document.getElementById('weight').addEventListener("change", function () {
+        //    weightForm.submit();
+        //});
+
+        //document.getElementById('weightGoal').addEventListener("change", function () {
+        //    weightGoalForm.submit();
+        //});
+
     </script>
 </body>
