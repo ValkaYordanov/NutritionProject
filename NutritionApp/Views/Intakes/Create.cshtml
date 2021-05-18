@@ -169,7 +169,7 @@
 <script>
 
     function searchForFoods(input, currentUserId) {
-
+        resetSearchedFoods();
         if (input !== "") {
             document.querySelector("input[type='submit']").disabled = false;
             document.querySelector("#foodsHeadline").innerHTML = "Select food"
@@ -188,7 +188,8 @@
                 .then(data => {
 
                     console.log(data);
-                    
+
+                   
                     showUserIntakes(false);
 
                     data.productList.forEach(obj => addFoodOption(obj, 'product', `${input}`))
@@ -217,8 +218,19 @@
         }
     }
 
+    function resetSearchedFoods() {
+        console.log("reset foods");
+        let tableBody = document.querySelector("tbody");
+        let searchedFoods = tableBody.querySelectorAll("tr:not(.userIntake)")
+        console.log(searchedFoods);
+        searchedFoods.forEach(food => {
+            console.log(food);
+            tableBody.removeChild(food);
+        })
+    }
+
     function showUserIntakes(show) {
-                let userIntakes = document.querySelectorAll(".userIntake");
+        let userIntakes = document.querySelectorAll(".userIntake");
                 userIntakes.forEach(intake => {
                    if (show) {      
                 intake.style.display = "table-row";
