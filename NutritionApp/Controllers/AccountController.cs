@@ -136,18 +136,15 @@ namespace NutritionApp.Controllers
             AppUser user = await CurrentUser;
             if (user != null)
             {
-                if (weight > 0)
+                user.Weight = weight;
+                IdentityResult result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
                 {
-                    user.Weight = weight;
-                    IdentityResult result = await _userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Details");
-                    }
-                    else
-                    {
-                        AddErrors(result);
-                    }
+                    return RedirectToAction("Details");
+                }
+                else
+                {
+                    AddErrors(result);
                 }
             }
 
@@ -161,18 +158,15 @@ namespace NutritionApp.Controllers
             AppUser user = await CurrentUser;
             if (user != null)
             {
-                if (weightGoal > 0)
+                user.WeightGoal = weightGoal;
+                IdentityResult result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
                 {
-                    user.WeightGoal = weightGoal;
-                    IdentityResult result = await _userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Create", "Intakes");
-                    }
-                    else
-                    {
-                        AddErrors(result);
-                    }
+                    return RedirectToAction("Create", "Intakes");
+                }
+                else
+                {
+                    AddErrors(result);
                 }
             }
 
