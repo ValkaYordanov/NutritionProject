@@ -48,7 +48,7 @@
                         <p>
                             At the current moment, I weight
                         </p>
-                            <input type="number" name="weight" id="weight" onkeyup="validateWeight(this)" />
+                            <input type="number" name="weight" id="weight" onkeyup="validateWeight(this)" autocomplete="off"/>
                             <p>  kg. </p>
                         
                         <input type="button" value="Continue" onclick="WeightFormSubmit()" />
@@ -62,7 +62,7 @@
                     <form id="weightGoalForm" class="story-style" method="post" asp-controller="Account" asp-action="WeightGoal">
                         <p>
                             One last thing... My weight goal is to weight
-                            <input type="number" name="weightGoal" id="weightGoal" onkeyup="validateWeight(this)" />
+                            <input type="number" name="weightGoal" id="weightGoal" onkeyup="validateWeight(this)" autocomplete="off"/>
                             kg.
                         </p>
                         <p>
