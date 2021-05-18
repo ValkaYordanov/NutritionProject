@@ -12,6 +12,7 @@ namespace NutritionApp.Models.ViewModels
         //[Required]
         public int ItemId { get; set; }
         public string ItemName { get; set; }
+        [DisplayFormat(DataFormatString = "{0:#,0}", ApplyFormatInEditMode = true)]
         public decimal Quantity { get; set; }
         //[Required]
         public string Type { get; set; }

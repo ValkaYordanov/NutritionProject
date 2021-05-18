@@ -98,48 +98,63 @@
             </tr>
         </thead>
         <tbody>
+            @{bool anyUserIntakes = false; }
             @foreach (var item in Model.Intakes)
             {
-                if (item.Meal != null)
+                if (item.UserId == Model.UserId)
                 {
-                    if (item.Meal.UserId == Model.UserId)
+                    anyUserIntakes = true;
+                    if (item.Meal != null)
                     {
-                        <tr onclick="addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
-                            <td>
-                                @item.Quantity
-                            </td>
-                            <td>
-                                <img src="/images/meal.svg" alt="Meal" />
-                            </td>
-                            <td>
-                                @item.Meal.MealName
-                            </td>
-                            <td>
-                                @foreach (var ingredient in @item.Meal.Ingredients)
-                                {
-                                    @*@ingredient.Product.Kcal*@
+                        if (item.Meal.UserId == Model.UserId)
+                        {
+                            <tr onclick="addToInput(@item.Meal.MealId, '@item.Meal.MealName', '@item.Quantity', 'meal');">
+                                <td>
+                                    @item.Quantity
+                                </td>
+                                <td>
+                                    <img src="/images/meal.svg" alt="Meal" />
+                                </td>
+                                <td>
+                                    @item.Meal.MealName
+                                </td>
+                                <td>
+                                    @foreach (var ingredient in @item.Meal.Ingredients)
+                                    {
+                                        @*@ingredient.Product.Kcal*@
 
-                                }
-                            </td>
+                                    }
+                                </td>
 
+                            </tr>
+                        }
+                    }
+                    if (item.Product != null)
+                    {
+
+                        <tr onclick="addToInput(@item.Product.ProductId, '@item.Product.ProductName', '@item.Quantity', 'product');">
+                            <td>
+                                @Decimal.Truncate(item.Quantity)
+                                                         </td>
+                            <td>
+                                <img src="/images/product.svg" alt="Food" /> @item.Product.ProductName
+                            </td>
+                            <td class="kcal">@(Decimal.Truncate(item.Product.Kcal / 100M * item.Quantity)) </td>
                         </tr>
                     }
-                }
-                if (item.Product != null)
-                {
-                    <tr onclick="addToInput(@item.Product.ProductId, '@item.Product.ProductName', '@item.Quantity', 'product');">
-                        <td>
-                            @item.Quantity
-                        </td>
-                        <td>
-                            <img src="/images/product.svg" alt="Food" /> @item.Product.ProductName
-                        </td>
-                        <td>@(item.Product.Kcal/100M * item.Quantity) </td>
-                    </tr>
-                }
 
 
+                }
             }
+            @if (!anyUserIntakes)
+            {
+                <tr>
+                    <td>
+                        You havent added any intakes yet
+                    </td>
+                </tr>
+            }
+
         </tbody>
     </table>
 </div>
@@ -149,6 +164,7 @@
 <script>
 
     function searchForFoods(input, currentUserId) {
+        console.log(currentUserId);
         if (input !== "") {
             const path = "https://localhost:44351/Intakes/SelectFromSp?";
             const inputDec = "Input=";
