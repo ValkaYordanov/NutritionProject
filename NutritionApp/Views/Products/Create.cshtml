@@ -9,24 +9,37 @@
 
 <div class="row whiteBox">
     <h1 class="pageTitle">Add product</h1>
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Create" id="addProductForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Product Name</label>
+                <input asp-for="ProductName" id="pName" class="form-control" autocomplete="off" />
+                <ul id="pList"></ul>
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Brand" class="control-label"></label>
                 <input asp-for="Brand" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Brand" class="text-danger"></span>
             </div>
             <div class="form-group">
+<<<<<<< HEAD
                 <label class="control-label">Product Name</label>
                 <input asp-for="ProductName" class="form-control" autocomplete="off" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="GTIN" class="control-label"></label>
+=======
+                <label class="control-label">Barcode / GTIN</label>
+>>>>>>> styling---create-product
                 <input asp-for="GTIN" class="form-control" autocomplete="off" />
                 <span asp-validation-for="GTIN" class="text-danger"></span>
+<<<<<<< HEAD
                 <p id="barcode">Scan code</p>
+=======
+>>>>>>> styling---create-product
             </div>
             <div id="barcode-scanner">
                 <video src=""></video>
@@ -38,8 +51,8 @@
                 <span asp-validation-for="Kcal" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Kj / / 100 gram</label>
-                <input asp-for="KJ" class="form-control" autocomplete="off" />
+                <label class="control-label">Kj / 100 gram</label>
+                <input asp-for="KJ" class="form-control" autocomplete="off" value="0" />
                 <span asp-validation-for="KJ" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -49,7 +62,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Saturated Fats / 100 gram</label>
-                <input asp-for="FromFatSaturated" class="form-control" autocomplete="off" />
+                <input asp-for="FromFatSaturated" class="form-control" autocomplete="off" value="0" />
                 <span asp-validation-for="FromFatSaturated" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -59,7 +72,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Sugar / 100 gram</label>
-                <input asp-for="FromCarbsSuggar" class="form-control" autocomplete="off" />
+                <input asp-for="FromCarbsSuggar" class="form-control" autocomplete="off" value="0" />
                 <span asp-validation-for="FromCarbsSuggar" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -69,7 +82,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label"> Salt / 100 gram</label>
-                <input asp-for="Salt" class="form-control" autocomplete="off" />
+                <input asp-for="Salt" class="form-control" autocomplete="off" value="0" />
                 <span asp-validation-for="Salt" class="text-danger"></span>
             </div>
             <div class="form-group" style="display: none;">
@@ -88,6 +101,96 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/js/quagga.min.js"></script>
 <script src="~/js/barcode.js"></script>
+<script>
+    const pName = document.getElementById('pName');
+    const pList = document.getElementById('pList');
+    const kcalField = document.querySelector('input[name="Kcal"]');
+    const fatField = document.querySelector('input[name="Fat"]');
+    const carbField = document.querySelector('input[name="Carbs"]');
+    const proteinField = document.querySelector('input[name="Protein"]');
+    const kjField = document.querySelector('input[name="KJ"]');
+
+    let listItem = document.querySelectorAll('#pList li');
+    //api
+    var appId = '2d5554ad';
+    var appKey = 'e73fa7cbae14ba52da921ddee52baec5';
+    var searchTerm = "";
+    
+
+
+
+
+    pName.addEventListener("keyup", function () {
+        var searchTerm = pName.value;
+        var autoComplete = 'https://api.edamam.com/auto-complete?q=' + searchTerm + '&limit=10&app_id=' + appId + '&app_key=' + appKey + '';
+
+        fetch(autoComplete)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                //console.log(data);
+                //clear list
+                let list = document.querySelectorAll('#pList li');
+                [].forEach.call(list, function (li) {
+                    li.remove();
+                });
+
+                var i;
+                for (i = 0; i < data.length; i++) {
+                    var item = document.createElement('li');
+                    item.textContent = data[i];
+                    item.setAttribute('data-name', data[i]);
+                    item.setAttribute('onclick', 'searchItem(this)');
+                    pList.appendChild(item);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    
+    });
+
+    function searchItem(name) {
+        var searchTerm = name.getAttribute('data-name');
+        console.log('item: ' + searchTerm);
+        //api call
+        var searchUrl = 'https://api.edamam.com/api/food-database/v2/parser?ingr=' + searchTerm + '&app_id=' + appId + '&app_key=' + appKey + '';
+
+        fetch(searchUrl)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                //console.log(data);
+                var nutri = data['parsed'][0]['food']['nutrients'];
+                console.log(nutri);
+                var fat = nutri['FAT'];
+                var protein = nutri['PROCNT'];
+                var carbs = nutri['CHOCDF'];
+                var kcal = nutri['ENERC_KCAL'];
+
+                kcalField.value = Math.floor(kcal);
+                fatField.value = Math.floor(fat);
+                carbField.value = Math.floor(carbs);
+                proteinField.value = Math.floor(protein);
+                kjField.value = Math.floor(kcal * 4.184);
+                var ptitle = searchTerm[0].toUpperCase() + searchTerm.slice(1);
+                pName.value = ptitle;
+                //4.184
+
+                //clear list
+                let list = document.querySelectorAll('#pList li');
+                [].forEach.call(list, function (li) {
+                    li.remove();
+                });
+                
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+</script>
 
 @await Html.PartialAsync("_CreateProductNav")
 @section Scripts {

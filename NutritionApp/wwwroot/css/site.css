@@ -385,3 +385,20 @@ form[action="/Products/Create"] label {
     right: 10px;
     transform: translateY(-130%);
 }
+#pList {
+    border: 1px solid #ddd;
+    border-top: unset;
+    background: #fff;
+    padding: 5px 1em;
+}
+#pList:empty {
+    border: unset;
+    background: unset;
+    padding: unset;
+}
+#pList li {
+    list-style: none;
+    text-transform: capitalize;
+    font-size: 1.1em;
+    cursor: pointer;
+}
