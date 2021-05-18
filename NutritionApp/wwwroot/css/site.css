@@ -41,21 +41,42 @@ a {
 }
 
 .create-container {
-    margin-top: 2rem;
+    /*margin-top: 2rem;*/
     display: flex;
     flex-direction: column;
-    color: gray;
+    /*color: gray;*/ 
+    color: white;
+
 }
+
+    .create-container svg {
+        position: absolute;
+        top: 5px;
+        left: -3px;
+        transform: rotate(268deg);
+    }
+
+    .create-container path, .create-container circle {
+        fill: transparent;
+    }
+
+    .create-container text {
+        fill: white;
+        font-size: 1.2em;
+        z-index: 99;
+        font-weight:500;
+    }
+
 
 .add-button {
     width: 50px;
     height: 50px;
-    background-color: white;
+    background-color: #FA8072;
     text-align: center;
     font-weight: bold;
-    font-size: 3rem;
+    font-size: 2rem;
     line-height: 50px;
-    color: gray;
+    /*color: gray;*/
     border-radius: 50%;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

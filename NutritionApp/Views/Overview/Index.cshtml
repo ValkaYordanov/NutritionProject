@@ -95,28 +95,28 @@
             </div>
 
 </section>
+<div class="food-listing">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Grams
+                </th>
+                <th>
+                    Product / Meal
+                </th>
+                <th>
+                    Kcal
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Grams
-            </th>
-            <th>
-                Product / Meal
-            </th>
-            <th>
-                Kcal
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+                <tr onclick="location.href = '@(Url.Action("Edit", "Intakes",new { id= @item.IntakeId }))'">
 
-            <tr  onclick="location.href = '@(Url.Action("Edit", "Intakes",new { id= @item.IntakeId }))'">
-             
                     <td class="qnt">
                         @Html.DisplayFor(modelItem => item.Quantity)
                     </td>
@@ -178,14 +178,15 @@
 
                     </td>
 
-        
-
-            </tr>
-        }
 
 
-    </tbody>
-</table>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>
 <partial name="_navigation" />
 <script>
     let kcalCol = document.querySelectorAll('.kcal-col');

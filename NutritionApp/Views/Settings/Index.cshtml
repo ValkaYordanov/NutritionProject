@@ -17,7 +17,7 @@
 <div class="panel">
     <div id="weight-block">
         <form id="weightForm" method="post" asp-controller="Settings" asp-action="Weight">
-            <input type="text" class="text-input" onkeyup="validateWeight(this);" name="weight" id="weight" asp-for="Weight" />
+            <input type="text" class="text-input" onkeyup="validateWeight(this);" name="weight" id="weight" inputmode="numeric" asp-for="Weight" />
             <input type="button" value="Change" onclick="WeightFormSubmit()" />
         </form>
         <p class="fail"></p>
@@ -28,7 +28,7 @@
 <div class="panel">
     <div id="goal-block">
         <form id="weightGoalForm" method="post" asp-controller="Settings" asp-action="WeightGoal">
-            <input type="text" class="text-input" onkeyup="validateWeight(this);" name="weightGoal" class="text-input" id="weightGoal" asp-for="WeightGoal" />
+            <input type="text" class="text-input" onkeyup="validateWeight(this);" name="weightGoal" id="weightGoal" inputmode="numeric" asp-for="WeightGoal" />
             <input type="button" value="Change" onclick="WeightGoalFormSubmit()" />
         </form>
         <p class="fail"></p>

@@ -44,8 +44,16 @@
 
 <a asp-action="Create" class="create-link">
     <div class="create-container">
-        <small style="margin-left:-1rem">ADD PRODUCT</small>
+        @*<small style="margin-left:-1rem">ADD PRODUCT</small>*@
         <div class="add-button">+</div>
+        <svg viewBox="164 68 100 100">
+            <path id="curve" d="M 230 80 A 45 45, 0, 1, 0, 275 125" />
+            <text width="100">
+                <textPath xlink:href="#curve">
+                    ADD PRODUCT
+                </textPath>
+            </text>
+        </svg>
     </div>
 </a>
 

@@ -11,10 +11,10 @@
 <div class="row">
     <div class="col-md-4">
 
-        <form asp-action="AddToBasket" asp-controller="Basket" method="post">
+        <form asp-action="AddToBasket" asp-controller="Basket" method="post" id="addForm">
             <div class="form-group">
                 <label asp-for="Meal.MealName" class="control-label"><small>MEAL NAME</small></label>
-                <input asp-for="Meal.MealName" class="form-control" onkeyup="nc(this); mealDisabler(this);" autocomplete="off"  />
+                <input asp-for="Meal.MealName" class="form-control" onkeyup="nc(this); mealDisabler(this);" autocomplete="off" />
                 <span asp-validation-for="Meal.MealName" class="text-danger"></span>
             </div>
             <div style="display:flex;justify-content:space-between">
@@ -38,9 +38,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-group">
-                <label asp-for="Meal.UserId" class="control-label"></label>
-                <select type="hidden" asp-for="Meal.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-            </div>*@
+                    <label asp-for="Meal.UserId" class="control-label"></label>
+                    <select type="hidden" asp-for="Meal.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                </div>*@
 
             <div class="form-group" style="display:none">
                 <label asp-for="Meal.MealName" class="control-label"></label>
@@ -48,7 +48,7 @@
                 <span asp-validation-for="Meal.MealName" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" >
                 <input type="submit" value="Create" class="btn btn-primary" disabled />
             </div>
         </form>
@@ -58,25 +58,34 @@
 
 <a asp-action="Index" class="create-link">
     <div class="create-container">
-        <small>CANCEL</small>
+        @*<small>CANCEL</small>*@
         <div class="add-button rotate45">+</div>
+        <svg viewBox="164 68 100 100">
+            <path id="curve" d="M 230 80 A 45 45, 0, 1, 0, 275 125" />
+            <text width="100">
+                <textPath xlink:href="#curve">
+                    CANCEL
+                </textPath>
+            </text>
+        </svg>
     </div>
 </a>
+@*<partial name="_CreateProductNav" />*@
 
 
 <script>
     function nc(self) {
         document.getElementById('meal-name').value = self.value;
- }
+    }
 
-
+    document.querySelectorAll("input[type='submit']")[2].disabled = true;
 
     function mealDisabler(elm) {
         if (elm.value != "") {
-            
-            document.querySelectorAll("input[type='submit']")[1].disabled = false;
+
+            document.querySelectorAll("input[type='submit']")[2].disabled = false;
         } else {
-            document.querySelectorAll("input[type='submit']")[1].disabled = true;
+            document.querySelectorAll("input[type='submit']")[2].disabled = true;
         }
     }
 </script>
