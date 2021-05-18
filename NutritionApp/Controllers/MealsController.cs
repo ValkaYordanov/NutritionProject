@@ -108,11 +108,11 @@ namespace NutritionApp.Controllers
                 return NotFound();
             }
 
-          
-                foreach (var ingredient in _context.Ingredients)
+            var ingredientsList = _context.Ingredients.Where(i => i.MealId == id);
+
+                foreach (var ingredient in ingredientsList)
                 {
-                   if(ingredient.MealId == id)
-                    {
+                  
                         BasketLine line = new BasketLine();
                         Product prod = _context.Products.First(i => i.ProductId == ingredient.ProductId);
                    
@@ -120,8 +120,6 @@ namespace NutritionApp.Controllers
                         line.Quantity = Convert.ToInt32(ingredient.Quantity);
                         bas.Lines.Add(line);
                     
-                   
-                    }
                 }
             
             
@@ -173,23 +171,26 @@ namespace NutritionApp.Controllers
         }
 
 
-        //public ActionResult DeleteIngredientFromBasket(int id)
-        //{
-        //    foreach(var ingredient in bas.Lines)
-        //    {
-        //        if(ingredient.Product.ProductId == id)
-        //        {
-        //            bas.Lines.Remove(ingredient);
-        //            var ingre =  _context.Ingredients.Find(id);
-        //            _context.Ingredients.Remove(ingre);
-        //            _context.SaveChangesAsync();
+        public RedirectToActionResult DeleteIngredientFromBasket(int ProductId, int MealId)
+        {
 
-        //        }
-        //    }
-        //    BasketIndexViewModel model = new BasketIndexViewModel();
-        //    model.Basket = bas;
-        //    return View("Edit",model);
-        //}
+            var ingredientsList = _context.Ingredients.Where(i => i.MealId == MealId);
+            foreach (var ingredient in ingredientsList)
+            {
+                if (ingredient.ProductId == ProductId)
+                {
+                    //bas.Lines.Remove(ingredient);
+                    var ingre = _context.Ingredients.Where(i => i.ProductId == ProductId && i.MealId == MealId).First();
+                    _context.Ingredients.Remove(ingre);
+
+                }
+            }
+                    _context.SaveChanges();
+            //BasketIndexViewModel model = new BasketIndexViewModel();
+            //model.Basket = bas;
+            //model.Meal = _context.Meals.Where(i => i.MealId == MealId).First();
+            return RedirectToAction("Edit",new { id=MealId });
+        }
 
 
         // GET: Meals/Delete/5
