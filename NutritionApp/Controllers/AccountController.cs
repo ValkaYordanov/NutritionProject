@@ -167,7 +167,7 @@ namespace NutritionApp.Controllers
                     IdentityResult result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)
                     {
-                        return Redirect("/");
+                        return RedirectToAction("Create", "Intakes");
                     }
                     else
                     {
