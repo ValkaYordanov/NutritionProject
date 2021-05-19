@@ -112,10 +112,12 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @{ if (Model.Any())
+                {
+            foreach (var item in Model)
             {
 
-                <tr onclick="location.href = '@(Url.Action("Edit", "Intakes",new { id= @item.IntakeId }))'">
+                <tr onclick="location.href = '@(Url.Action("Edit", "Intakes", new { id = @item.IntakeId }))'">
 
                     <td class="qnt">
                         @Html.DisplayFor(modelItem => item.Quantity)
@@ -126,7 +128,7 @@
                         @Html.DisplayFor(modelItem => item.Product.ProductName)
                     </td>
                     <td class="kcal-col" data-qnt="@Html.DisplayFor(modelItem => item.Quantity)" data-fat="@{
-                            var i2 = 0;
+                        var i2 = 0;
                         }
                         @foreach (var listitem in ViewData["Fats"] as List<decimal>)
                         {
@@ -137,7 +139,7 @@
 
                             }
                         }" data-carbs="@{
-                            var i3 = 0;
+    var i3 = 0;
                         }
                         @foreach (var listitem in ViewData["Carbs"] as List<decimal>)
                         {
@@ -147,7 +149,7 @@
                                     @listitem
                             }
                         }" data-proteins="@{
-                            var i4 = 0;
+    var i4 = 0;
                         }
                         @foreach (var listitem in ViewData["Proteins"] as List<decimal>)
                         {
@@ -167,7 +169,7 @@
                             {
                                     @listitem
 
-                                        }
+                            }
                         }
 
                         @{
@@ -181,7 +183,15 @@
 
 
                 </tr>
-            }
+                                }}
+                            else
+                            {
+                                <tr class="defaultMessage">
+                                    <td>You havent</td>
+            <td>added any intakes yet</td>
+                                </tr>
+                            }
+                            }
 
 
         </tbody>
