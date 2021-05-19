@@ -154,12 +154,15 @@ namespace NutritionApp.Controllers
 
         // POST: /Account/WeightGoal
         [HttpPost]
-        public async Task<IActionResult> WeightGoal(decimal weightGoal)
+        public async Task<IActionResult> WeightGoal(decimal weightGoal, decimal weight, int genderId)
         {
             AppUser user = await CurrentUser;
             if (user != null)
             {
                 user.WeightGoal = weightGoal;
+                user.GenderId = genderId;
+                user.Weight = weight;
+
                 IdentityResult result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {

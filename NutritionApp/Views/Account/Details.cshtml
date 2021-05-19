@@ -33,7 +33,7 @@
                         <p>
                             Tell me a bit about yourself... What do you identify as?
                         </p>
-                            <select style="max-width: 260px" name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
+                            <select style="max-width: 260px" onchange="gc(this)" name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
                         
                         <input type="button" value="Continue" onclick="GenderFormSubmit()" />
                     </form>
@@ -46,7 +46,7 @@
                         <p>
                             Interesting! What's your weight? <br />
                         </p>
-                            <input type="number" name="weight" id="weight" onkeyup="validateWeight(this)" autocomplete="off"/>
+                            <input type="number" name="weight" onkeyup="wc(this)" autocomplete="off"/>
                             <p>  kg. </p>
                         
                         <input type="button" value="Continue" onclick="WeightFormSubmit()" />
@@ -63,6 +63,8 @@
                             <input type="number" name="weightGoal" id="weightGoal" onkeyup="validateWeight(this)" autocomplete="off"/>
                             kg.
                         </p>
+                        <input type="hidden" id="genderId-og" name="genderId" value="" />
+                        <input type="hidden" id="weight-og" name="weight" value="" />
                         <p>
                             <div class="submit" id="mySubmit">Buckle up - Let's go!</div>
                         </p>
@@ -88,45 +90,12 @@
     </section>
 
     <script type="text/javascript">
-        function GenderFormSubmit() {
-            let url = document.getElementById("genderForm").action;
-            let genderId = document.getElementById("genderId").value;
-
-            let formData = new FormData();
-            formData.append("genderId", genderId);
-            const XHR = new XMLHttpRequest();
-            XHR.addEventListener('load', function (event) {
-                plusSlides(1);
-            });
-            XHR.open('POST', url);
-            XHR.send(formData);
+        function gc(self) {
+            document.getElementById('genderId-og').value = self.value;
         }
 
-        function WeightFormSubmit() {
-            let url = document.getElementById("weightForm").action;
-            let weight = document.getElementById("weight").value;
-
-            let formData = new FormData();
-            formData.append("weight", weight);
-            const XHR = new XMLHttpRequest();
-            XHR.addEventListener('load', function (event) {
-                plusSlides(1);
-            });
-            XHR.open('POST', url);
-            XHR.send(formData);
-        }
-
-        function WeightGoalFormSubmit() {
-            let url = document.getElementById("weightGoalForm").action;
-            let weightGoal = document.getElementById("weightGoal").value;
-            let formData = new FormData();
-            formData.append("weightGoal", weightGoal);
-            const XHR = new XMLHttpRequest();
-            XHR.addEventListener('load', function (event) {
-                document.getElementById("hmp-link").click();
-            });
-            XHR.open('POST', url);
-            XHR.send(formData);
+        function wc(self) {
+            document.getElementById('weight-og').value = self.value;
         }
     </script>
 
