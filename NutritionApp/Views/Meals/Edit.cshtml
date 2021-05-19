@@ -13,11 +13,11 @@
         <div>
             <form asp-action="AddToBasketEditMeal" asp-controller="Basket" method="post">
                 <div style="display:flex;justify-content:space-between" class="form-group">
-                    <div style="width:55%" >
+                    <div style="width:57%" >
                         <label class="control-label">Choose new product:</label>
                         <select name="productId" id="productId" class="form-control" asp-items="ViewBag.AllProd as SelectList"></select>
                     </div>
-                    <div style="width:15%" class="form-group">
+                    <div style="width:27%" class="form-group">
                         <label class="control-label">GRAMS</label>
                         <input name="qunatity" class="form-control" autocomplete="off" />
                         <span class="text-danger"></span>
