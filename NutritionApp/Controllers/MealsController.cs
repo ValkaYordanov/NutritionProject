@@ -149,9 +149,17 @@ namespace NutritionApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("MealId,Quantity,MealName")] Meal meal)
         {
+            var ingredientsList = _context.Ingredients.Where(i => i.MealId == id);
             var userid = _context.AppUsers.Where(i => i.Email == HttpContext.User.Identity.Name).First();
             meal.UserId = userid.Id;
             IngredientController ingredientCtr = new IngredientController(_context, basket);
+            decimal quant = 0;
+
+            foreach (var element in ingredientsList)
+            {
+                quant = quant + element.Quantity;
+            }
+            meal.Quantity = quant;
 
             if (id != meal.MealId)
             {
