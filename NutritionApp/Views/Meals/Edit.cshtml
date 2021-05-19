@@ -105,9 +105,20 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<a asp-action="Index" class="create-link">
+    <div class="create-container">
+        @*<small>CANCEL</small>*@
+        <div class="add-button rotate45">+</div>
+        <svg viewBox="164 68 100 100">
+            <path id="curve" d="M 230 80 A 45 45, 0, 1, 0, 275 125" />
+            <text width="100">
+                <textPath xlink:href="#curve">
+                    CANCEL
+                </textPath>
+            </text>
+        </svg>
+    </div>
+</a>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
