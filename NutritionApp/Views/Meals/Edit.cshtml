@@ -4,17 +4,16 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1 class="page-title">Edit Meal</h1>
 
-<h4>Meal</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <div>
             <form asp-action="AddToBasketEditMeal" asp-controller="Basket" method="post">
                 <div style="display:flex;justify-content:space-between" class="form-group">
-                    <div style="width:57%" >
-                        <label class="control-label">Choose new product:</label>
+                    <div style="width:57%">
+                        <label class="control-label">FOOD</label>
                         <select name="productId" id="productId" class="form-control" asp-items="ViewBag.AllProd as SelectList"></select>
                     </div>
                     <div style="width:27%" class="form-group">
@@ -36,8 +35,7 @@
                     <tr>
                         <th><small>NAME</small></th>
                         <th><small>GRAMS</small></th>
-                        @*<th>Delete</th>*@
-
+                        <th><small>DELETE</small></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,7 +82,7 @@
             <input type="hidden" asp-for="Meal.MealId" />
 
 
-           
+
             <div class="form-group">
                 <label asp-for="Meal.MealName" class="control-label"></label>
                 <input asp-for="Meal.MealName" class="form-control" />
@@ -98,7 +96,7 @@
 
             </div>
         </form>
-       
+
 
 
         @*@await Component.InvokeAsync("MealEdit", Model.Basket)*@
