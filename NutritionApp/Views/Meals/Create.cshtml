@@ -78,14 +78,14 @@
         document.getElementById('meal-name').value = self.value;
     }
 
-    document.querySelectorAll("input[type='submit']")[2].disabled = true;
+    document.querySelectorAll("input[type='submit']")[1].disabled = true;
 
     function mealDisabler(elm) {
         if (elm.value != "") {
 
-            document.querySelectorAll("input[type='submit']")[2].disabled = false;
+            document.querySelectorAll("input[type='submit']")[1].disabled = false;
         } else {
-            document.querySelectorAll("input[type='submit']")[2].disabled = true;
+            document.querySelectorAll("input[type='submit']")[1].disabled = true;
         }
     }
 </script>
