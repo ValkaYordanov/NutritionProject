@@ -21,21 +21,19 @@
             <div class="mySlides fade" onclick="plusSlides(1);">
                 <div id="welcome-block">
                     <p class="story-style">
-                        Welcome to NutriApp!
-                        We hope you bla bla bla,
-                        and that NutriApp helps you
-                        bla bla bla.
+                        Hey there, I'm NutriApp!
+                        Let's become health buddies!
                     </p>
                 </div>
             </div>
 
-            <div class="mySlides fade">
+            <div class="mySlides fade" style="">
                 <div id="gender-block">
                     <form id="genderForm" class="story-style" method="post" asp-controller="Account" asp-action="Gender">
                         <p>
-                            Great! I'm ready to start. First, my gender is
+                            Tell me a bit about yourself... What do you identify as?
                         </p>
-                            <select name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
+                            <select style="max-width: 260px" name="genderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
                         
                         <input type="button" value="Continue" onclick="GenderFormSubmit()" />
                     </form>
@@ -46,7 +44,7 @@
                 <div id="weight-block">
                     <form id="weightForm" class="story-style" method="post" asp-controller="Account" asp-action="Weight">
                         <p>
-                            At the current moment, I weight
+                            Interesting! What's your weight? <br />
                         </p>
                             <input type="number" name="weight" id="weight" onkeyup="validateWeight(this)" autocomplete="off"/>
                             <p>  kg. </p>
@@ -61,12 +59,12 @@
                 <div id="goal-block">
                     <form id="weightGoalForm" class="story-style" method="post" asp-controller="Account" asp-action="WeightGoal">
                         <p>
-                            One last thing... My weight goal is to weight
+                            One last thing... What's your dream weight?
                             <input type="number" name="weightGoal" id="weightGoal" onkeyup="validateWeight(this)" autocomplete="off"/>
                             kg.
                         </p>
                         <p>
-                            <div class="submit" id="mySubmit">All set - Let's go!</div>
+                            <div class="submit" id="mySubmit">Buckle up - Let's go!</div>
                         </p>
                         <input type="submit" />
                     </form>

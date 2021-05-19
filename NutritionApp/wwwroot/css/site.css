@@ -161,6 +161,11 @@ html {
     min-height: 100%;
 }
 
+#genderId {
+    text-align-last: center;
+    text-align: center;
+}
+
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
