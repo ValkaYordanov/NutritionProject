@@ -174,7 +174,7 @@
     function searchForFoods(input, currentUserId) {
         resetSearchedFoods();
         if (input !== "") {
-            const path = "https://localhost:44351/Intakes/SelectFromSp?";
+            const path = "https://nutriwebapp.azurewebsites.net/Intakes/SelectFromSp?";
             document.querySelector("input[type='submit']").disabled = false;
             document.querySelector("#foodsHeadline").innerHTML = "Select food"
 
