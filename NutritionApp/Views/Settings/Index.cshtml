@@ -8,7 +8,7 @@
     <div id="gender-block">
         <form id="genderForm" method="post" asp-controller="Settings" asp-action="Gender">
             <select asp-for="GenderId" id="genderId" class="form-control" asp-items="ViewBag.Genders"></select>
-            <input type="button" value="Change" onclick="GenderFormSubmit()" />
+            <input type="button" class="btn btn-success" value="Change" onclick="GenderFormSubmit()" />
         </form>
     </div>
 </div>
