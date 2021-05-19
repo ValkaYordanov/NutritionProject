@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using NutritionApp.Data;
 using NutritionApp.Models;
 using NutritionApp.Models.ViewModels;
-
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -29,6 +29,7 @@ namespace NutritionApp.Controllers
         }
       
         // GET: Intakes
+        [Authorize]
         public async Task<IActionResult> Index()
         {
           
@@ -37,6 +38,7 @@ namespace NutritionApp.Controllers
         }
 
         // GET: Intakes/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -58,6 +60,7 @@ namespace NutritionApp.Controllers
         }
 
         // GET: Intakes/Create
+        [Authorize]
         public IActionResult Create(int id)
         {
             ViewBag.SelectedPage = "Intake";
@@ -173,6 +176,7 @@ namespace NutritionApp.Controllers
         }
 
         // GET: Intakes/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             
@@ -285,6 +289,7 @@ namespace NutritionApp.Controllers
         }
 
         // GET: Intakes/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

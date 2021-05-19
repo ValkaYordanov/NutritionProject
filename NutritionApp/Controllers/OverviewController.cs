@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Collections.Generic;
 using NutritionApp.Models.ViewModels;
 using System.Collections;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NutritionApp.Controllers
 {
@@ -26,7 +27,7 @@ namespace NutritionApp.Controllers
 
         private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-        
+        [Authorize]
         public async Task<IActionResult> Index(int id)
         {
             ViewBag.SelectedPage = "Overview";

@@ -98,6 +98,7 @@ namespace NutritionApp.Controllers
 
         // GET: /Account/Details
         [HttpGet]
+        [Authorize]
         public IActionResult Details()
         {
             ViewData["Genders"] = new SelectList(_context.Genders, "GenderId", "Label");

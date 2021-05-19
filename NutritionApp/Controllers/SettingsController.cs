@@ -7,6 +7,7 @@ using NutritionApp.Data;
 using NutritionApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NutritionApp.Controllers
 {
@@ -24,6 +25,7 @@ namespace NutritionApp.Controllers
         private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(Settings settings)
         {
             ViewBag.SelectedPage = "Settings";

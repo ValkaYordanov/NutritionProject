@@ -9,6 +9,7 @@ using NutritionApp.Data;
 using NutritionApp.Models;
 using Microsoft.AspNetCore.Identity;
 using NutritionApp.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NutritionApp.Controllers
 {
@@ -29,6 +30,7 @@ namespace NutritionApp.Controllers
         private Task<AppUser> CurrentUser => _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
         // GET: Meals
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             ViewBag.SelectedPage = "Meal";
@@ -39,6 +41,7 @@ namespace NutritionApp.Controllers
         }
 
         // GET: Meals/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -58,6 +61,7 @@ namespace NutritionApp.Controllers
         }
 
         // GET: Meals/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["AllProd"] = new SelectList(_context.Products, "ProductId", "ProductName");
@@ -104,6 +108,7 @@ namespace NutritionApp.Controllers
 
 
         // GET: Meals/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -221,6 +226,7 @@ namespace NutritionApp.Controllers
 
 
         // GET: Meals/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
