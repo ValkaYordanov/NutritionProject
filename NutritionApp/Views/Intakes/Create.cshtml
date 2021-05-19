@@ -27,6 +27,7 @@
                 }
             }
         </span>
+        <input type="date" id="datepicker" data-day="@day" onchange="datepicked(this);" />
         @{ if (next >= 0)
             {
                 <a asp-action="Create" asp-route-id="@next"><img src="~/images/next.svg" /></a>
@@ -312,6 +313,37 @@
             })
             foodName.innerHTML = response
         });
+    }
+
+
+    function datepicked(elm) {
+        var chMonth = elm.value.split('-')[1];
+        var chDay = elm.value.split('-')[2];
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+
+        var first = mm + '/' + dd + '/2021';
+
+        var second = '' + chMonth + '/' + chDay + '/2021';
+        var diff = datediff(parseDate(first), parseDate(second));
+
+
+        var dayurl = window.location.origin + "/Intakes/Create/" + (diff * -1);
+
+        window.location.href = dayurl;
+    }
+
+    function parseDate(str) {
+        var mdy = str.split('/');
+        return new Date(mdy[2], mdy[0] - 1, mdy[1]);
+    }
+
+    function datediff(first, second) {
+        // Take the difference between the dates and divide by milliseconds per day.
+        // Round to nearest whole number to deal with DST.
+        return Math.round((second - first) / (1000 * 60 * 60 * 24));
     }
 
 </script>
