@@ -8,7 +8,6 @@
     var day = ViewBag.theDay;
     var p = 1;
 
-
 }
 
 <div id="day">
@@ -30,6 +29,7 @@
                 }
             }
         </span>
+        <input type="date" id="datepicker" data-day="@day" onchange="datepicked(this);" />
         @{ if (next >= 0)
             {
                 <a asp-action="Index" asp-route-id="@next"><img src="~/images/next.svg" /></a>
@@ -40,7 +40,10 @@
             }
         }
     </h3>
+
 </div>
+
+
 <section class="overview-graphs">
     <div id="top">
         <div id="kcal-goal">
@@ -82,17 +85,17 @@
                 <p>0</p>
                 <span>Fat</span>
             </div>
+        </div>
+        <div class="graph">
+            <div class="bar-wrap proteins">
+                <div class="bar"></div>
             </div>
-                <div class="graph">
-                    <div class="bar-wrap proteins">
-                        <div class="bar"></div>
-                    </div>
-                    <div class="graph-text">
-                        <p>0</p>
-                        <span>Protein</span>
-                    </div>
-                </div>
+            <div class="graph-text">
+                <p>0</p>
+                <span>Protein</span>
             </div>
+        </div>
+    </div>
 
 </section>
 
@@ -115,17 +118,17 @@
         @foreach (var item in Model)
         {
 
-            <tr  onclick="location.href = '@(Url.Action("Edit", "Intakes",new { id= @item.IntakeId }))'">
-             
-                    <td class="qnt">
-                        @Html.DisplayFor(modelItem => item.Quantity)
-                    </td>
-                    <td class="name">
+            <tr onclick="location.href = '@(Url.Action("Edit", "Intakes",new { id= @item.IntakeId }))'">
 
-                        @Html.DisplayFor(modelItem => item.Meal.MealName)
-                        @Html.DisplayFor(modelItem => item.Product.ProductName)
-                    </td>
-                    <td class="kcal-col" data-qnt="@Html.DisplayFor(modelItem => item.Quantity)" data-fat="@{
+                <td class="qnt">
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td class="name">
+
+                    @Html.DisplayFor(modelItem => item.Meal.MealName)
+                    @Html.DisplayFor(modelItem => item.Product.ProductName)
+                </td>
+                <td class="kcal-col" data-qnt="@Html.DisplayFor(modelItem => item.Quantity)" data-fat="@{
                             var i2 = 0;
                         }
                         @foreach (var listitem in ViewData["Fats"] as List<decimal>)
@@ -157,7 +160,7 @@
                                     @listitem
                             }
                         }"
-                        data-kcal="@{
+                    data-kcal="@{
                             var i5 = 0;
                         }
                         @foreach (var listitem in ViewData["KcalList"] as List<int>)
@@ -174,11 +177,11 @@
                             p++;
                         }">
 
-                        <p class="kcal"></p>
+                    <p class="kcal"></p>
 
-                    </td>
+                </td>
 
-        
+
 
             </tr>
         }
@@ -246,14 +249,14 @@
             appleStyle.querySelector('p').innerText = "REMAIN";
             //show totals on frontend
             fatText.innerText = 60 - totalFats;
-            proteinText.innerText = 49 -totalProteins;
+            proteinText.innerText = 49 - totalProteins;
             carbText.innerText = carbgoal - totalCarbs;
             kcalText.innerText = goal - totalKcal;
 
             //show percentages in graph
             carbsBar.style.height = "" + (100 - carbPct) + "%";
             fatsBar.style.height = "" + (100 - fatPct) + "%";
-            proteinsBar.style.height = "" + ( 100 - proteinPct) + "%";
+            proteinsBar.style.height = "" + (100 - proteinPct) + "%";
             kcalBar.style.height = "" + (100 - kcalPct) + "%";
 
         } else {
@@ -276,6 +279,49 @@
         setTimeout(function () {
             fetchGraphData();
         }, 100);
+    }
+
+    function datepicked(elm) {
+        //console.log(elm.value);
+        //console.log(elm.getAttribute('data-day'));
+        
+        
+
+        var chMonth = elm.value.split('-')[1];
+        var chDay = elm.value.split('-')[2];
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+
+        var first = mm + '/' + dd + '/2021';
+        //console.log(today);
+        //var month = now.split('-')[1];
+        //var day = now.split('-')[0];
+
+
+        //var first = '' + month + '/' + day + '/2021';
+        console.log(first);
+        var second = '' + chMonth + '/' + chDay + '/2021';
+        console.log(second);
+        var diff = datediff(parseDate(first), parseDate(second));
+        console.log(diff * -1);
+
+        
+        var dayurl = window.location.origin + "/overview/index/" + (diff * -1);
+
+        //window.location.href = dayurl;
+    }
+
+    function parseDate(str) {
+        var mdy = str.split('/');
+        return new Date(mdy[2], mdy[0] - 1, mdy[1]);
+    }
+
+    function datediff(first, second) {
+        // Take the difference between the dates and divide by milliseconds per day.
+        // Round to nearest whole number to deal with DST.
+        return Math.round((second - first) / (1000 * 60 * 60 * 24));
     }
 
 </script>
