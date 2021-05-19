@@ -16,14 +16,49 @@ nav a[href="/Settings"] {
     top:5px;
     right:5px;
 }
-#day h3 {
-    text-align: center;
+#day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-/*------------------------Boxex -------------------------*/
-.flexContainer {
+#day h3 {
+    width: calc(100% - 80px);
+    margin-left: 40px;
+    margin-right: 40px;
     display: flex;
     justify-content: space-between;
 }
+    #day input[type="date"] {
+        color: transparent !important;
+        background: transparent;
+        border-color: transparent;
+        background: transparent;
+        border-color: transparent;
+        position: relative;
+        font-size: 1.2em;
+        color: #000;
+        width: 3em;
+        cursor: pointer;
+        z-index: 1;
+        outline: unset;
+        font-size: 2rem;
+        width: 4rem;
+        margin-left: -20px;
+        margin-right: auto;
+    }
+    #day h3 span {
+        pointer-events: none;
+        background: #f3f3f3;
+        position: relative;
+        z-index: 3;
+        margin-left: auto;
+    }
+
+    /*------------------------Boxex -------------------------*/
+    .flexContainer {
+        display: flex;
+        justify-content: space-between;
+    }
 .justifyCenter {
     justify-content: center;
 }
