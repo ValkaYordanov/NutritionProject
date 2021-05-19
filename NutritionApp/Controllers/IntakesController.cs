@@ -63,7 +63,7 @@ namespace NutritionApp.Controllers
             ViewBag.SelectedPage = "Intake";
             var minusCount = -1 * id;
             var theDay = DateTime.Today.AddDays(minusCount);
-            ViewBag.theDay = theDay.ToString("dd/MM");
+            ViewBag.theDay = theDay;
             ViewBag.Count = id;
 
 
@@ -124,6 +124,7 @@ namespace NutritionApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IntakeViewModel data)
         {
+            IntakeViewModel test = data;
             
             Intake intake = new Intake();
 

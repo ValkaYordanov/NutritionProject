@@ -54,7 +54,7 @@ namespace NutritionApp.Controllers
 
             var minusCount = (-1 * id);
             var theDay = DateTime.Today.AddDays(minusCount);
-            ViewBag.theDay = theDay.ToString("dd/MM");
+            ViewBag.theDay = theDay;
 
             var nutritionAppContext = _context.Intakes
                     .Where(s =>
