@@ -104,7 +104,7 @@ namespace NutritionApp.Controllers
             //BasketIndexViewModel model = new BasketIndexViewModel();
             return View(meal);
         }
-        
+
 
 
         // GET: Meals/Edit/5

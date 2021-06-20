@@ -27,7 +27,7 @@ namespace NutritionApp.Controllers
         {
             _context = context;
         }
-      
+
         // GET: Intakes
         [Authorize]
         public async Task<IActionResult> Index()
