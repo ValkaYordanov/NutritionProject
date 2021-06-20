@@ -96,7 +96,7 @@ namespace NutritionApp.Controllers
 
             List<Product> products =
                 _context.Products.FromSqlRaw<Product>(
-                    "exec spSearchProductAndMeal @input", inputs).ToList();
+                    "exec spSearchProduct @input", inputs).ToList();
 
             List<Meal> meals =
                 _context.Meals.FromSqlRaw<Meal>(
